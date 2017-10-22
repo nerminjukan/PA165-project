@@ -1,8 +1,6 @@
 package fi.muni.cz.pa165.travelagency.dao;
 
 import fi.muni.cz.pa165.travelagency.entity.Excursion;
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
