@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -32,7 +33,7 @@ public class Reservation implements Serializable {
     /*
     In Customer set atribute reservations to @OneToMany(mappedBy="customer")
     */
-    /*@NotNull
+    @NotNull
     @ManyToOne(optional=false)
     private Customer customer;
 
@@ -43,7 +44,7 @@ public class Reservation implements Serializable {
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
-    */
+    
     public Long getId() {
         return id;
     }
@@ -74,7 +75,7 @@ public class Reservation implements Serializable {
         int result = 1;
         result = prime * result + ((created == null) ? 0 : created.hashCode());
         result = prime * result + ((reservedTrip == null) ? 0 : reservedTrip.hashCode());
-        //result = prime * result + ((customer == null) ? 0 : customer.hashCode());
+        result = prime * result + ((customer == null) ? 0 : customer.hashCode());
         return result;
     }
 
@@ -104,17 +105,19 @@ public class Reservation implements Serializable {
         } else if (!reservedTrip.equals(other.getReservedTrip())) {
             return false;
         }
-        /*if (customer == null) {
-            if (other.getCustomer() != null)
+        if (customer == null) {
+            if (other.getCustomer() != null) {
                 return false;
-        } else if (!customer.equals(other.getCustomer()))
-            return false;*/
+            }
+        } else if (!customer.equals(other.getCustomer())) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
         return "Reservation{" + "id=" + id + ", created=" + created + 
-                ", reservedTrip=" + reservedTrip + ", customer=" + /*customer*/ + '}';
+                ", reservedTrip=" + reservedTrip + ", customer=" + customer + '}';
     }
 }

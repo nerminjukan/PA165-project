@@ -46,7 +46,8 @@ public interface ReservationDao {
      * Remove specified persisted reservation from database.
      * 
      * @param   reservation                 Specific reservation to be removed.
-     * @throws  IllegalArgumentException    when no such reservation exists.
+     * @throws  IllegalArgumentException    if the instance is not an entity 
+     *                                      or is a detached entity.
      */
     void remove(Reservation reservation) throws IllegalArgumentException;
     

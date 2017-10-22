@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -25,26 +26,36 @@ public class ReservationDaoImpl implements ReservationDao {
 
     @Override
     public List<Reservation> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); 
+        TypedQuery<Reservation> query = em.createQuery("SELECT q FROM Reservation q",
+                Reservation.class);
+        return query.getResultList();
     }
 
     @Override
     public List<Reservation> findByCustomer(Customer customer) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        TypedQuery<Reservation> query = em.createQuery("Select o from Reservation o "
+                + "where o.customer = :customerid",
+                Reservation.class);
+        query.setParameter("customerid", customer);
+        return query.getResultList();
     }
 
     @Override
     public Reservation findById(Long id) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return em.find(Reservation.class, id);
     }
 
     @Override
     public void remove(Reservation reservation) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        em.remove(reservation);
     }
 
     @Override
     public List<Reservation> getReservationsCreatedBetween(Date start, Date end) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        TypedQuery<Reservation> query = em.createQuery("SELECT o FROM Reservation o "
+                + "WHERE o.created BETWEEN :startDate AND :endDate ",Reservation.class);
+        query.setParameter("startDate", start);
+        query.setParameter("endDate", end);
+        return query.getResultList();
     }
 }
