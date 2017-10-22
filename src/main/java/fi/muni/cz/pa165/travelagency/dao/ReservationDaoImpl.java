@@ -1,9 +1,10 @@
 package fi.muni.cz.pa165.travelagency.dao;
 
 import fi.muni.cz.pa165.travelagency.entity.Reservation;
+import fi.muni.cz.pa165.travelagency.entity.Customer;
+
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;

@@ -2,6 +2,7 @@ package fi.muni.cz.pa165.travelagency.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,6 +12,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 /**
  * @author Radoslav Micko <445611>
@@ -30,6 +34,14 @@ public class Reservation implements Serializable {
     @OneToOne(optional=false)
     private Trip reservedTrip;
         
+    //-------------------------------------------------------------------------
+    //Names of tables for join table
+    @ManyToMany
+    @JoinTable(name="RESERVED_EXC",
+            joinColumns = @JoinColumn(name = "Reservation_id"),
+            inverseJoinColumns = @JoinColumn(name = "Excursion_id"))
+    private Set<Excursion> reservedExcursions;
+    
     /*
     In Customer set atribute reservations to @OneToMany(mappedBy="customer")
     */
@@ -41,6 +53,14 @@ public class Reservation implements Serializable {
         return customer;
     }
 
+    public Set<Excursion> getReservedExcursions() {
+        return reservedExcursions;
+    }
+
+    public void setReservedExcursions(Set<Excursion> reservedExcursions) {
+        this.reservedExcursions = reservedExcursions;
+    }
+    
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
