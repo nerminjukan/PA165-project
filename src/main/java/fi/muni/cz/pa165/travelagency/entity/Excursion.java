@@ -1,19 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fi.muni.cz.pa165.travelagency.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Objects;
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 
 /**
@@ -24,6 +24,7 @@ import javax.persistence.TemporalType;
 
 
 @Entity
+@Table(name = "excursion")
 public class Excursion implements Serializable {
     
     /*
@@ -37,29 +38,37 @@ public class Excursion implements Serializable {
     /*
      * The date at which the Excursion is taking place.
      */
+    @NotNull
     @Temporal(TemporalType.DATE)
     private java.util.Date excursionDate;
     
     /*
      * The duration of the Excursion.
      */
+    @NotNull
     private Integer duration;
     
     /*
      * The description of the Excursion.
      */
+    @NotNull
     private String description;
     
     /*
      * The destination of the Excursion.
      */
+    @NotNull
     private String destination;
     
     
     /*
      * The price of the Excursion.
      */
+    @NotNull
     private BigDecimal price;
+    
+    @ManyToMany(mappedBy = "excursions")
+    private Set<Trip> trips;
 
     /**
      * Sets the ID of the Excursion.
@@ -168,7 +177,7 @@ public class Excursion implements Serializable {
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
-    
+
     /**
      * Method returns Excursion hash code.
      *
@@ -176,30 +185,58 @@ public class Excursion implements Serializable {
      */
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 7;
+        hash = 29 * hash + Objects.hashCode(this.id);
+        hash = 29 * hash + Objects.hashCode(this.excursionDate);
+        hash = 29 * hash + Objects.hashCode(this.duration);
+        hash = 29 * hash + Objects.hashCode(this.description);
+        hash = 29 * hash + Objects.hashCode(this.destination);
+        hash = 29 * hash + Objects.hashCode(this.price);
         return hash;
     }
-
+    
     /**
      * Method returns true if two Excursions are equal, false otherwise.
      * The ID field MUST BE SET.
      *
-     * @param object
+     * @param obj
      * @return boolean
      */
     @Override
-    public boolean equals(Object object) {
-        // Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Trip)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Excursion other = (Excursion) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Excursion other = (Excursion) obj;
+        if (!Objects.equals(this.description, other.description)) {
+            return false;
+        }
+        if (!Objects.equals(this.destination, other.destination)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.excursionDate, other.excursionDate)) {
+            return false;
+        }
+        if (!Objects.equals(this.duration, other.duration)) {
+            return false;
+        }
+        if (!Objects.equals(this.price, other.price)) {
             return false;
         }
         return true;
     }
+    
+    
+    
 
     /**
      * Method returns a string presentation of the Excursion.
@@ -210,5 +247,15 @@ public class Excursion implements Serializable {
     public String toString() {
         return "fi.muni.cz.pa165.travelagency.entity.Excursion[ id=" + id + " ]";
     }
+
+    public Set<Trip> getTrips() {
+        return trips;
+    }
+
+    public void setTrips(Set<Trip> trips) {
+        this.trips = trips;
+    }
+    
+    
     
 }

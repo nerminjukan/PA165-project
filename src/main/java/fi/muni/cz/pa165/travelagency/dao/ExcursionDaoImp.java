@@ -1,17 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fi.muni.cz.pa165.travelagency.dao;
 
 import fi.muni.cz.pa165.travelagency.entity.Excursion;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
+ * An implementation of the Excursion interface.
  *
  * @author (name = "Nermin Jukan", UCO = "<473370>")
  */
@@ -33,46 +31,26 @@ public class ExcursionDaoImp implements ExcursionDao{
     public Excursion findById(Long id) {
         return em.find(Excursion.class, id);
     }
-
-    @Override
-    public void updateDate(Excursion e, Date date) {
-        Excursion toUpdate = findById(e.getId());
-        toUpdate.setExcursionDate(date);
-        em.persist(toUpdate);
-    }
-
-    @Override
-    public void updateDuration(Excursion e, int duration) {
-        Excursion toUpdate = findById(e.getId());
-        toUpdate.setDuration(duration);
-        em.persist(toUpdate);
-
-    }
-
-    @Override
-    public void updateDescription(Excursion e, String description) {
-        Excursion toUpdate = findById(e.getId());
-        toUpdate.setDescription(description);
-        em.persist(toUpdate);
-    }
-
-    @Override
-    public void updateDestination(Excursion e, String destination) {
-        Excursion toUpdate = findById(e.getId());
-        toUpdate.setDestination(destination);
-        em.persist(toUpdate);
-    }
-
-    @Override
-    public void updatePrice(Excursion e, BigDecimal price) {
-        Excursion toUpdate = findById(e.getId());
-        toUpdate.setPrice(price);
-        em.persist(toUpdate);
-    }
     
     @Override
     public void delete(Excursion e) {
         em.remove(e);
+    }
+
+    @Override
+    public List<Excursion> findByDestination(String destination) {
+        TypedQuery<Excursion> query = em.createQuery("Select e from Excursion e "
+                + "where e.destination = :destinationName",
+                Excursion.class);
+        query.setParameter("destinationName", destination);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Excursion> findAll() {
+        TypedQuery<Excursion> query = em.createQuery("Select e from Excursion e",
+                Excursion.class);
+        return query.getResultList();
     }
     
 }
