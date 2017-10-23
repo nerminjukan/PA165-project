@@ -2,8 +2,10 @@ package fi.muni.cz.pa165.travelagency.entity;
 
 import fi.muni.cz.pa165.travelagency.enums.PaymentStateType;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
@@ -43,7 +45,7 @@ public class Reservation implements Serializable {
     @JoinTable(name="RESERVED_EXC",
             joinColumns = @JoinColumn(name = "Reservation_id"),
             inverseJoinColumns = @JoinColumn(name = "Excursion_id"))
-    private Set<Excursion> reservedExcursions;
+    private Set<Excursion> reservedExcursions = new HashSet<>();
     
     /*
     In Customer set atribute reservations to @OneToMany(mappedBy="customer")
@@ -72,16 +74,31 @@ public class Reservation implements Serializable {
         return Collections.unmodifiableSet(reservedExcursions);
     }
     
+    /**
+     * Add new reserved excursion into reservation.
+     * 
+     * @param excursion excursion to be added.
+     */
     public void addReservedExcursion(Excursion excursion) {
         reservedExcursions.add(excursion);
     }
     
+    /**
+     * Remove reserved excursion from reservation.
+     * 
+     * @param excursion excursion to be removed
+     */
     public void removeReservedExcursion(Excursion excursion) {
         reservedExcursions.remove(excursion);
     }
 
-    public void setReservedExcursions(Set<Excursion> reservedExcursions) {
-        this.reservedExcursions = reservedExcursions;
+    /**
+     * Add all excursions from given collection.
+     * 
+     * @param excursions collection of excursion to be added
+     */
+    public void addAllReservedExcursions(Collection<Excursion> excursions) {
+        this.reservedExcursions.addAll(excursions);
     }
     
     public void setCustomer(Customer customer) {
