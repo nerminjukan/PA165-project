@@ -1,9 +1,11 @@
 package fi.muni.cz.pa165.travelagency.entity;
 
+import fi.muni.cz.pa165.travelagency.enums.PaymentStateType;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -48,6 +50,18 @@ public class Reservation implements Serializable {
     @NotNull
     @ManyToOne(optional=false)
     private Customer customer;
+    
+    @Enumerated
+    @NotNull
+    private PaymentStateType paymentState = PaymentStateType.NotPaid;
+
+    public PaymentStateType getPaymentState() {
+        return paymentState;
+    }
+
+    public void setPaymentState(PaymentStateType paymentState) {
+        this.paymentState = paymentState;
+    }
 
     public Customer getCustomer() {
         return customer;
