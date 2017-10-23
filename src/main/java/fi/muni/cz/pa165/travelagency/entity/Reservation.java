@@ -2,6 +2,7 @@ package fi.muni.cz.pa165.travelagency.entity;
 
 import fi.muni.cz.pa165.travelagency.enums.PaymentStateType;
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Set;
 import javax.persistence.Entity;
@@ -68,7 +69,15 @@ public class Reservation implements Serializable {
     }
 
     public Set<Excursion> getReservedExcursions() {
-        return reservedExcursions;
+        return Collections.unmodifiableSet(reservedExcursions);
+    }
+    
+    public void addReservedExcursion(Excursion excursion) {
+        reservedExcursions.add(excursion);
+    }
+    
+    public void removeReservedExcursion(Excursion excursion) {
+        reservedExcursions.remove(excursion);
     }
 
     public void setReservedExcursions(Set<Excursion> reservedExcursions) {
