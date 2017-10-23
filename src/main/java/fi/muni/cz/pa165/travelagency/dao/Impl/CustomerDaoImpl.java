@@ -7,9 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by martin on 22.10.2017.

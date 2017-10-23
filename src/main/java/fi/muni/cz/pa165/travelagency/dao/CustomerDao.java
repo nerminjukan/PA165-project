@@ -4,17 +4,48 @@ import fi.muni.cz.pa165.travelagency.entity.Customer;
 import fi.muni.cz.pa165.travelagency.entity.Reservation;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by martin on 22.10.2017.7
  * @author Martin Sevcik <422365>
  */
 public interface CustomerDao {
-    public void create(Customer customer);
-    public List<Customer> findAll();
-    public Customer findById(Long id);
-    public void remove(Customer customer);
-    public void update(Customer customer);
-    public Customer findByReservation(Reservation reservation);
+
+    /**
+     * Create operation for CustomerDao
+     * @param customer Customer
+     */
+    void create(Customer customer);
+
+    /**
+     * Finds all Customers
+     * @return Customer's list
+     */
+    List<Customer> findAll();
+
+    /**
+     * Finds specified customer
+     * @param id id of customer
+     * @return Customer
+     */
+    Customer findById(Long id);
+
+    /**
+     * Removes Customer
+     * @param customer Customer
+     */
+    void remove(Customer customer);
+
+    /**
+     * Updates Customer
+     * @param customer Customer
+     */
+    void update(Customer customer);
+
+    /**
+     * Finds customers based on reservation
+     * @param reservation Reservation
+     * @return Customer
+     */
+    Customer findByReservation(Reservation reservation);
 }
