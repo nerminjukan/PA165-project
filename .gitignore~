@@ -28,4 +28,7 @@ target/
 TravelAgency.iml
 =======
 .LCKpersistence.xml~
->>>>>>> 8007097fc51ffab2886ad03d340221d8837d949b
+
+TravelAgency.iml
+.idea
+>>>>>>> 28039ff0fa31149b0d57df1c8b00563c742c97b3
