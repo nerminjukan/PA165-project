@@ -2,10 +2,7 @@ package fi.muni.cz.pa165.travelagency.entity;
 
 import com.sun.istack.internal.NotNull;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by martin on 22.10.2017.
@@ -31,6 +28,10 @@ public class Address {
     private String houseNumber;
 
     private String street;
+
+    @NotNull
+    @ManyToOne(optional=false)
+    private Customer customer;
 
     public Long getId() {
         return id;

@@ -1,7 +1,9 @@
 package fi.muni.cz.pa165.travelagency.dao;
 
 import fi.muni.cz.pa165.travelagency.entity.Customer;
+import fi.muni.cz.pa165.travelagency.entity.Reservation;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -10,9 +12,9 @@ import java.util.Set;
  */
 public interface CustomerDao {
     public void create(Customer customer);
-    public Set<Customer> findAll();
+    public List<Customer> findAll();
     public Customer findById(Long id);
-    public Customer findBySurname(String surname);
     public void remove(Customer customer);
     public void update(Customer customer);
+    public Customer findByReservation(Reservation reservation);
 }

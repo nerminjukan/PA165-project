@@ -30,11 +30,14 @@ public class Customer {
     private String email;
 
     @NotNull
-    @OneToMany
+    @OneToMany(mappedBy = "customer")
     private Set<Address> addresses;
 
     @NotNull
     private Date birthDate;
+
+    @OneToMany(mappedBy="customer")
+    private Set<Reservation> reservations;
 
     public Long getId() {
         return id;
@@ -98,5 +101,13 @@ public class Customer {
 
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public Set<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservation(Set<Reservation> reservations) {
+        this.reservations = reservations;
     }
 }
