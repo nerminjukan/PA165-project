@@ -24,11 +24,14 @@ hs_err_pid*
 nbproject/
 target/
 <<<<<<< HEAD
-.idea
-TravelAgency.iml
+
 =======
+>>>>>>> 8a05b1634fd06515f3a05ed9cc9382be7a9f0b42
 .LCKpersistence.xml~
 
 TravelAgency.iml
 .idea
->>>>>>> 28039ff0fa31149b0d57df1c8b00563c742c97b3
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8a05b1634fd06515f3a05ed9cc9382be7a9f0b42
