@@ -7,9 +7,18 @@ package fi.muni.cz.pa165.travelagency.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.*;
-import javax.persistence.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -197,9 +206,12 @@ public class Trip implements Serializable {
             return false;
         }
         Trip trip = (Trip) object;
-        return ((this.name == null && trip.getName() == null) || (this.name != null && this.name.equals(trip.getName())) &&
-                (this.dateFrom == null && trip.getDateFrom() == null) || (this.dateFrom != null && this.dateFrom.equals(trip.getDateFrom())) &&
-                (this.dateTo == null && trip.getDateTo() == null) || (this.dateTo != null && this.dateTo.equals(trip.getDateTo())));
+        return ((this.name == null && trip.getName() == null) ||
+                        (this.name != null && this.name.equals(trip.getName())) &&
+                (this.dateFrom == null && trip.getDateFrom() == null) ||
+                        (this.dateFrom != null && this.dateFrom.equals(trip.getDateFrom())) &&
+                (this.dateTo == null && trip.getDateTo() == null) ||
+                        (this.dateTo != null && this.dateTo.equals(trip.getDateTo())));
     }
 
     @Override
