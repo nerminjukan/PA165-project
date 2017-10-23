@@ -1,6 +1,5 @@
 package fi.muni.cz.pa165.travelagency.dao;
 
-import fi.muni.cz.pa165.travelagency.entity.Excursion;
 import fi.muni.cz.pa165.travelagency.entity.Trip;
 
 import javax.persistence.EntityManager;
