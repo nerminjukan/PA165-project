@@ -7,11 +7,13 @@ import fi.muni.cz.pa165.travelagency.entity.Customer;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
 /**
  * Created by martin on 23.10.2017.
  * @author Martin Sevcik <422365>
  */
+@Repository
 public class AddressDaoImpl implements AddressDao {
 
     @PersistenceContext
