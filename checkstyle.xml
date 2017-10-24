@@ -63,7 +63,6 @@
     <module name="LeftCurly">
       <property name="option" value="eol"/>
     </module>
-    <module name="NeedBraces"/>
     <module name="RightCurly"/>
 
     <!-- Checks for common coding problems               -->
@@ -80,6 +79,10 @@
     <module name="InterfaceIsType"/>
     <module name="VisibilityModifier">
       <property name="protectedAllowed" value="true"/>
+    </module>
+
+    <module name="NeedBraces">
+      <property name="allowSingleLineIf" value="true"/>
     </module>
 
     <!-- Miscellaneous other checks.                   -->
