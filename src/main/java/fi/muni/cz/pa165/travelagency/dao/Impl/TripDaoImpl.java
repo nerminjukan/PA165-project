@@ -1,5 +1,6 @@
-package fi.muni.cz.pa165.travelagency.dao;
+package fi.muni.cz.pa165.travelagency.dao.Impl;
 
+import fi.muni.cz.pa165.travelagency.dao.TripDao;
 import fi.muni.cz.pa165.travelagency.entity.Trip;
 
 import javax.persistence.EntityManager;
@@ -7,10 +8,12 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.Date;
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author Pavel Kotala, 437164
  */
+@Repository
 public class TripDaoImpl implements TripDao {
     @PersistenceContext
     private EntityManager em;

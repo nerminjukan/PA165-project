@@ -1,5 +1,6 @@
-package fi.muni.cz.pa165.travelagency.dao;
+package fi.muni.cz.pa165.travelagency.dao.Impl;
 
+import fi.muni.cz.pa165.travelagency.dao.ReservationDao;
 import fi.muni.cz.pa165.travelagency.entity.Reservation;
 import fi.muni.cz.pa165.travelagency.entity.Customer;
 

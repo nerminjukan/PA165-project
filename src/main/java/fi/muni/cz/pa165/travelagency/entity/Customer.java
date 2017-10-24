@@ -1,5 +1,6 @@
 package fi.muni.cz.pa165.travelagency.entity;
 
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,13 +10,15 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * Created by martin on 22.10.2017.
  * @author Martin Sevcik <422365>
  */
 @Entity
-public class Customer {
+public class Customer implements Serializable {
 
     /**
      * Id of customer
@@ -63,6 +66,7 @@ public class Customer {
      * Birth date of customer
      */
     @NotNull
+    @Temporal(TemporalType.DATE)
     private Date birthDate;
 
     /**

@@ -1,17 +1,19 @@
-package fi.muni.cz.pa165.travelagency.dao;
+package fi.muni.cz.pa165.travelagency.dao.Impl;
 
+import fi.muni.cz.pa165.travelagency.dao.ExcursionDao;
 import fi.muni.cz.pa165.travelagency.entity.Excursion;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import org.springframework.stereotype.Repository;
 
 /**
  * An implementation of the Excursion interface.
  *
  * @author (name = "Nermin Jukan", UCO = "<473370>")
  */
-
+@Repository
 public class ExcursionDaoImp implements ExcursionDao{
 
     
