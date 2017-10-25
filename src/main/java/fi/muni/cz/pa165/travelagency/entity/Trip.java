@@ -43,6 +43,7 @@ public class Trip implements Serializable {
     private Date dateTo;
 
     private String destination;
+    
     private int availableSpots;
     
     @ManyToMany
@@ -50,9 +51,11 @@ public class Trip implements Serializable {
             joinColumns = @JoinColumn(name = "Trip_id"),
             inverseJoinColumns = @JoinColumn(name = "Excursion_id"))
     private Set<Excursion> excursions = new HashSet<>();
+    
     @NotNull
-    @Column(nullable = false)
+    @Column(nullable = false, unique=true)
     private String name;
+    
     private BigDecimal price;
 
     /**
