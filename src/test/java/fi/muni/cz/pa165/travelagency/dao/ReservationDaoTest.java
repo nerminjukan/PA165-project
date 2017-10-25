@@ -1,9 +1,8 @@
 package fi.muni.cz.pa165.travelagency.dao;
 
-import org.junit.Before;
-import org.junit.Test;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.Test;
 
 /**
  * Created by martin on 24.10.2017.
@@ -14,7 +13,7 @@ import javax.transaction.Transactional;
 @Transactional
 public class ReservationDaoTest {
 //TODO
-    @Before
+    
     public void setup(){
         throw new UnsupportedOperationException();
     }

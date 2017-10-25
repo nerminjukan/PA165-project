@@ -17,6 +17,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -41,6 +44,11 @@ public class Trip implements Serializable {
 
     private String destination;
     private int availableSpots;
+    
+    @ManyToMany
+    @JoinTable(name="TRIP_EXC",
+            joinColumns = @JoinColumn(name = "Trip_id"),
+            inverseJoinColumns = @JoinColumn(name = "Excursion_id"))
     private Set<Excursion> excursions = new HashSet<>();
     @NotNull
     @Column(nullable = false)
