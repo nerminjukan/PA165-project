@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Temporal;
@@ -19,6 +20,10 @@ import javax.persistence.TemporalType;
  */
 @Entity
 public class Customer implements Serializable {
+
+    public Customer(){
+        this.reservations = new HashSet<>();
+    }
 
     /**
      * Id of customer
@@ -54,13 +59,6 @@ public class Customer implements Serializable {
      */
     @NotNull
     private String email;
-
-    /**
-     * Addresses of customer
-     */
-    @NotNull
-    @OneToMany(mappedBy = "customer")
-    private Set<Address> addresses;
 
     /**
      * Birth date of customer
@@ -173,22 +171,6 @@ public class Customer implements Serializable {
 
     /**
      * Basic getter
-     * @return Address
-     */
-    public Set<Address> getAddresses() {
-        return addresses;
-    }
-
-    /**
-     * Basic setter
-     * @param address address
-     */
-    public void setAddresses(Set<Address> address) {
-        this.addresses = addresses;
-    }
-
-    /**
-     * Basic getter
      * @return birthDate
      */
     public Date getBirthDate() {
@@ -219,6 +201,10 @@ public class Customer implements Serializable {
         this.reservations = reservations;
     }
 
+    public void addReservation(Reservation reservation){
+        this.reservations.add(reservation);
+    }
+
     /**
      * Overridden Equals
      * @param o object
@@ -236,7 +222,6 @@ public class Customer implements Serializable {
         if (!Objects.equals(phoneNumber, customer.getPhoneNumber())) return false;
         if (!idCardNumber.equals(customer.idCardNumber)) return false;
         if (!email.equals(customer.email)) return false;
-        if (!addresses.equals(customer.addresses)) return false;
         if (!birthDate.equals(customer.birthDate)) return false;
         return Objects.equals(reservations, customer.getReservations());
 
@@ -253,7 +238,6 @@ public class Customer implements Serializable {
         result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
         result = 31 * result + idCardNumber.hashCode();
         result = 31 * result + email.hashCode();
-        result = 31 * result + addresses.hashCode();
         result = 31 * result + birthDate.hashCode();
         result = 31 * result + (reservations != null ? reservations.hashCode() : 0);
         return result;
