@@ -21,6 +21,9 @@ import javax.persistence.TemporalType;
 @Entity
 public class Customer implements Serializable {
 
+    /**
+     * Non-parametric constructor
+     */
     public Customer(){
         this.reservations = new HashSet<>();
     }
@@ -201,6 +204,10 @@ public class Customer implements Serializable {
         this.reservations = reservations;
     }
 
+    /**
+     * Adds single reservation to reservations
+     * @param reservation Reservation
+     */
     public void addReservation(Reservation reservation){
         this.reservations.add(reservation);
     }

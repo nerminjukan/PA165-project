@@ -40,16 +40,14 @@ public class ReservationDaoTest extends AbstractTestNGSpringContextTests {
     private CustomerDao customerDao;
 
     private Customer customer;
-
     private Trip trip;
-
     private Reservation reservation;
 
     @BeforeMethod
     public void setup(){
         customer = new Customer();
         Calendar cal = Calendar.getInstance();
-        cal.set(2017, 10, 10);
+        cal.set(2017, 11, 10);
         customer.setBirthDate(cal.getTime());
         customer.setEmail("name@name.com");
         customer.setIdCardNumber("idCard");
@@ -148,7 +146,73 @@ public class ReservationDaoTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void getReservationsCreatedBetweenTest(){
+        Calendar cal = Calendar.getInstance();
 
-        throw new UnsupportedOperationException();
+        Customer customer2 = new Customer();
+        cal.set(2016, 9, 9);
+        customer2.setBirthDate(cal.getTime());
+        customer2.setEmail("name3@name.com");
+        customer2.setIdCardNumber("idCard3");
+        customer2.setSurname("Surname3");
+        customerDao.create(customer2);
+
+        Customer customer3 = new Customer();
+        cal.set(2016, 9, 3);
+        customer3.setBirthDate(cal.getTime());
+        customer3.setEmail("name3@name.com");
+        customer3.setIdCardNumber("idCard3");
+        customer3.setSurname("Surname3");
+        customerDao.create(customer3);
+
+        Trip trip2 = new Trip();
+        trip2.setName("Trip2");
+        tripDao.create(trip2);
+
+        Trip trip3 = new Trip();
+        trip3.setName("Trip3");
+        tripDao.create(trip3);
+
+        Reservation reservation2 = new Reservation();
+        reservation2.setPaymentState(PaymentStateType.NotPaid);
+        cal.set(2017, 10, 2);
+        reservation2.setCreated(cal.getTime());
+        reservation2.setCustomer(customer2);
+        reservation2.setReservedTrip(trip2);
+        reservationDao.create(reservation2);
+
+        Reservation reservation3 = new Reservation();
+        reservation3.setPaymentState(PaymentStateType.NotPaid);
+        cal.set(2017, 10, 6);
+        reservation3.setCreated(cal.getTime());
+        reservation3.setCustomer(customer3);
+        reservation3.setReservedTrip(trip3);
+        reservationDao.create(reservation3);
+
+        Calendar calStart = Calendar.getInstance();
+        calStart.set(2017, 10, 1);
+        Calendar calEnd = Calendar.getInstance();
+        calEnd.set(2017, 10, 10);
+
+        List<Reservation> list  = reservationDao.getReservationsCreatedBetween(calStart.getTime(), calEnd.getTime());
+        Assert.assertEquals(list.size(), 2);
+        Assert.assertTrue(list.contains(reservation2));
+        Assert.assertTrue(list.contains(reservation3));
+
+        calStart.set(2017, 10, 3);
+        list = reservationDao.getReservationsCreatedBetween(calStart.getTime(), calEnd.getTime());
+        Assert.assertEquals(list.size(), 1);
+        Assert.assertTrue(list.contains(reservation3));
+    }
+
+    @Test
+    public void getReservationsCreatedBetweenEmptyTest(){
+        reservationDao.create(reservation);
+
+        Calendar calStart = Calendar.getInstance();
+        calStart.set(2017, 10, 1);
+        Calendar calEnd = Calendar.getInstance();
+        calEnd.set(2017, 10, 10);
+
+        Assert.assertTrue(reservationDao.getReservationsCreatedBetween(calStart.getTime(), calEnd.getTime()).isEmpty());
     }
 }
