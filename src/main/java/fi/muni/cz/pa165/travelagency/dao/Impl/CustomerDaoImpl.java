@@ -37,7 +37,7 @@ public class CustomerDaoImpl implements CustomerDao {
 
     @Override
     public void remove(Customer customer) {
-        em.remove(customer);
+        em.remove(em.contains(customer) ? customer : em.merge(customer));
     }
 
     @Override
