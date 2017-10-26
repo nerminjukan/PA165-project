@@ -31,7 +31,7 @@ public class AddressDaoImpl implements AddressDao {
 
     @Override
     public void remove(Address address) {
-        em.remove(address);
+        em.remove(em.contains(address) ? address : em.merge(address));
     }
 
     @Override
