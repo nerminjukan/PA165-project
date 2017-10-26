@@ -21,9 +21,6 @@ import org.testng.annotations.Test;
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
 public class TripDaoTest extends AbstractTestNGSpringContextTests {
-    
-    @Autowired
-    public AddressDao addressDao;
 
     @Autowired
     public CustomerDao customerDao;
