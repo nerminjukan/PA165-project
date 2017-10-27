@@ -49,7 +49,7 @@ public class ExcursionDaoImplTest extends AbstractTestNGSpringContextTests {
         Trip europe = new Trip();
         europe.setName("europe");
         Trip world = new Trip();
-        europe.setName("world");
+        world.setName("world");
         castle = createExcursion("castle", "france", 2, calendar.getTime(), BigDecimal.valueOf(1999), europe);
         calendar.set(1999, 11, 31);
         beach = createExcursion("beach", "turkey", 4, calendar.getTime(), BigDecimal.valueOf(99.9999), europe, world);
@@ -110,13 +110,13 @@ public class ExcursionDaoImplTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void findByDesetinationTest() {
+    public void findByDestinationTest() {
         SoftAssertions softly = new SoftAssertions();
 
-        softly.assertThat(excursionDao.findByDestination("i").size()).isEqualTo(3);
-        softly.assertThat(excursionDao.findByDestination("hi").size()).isEqualTo(1);
+        softly.assertThat(excursionDao.findByDestination("turkey").size()).isEqualTo(1);
+        softly.assertThat(excursionDao.findByDestination("turke")).isEmpty();
         softly.assertThat(excursionDao.findByDestination("adswqw")).isEmpty();
-        softly.assertThat(excursionDao.findByDestination("beach").size()).isEqualTo(1);
+        softly.assertThat(excursionDao.findByDestination("france").size()).isEqualTo(1);
 
         softly.assertAll();
     }
