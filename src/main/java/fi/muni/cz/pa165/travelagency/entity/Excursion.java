@@ -2,7 +2,10 @@ package fi.muni.cz.pa165.travelagency.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Entity;
@@ -10,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -24,7 +26,6 @@ import javax.validation.constraints.NotNull;
 
 
 @Entity
-@Table(name = "excursion")
 public class Excursion implements Serializable {
     
     /*
@@ -68,7 +69,7 @@ public class Excursion implements Serializable {
     private BigDecimal price;
     
     @ManyToMany(mappedBy = "excursions")
-    private Set<Trip> trips;
+    private Set<Trip> trips = new HashSet<>();
 
     /**
      * Sets the ID of the Excursion.
@@ -210,7 +211,7 @@ public class Excursion implements Serializable {
         if (obj == null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if (!(obj instanceof Excursion)) {
             return false;
         }
         final Excursion other = (Excursion) obj;
@@ -248,14 +249,42 @@ public class Excursion implements Serializable {
         return "fi.muni.cz.pa165.travelagency.entity.Excursion[ id=" + id + " ]";
     }
 
-    public Set<Trip> getTrips() {
-        return trips;
-    }
-
     public void setTrips(Set<Trip> trips) {
         this.trips = trips;
     }
-    
-    
+
+
+
+    /**
+     * Returns unmodifiable set of trips that include this excursion.
+     * @return unmodifiable set of trips that include this excursion.
+     */
+    public Set<Trip> getTrips() {
+        return Collections.unmodifiableSet(trips);
+    }
+
+    /**
+     * Adds given trip to the set of trips that include this excursion.
+     * @param trip trip to be added
+     */
+    public void addTrip(Trip trip) {
+        this.trips.add(trip);
+    }
+
+    /**
+     * Adds all trips from the given collection to the set of trips that include this excursion.
+     * @param trips collection of trips to be added
+     */
+    public void addAllTrips(Collection<Trip> trips) {
+        this.trips.addAll(trips);
+    }
+
+    /**
+     * Removes given trip from the set of trips that include this excursion.
+     * @param trip trip to be removed
+     */
+    public void removeTrip(Trip trip) {
+        this.trips.remove(trip);
+    }
     
 }

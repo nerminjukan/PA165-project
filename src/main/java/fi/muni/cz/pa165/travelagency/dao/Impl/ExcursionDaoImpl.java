@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
  * @author (name = "Nermin Jukan", UCO = "<473370>")
  */
 @Repository
-public class ExcursionDaoImp implements ExcursionDao{
+public class ExcursionDaoImpl implements ExcursionDao{
 
     
     @PersistenceContext
