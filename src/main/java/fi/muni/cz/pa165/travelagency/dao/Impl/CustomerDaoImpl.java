@@ -47,7 +47,7 @@ public class CustomerDaoImpl implements CustomerDao {
 
     @Override
     public Customer findByReservation(Reservation reservation){
-        return em.createQuery("select c from Customer c join Reservation r on r.customer = c.id" +
+        return em.createQuery("select c from Customer c join c.reservations r" +
                 " where r.id = :reservationId", Customer.class)
                 .setParameter("reservationId", reservation.getId()).getSingleResult();
     }
