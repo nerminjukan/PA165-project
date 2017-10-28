@@ -22,9 +22,11 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
+ * Tests for Customer Dao implementation.
  *
- * @author root
+ * @author (name = "Nermin Jukan", UCO = "<473370>")
  */
+
 @ContextConfiguration(classes = PersistenceSampleApplicationContext.class)
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
