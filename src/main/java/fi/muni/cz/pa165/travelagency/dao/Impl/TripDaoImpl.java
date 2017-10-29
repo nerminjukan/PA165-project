@@ -43,7 +43,7 @@ public class TripDaoImpl implements TripDao {
 
     @Override
     public void remove(Trip trip) {
-        em.remove(trip);
+        em.remove(em.contains(trip) ? trip : em.merge(trip));
     }
 
     @Override

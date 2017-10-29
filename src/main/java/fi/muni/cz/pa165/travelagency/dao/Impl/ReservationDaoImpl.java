@@ -49,7 +49,7 @@ public class ReservationDaoImpl implements ReservationDao {
 
     @Override
     public void remove(Reservation reservation) throws IllegalArgumentException {
-        em.remove(reservation);
+        em.remove(em.contains(reservation) ? reservation : em.merge(reservation));
     }
 
     @Override
