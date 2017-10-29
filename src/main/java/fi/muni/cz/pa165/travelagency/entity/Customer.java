@@ -220,7 +220,8 @@ public class Customer implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null) return false;
+        if (!(o instanceof Customer)) return false;
 
         Customer customer = (Customer) o;
 
@@ -231,7 +232,6 @@ public class Customer implements Serializable {
         if (!email.equals(customer.email)) return false;
         if (!birthDate.equals(customer.birthDate)) return false;
         return Objects.equals(reservations, customer.getReservations());
-
     }
 
     /**
@@ -249,6 +249,4 @@ public class Customer implements Serializable {
         result = 31 * result + (reservations != null ? reservations.hashCode() : 0);
         return result;
     }
-
-
 }
