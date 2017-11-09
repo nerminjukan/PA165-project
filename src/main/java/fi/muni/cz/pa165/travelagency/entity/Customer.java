@@ -238,13 +238,6 @@ public class Customer implements Serializable {
      */
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + surname.hashCode();
-        result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
-        result = 31 * result + idCardNumber.hashCode();
-        result = 31 * result + email.hashCode();
-        result = 31 * result + birthDate.hashCode();
-        result = 31 * result + (reservations != null ? reservations.hashCode() : 0);
-        return result;
+        return 31 * idCardNumber.hashCode();
     }
 }
