@@ -65,11 +65,21 @@ public class ReservationDaoTest extends AbstractTestNGSpringContextTests {
         reservation.setReservedTrip(trip);
     }
 
+    private void assertReservationsEqual(Reservation compared){
+        Assert.assertEquals(compared.getCreated(), this.reservation.getCreated());
+        Assert.assertEquals(compared.getCustomer(), this.reservation.getCustomer());
+        Assert.assertEquals(compared.getId(), this.reservation.getId());
+        Assert.assertEquals(compared.getPaymentState(), this.reservation.getPaymentState());
+        Assert.assertEquals(compared.getReservedExcursions(), this.reservation.getReservedExcursions());
+        Assert.assertEquals(compared.getReservedTrip(), this.reservation.getReservedTrip());
+    }
+
     @Test
     public void createTest(){
         reservationDao.create(reservation);
 
         Assert.assertEquals(reservationDao.findAll().size(), 1);
+        this.assertReservationsEqual(reservationDao.findAll().get(0));
     }
 
     @Test(expectedExceptions=ConstraintViolationException.class)
@@ -87,7 +97,7 @@ public class ReservationDaoTest extends AbstractTestNGSpringContextTests {
 
         list = reservationDao.findAll();
         Assert.assertEquals(list.size(), 1);
-        Assert.assertEquals(list.get(0), reservation);
+        this.assertReservationsEqual(reservationDao.findAll().get(0));
     }
 
     @Test
@@ -138,10 +148,10 @@ public class ReservationDaoTest extends AbstractTestNGSpringContextTests {
     @Test
     public void removeTest(){
         reservationDao.create(reservation);
-        Assert.assertEquals(reservationDao.findAll().isEmpty(), false);
+        Assert.assertFalse(reservationDao.findAll().isEmpty());
 
         reservationDao.remove(reservation);
-        Assert.assertEquals(reservationDao.findAll().isEmpty(), true);
+        Assert.assertTrue(reservationDao.findAll().isEmpty());
     }
 
     @Test
@@ -151,8 +161,8 @@ public class ReservationDaoTest extends AbstractTestNGSpringContextTests {
         Customer customer2 = new Customer();
         cal.set(2016, 9, 9);
         customer2.setBirthDate(cal.getTime());
-        customer2.setEmail("name3@name.com");
-        customer2.setIdCardNumber("idCard3");
+        customer2.setEmail("name2@name.com");
+        customer2.setIdCardNumber("idCard2");
         customer2.setSurname("Surname3");
         customerDao.create(customer2);
 
@@ -206,7 +216,9 @@ public class ReservationDaoTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void getReservationsCreatedBetweenEmptyTest(){
-        reservationDao.create(reservation);
+
+
+        //reservationDao.create(reservation);
 
         Calendar calStart = Calendar.getInstance();
         calStart.set(2017, 10, 1);

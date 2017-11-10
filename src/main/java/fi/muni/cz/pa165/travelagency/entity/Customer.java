@@ -1,18 +1,20 @@
 package fi.muni.cz.pa165.travelagency.entity;
 
+
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.validation.constraints.NotNull;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import javax.persistence.Column;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Date;
+import java.util.Collections;
 
 /**
  * Created by martin on 22.10.2017.
@@ -55,12 +57,14 @@ public class Customer implements Serializable {
      * IdCard number of customer
      */
     @NotNull
+    @Column(nullable = false, unique=true)
     private String idCardNumber;
 
     /**
      * Email of customer
      */
     @NotNull
+    @Column(nullable = false, unique=true)
     private String email;
 
     /**
@@ -193,7 +197,7 @@ public class Customer implements Serializable {
      * @return Reservations
      */
     public Set<Reservation> getReservations() {
-        return reservations;
+        return Collections.unmodifiableSet(reservations);
     }
 
     /**
@@ -225,13 +229,7 @@ public class Customer implements Serializable {
 
         Customer customer = (Customer) o;
 
-        if (!Objects.equals(name, customer.getName())) return false;
-        if (!surname.equals(customer.surname)) return false;
-        if (!Objects.equals(phoneNumber, customer.getPhoneNumber())) return false;
-        if (!idCardNumber.equals(customer.idCardNumber)) return false;
-        if (!email.equals(customer.email)) return false;
-        if (!birthDate.equals(customer.birthDate)) return false;
-        return Objects.equals(reservations, customer.getReservations());
+        return this.idCardNumber.equals(customer.getIdCardNumber());
     }
 
     /**
@@ -240,13 +238,6 @@ public class Customer implements Serializable {
      */
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + surname.hashCode();
-        result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
-        result = 31 * result + idCardNumber.hashCode();
-        result = 31 * result + email.hashCode();
-        result = 31 * result + birthDate.hashCode();
-        result = 31 * result + (reservations != null ? reservations.hashCode() : 0);
-        return result;
+        return 31 * idCardNumber.hashCode();
     }
 }
