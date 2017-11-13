@@ -11,6 +11,7 @@ import fi.muni.cz.pa165.travelagency.entity.Reservation;
 import fi.muni.cz.pa165.travelagency.entity.Trip;
 import fi.muni.cz.pa165.travelagency.enums.PaymentStateType;
 import java.util.Calendar;
+import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -48,11 +49,13 @@ public class CustomerDaoTest extends AbstractTestNGSpringContextTests{
     private Customer customerTwo;
     private Reservation reservation;
     private Trip trip;
+    private Calendar cal;
+    
     
     @BeforeMethod
     public void setupEntities(){
         customerOne = new Customer();
-        Calendar cal = Calendar.getInstance();
+        cal = Calendar.getInstance();
         cal.set(2017, 28, 10);
         customerOne.setBirthDate(cal.getTime());
         customerOne.setEmail("someone@tester.si");
@@ -60,7 +63,6 @@ public class CustomerDaoTest extends AbstractTestNGSpringContextTests{
         customerOne.setSurname("Tester");
         
         customerTwo = new Customer();
-        cal.set(2017, 27, 10);
         customerTwo.setBirthDate(cal.getTime());
         customerTwo.setEmail("someoneNew@testerTwo.cz");
         customerTwo.setIdCardNumber("321");
@@ -71,11 +73,16 @@ public class CustomerDaoTest extends AbstractTestNGSpringContextTests{
     
     @Test
     public void testCreate(){
+        
         Assert.assertEquals(customerDao.findAll().size(), 0);
         
         customerDao.create(customerOne);
         
         Assert.assertEquals(customerDao.findAll().size(), 1);
+        Assert.assertEquals(customerDao.findById(customerOne.getId()).getSurname(), "Tester");
+        Assert.assertEquals(customerDao.findById(customerOne.getId()).getEmail(), "someone@tester.si");
+        Assert.assertEquals(customerDao.findById(customerOne.getId()).getIdCardNumber(), "123");
+        Assert.assertEquals(customerDao.findById(customerOne.getId()).getBirthDate(), cal.getTime());
     }
     
     @Test
@@ -87,12 +94,18 @@ public class CustomerDaoTest extends AbstractTestNGSpringContextTests{
         Assert.assertEquals(customerDao.findAll().size(), 2);
     }
     
-    @Test
+    @Test(expectedExceptions = Exception.class)
     public void testSameCustomerCreate(){
-        customerDao.create(customerOne);
-        customerDao.create(customerOne);
+        Customer theDouble = new Customer();
+        theDouble.setBirthDate(cal.getTime());
+        theDouble.setEmail("someone@tester.si");
+        theDouble.setIdCardNumber("123");
+        theDouble.setSurname("Tester");
         
-        Assert.assertEquals(customerDao.findAll().size(), 1);
+        customerDao.create(customerOne);
+        customerDao.create(theDouble);
+        
+        //Assert.assertEquals(customerDao.findAll().size(), 1);
     }
     
     @Test(expectedExceptions=NullPointerException.class)
@@ -119,7 +132,7 @@ public class CustomerDaoTest extends AbstractTestNGSpringContextTests{
     }
     
     @Test(expectedExceptions = org.springframework.dao.EmptyResultDataAccessException.class)
-    public void testEmptyResultQuery(){
+    public void testFindNonExistingId(){
         Customer nullBudy = customerDao.findById(Long.MIN_VALUE);
         Assert.assertNull(nullBudy);
     }
@@ -127,10 +140,15 @@ public class CustomerDaoTest extends AbstractTestNGSpringContextTests{
     @Test
     public void testRemove(){
         customerDao.create(customerOne);
-        Assert.assertEquals(customerDao.findAll().isEmpty(), false);
-
+        customerDao.create(customerTwo);
+        
         customerDao.remove(customerOne);
-        Assert.assertEquals(customerDao.findAll().isEmpty(), true);
+        
+        Assert.assertEquals(customerDao.findById(customerTwo.getId()), customerTwo);
+        
+        customerDao.remove(customerTwo);
+        
+        Assert.assertTrue(customerDao.findAll().isEmpty());
     }
     
     @Test
@@ -154,8 +172,6 @@ public class CustomerDaoTest extends AbstractTestNGSpringContextTests{
         trip.setName("Somewhere");
         tripDao.create(trip);
         
-        Calendar cal = Calendar.getInstance();
-        cal.set(2017, 12, 12);
         reservation = new Reservation();
         reservation.setPaymentState(PaymentStateType.Paid);
         reservation.setCreated(cal.getTime());
