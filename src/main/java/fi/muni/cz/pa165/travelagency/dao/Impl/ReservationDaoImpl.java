@@ -27,12 +27,17 @@ public class ReservationDaoImpl implements ReservationDao {
     }
 
     @Override
+    public Reservation update(Reservation reservation) {
+        return em.merge(reservation);
+    }
+    
+    @Override
     public List<Reservation> findAll() {
         TypedQuery<Reservation> query = em.createQuery("SELECT q FROM Reservation q",
                 Reservation.class);
         return query.getResultList();
     }
-
+    
     @Override
     public List<Reservation> findByCustomer(Customer customer) {
         TypedQuery<Reservation> query = em.createQuery("Select o from Reservation o "

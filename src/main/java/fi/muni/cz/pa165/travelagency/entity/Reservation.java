@@ -39,17 +39,12 @@ public class Reservation implements Serializable {
     @OneToOne(optional=false)
     private Trip reservedTrip;
         
-    //-------------------------------------------------------------------------
-    //Names of tables for join table
     @ManyToMany
     @JoinTable(name="RESERVED_EXC",
             joinColumns = @JoinColumn(name = "Reservation_id"),
             inverseJoinColumns = @JoinColumn(name = "Excursion_id"))
     private Set<Excursion> reservedExcursions = new HashSet<>();
     
-    /*
-    In Customer set atribute reservations to @OneToMany(mappedBy="customer")
-    */
     @NotNull
     @ManyToOne(optional=false)
     private Customer customer;

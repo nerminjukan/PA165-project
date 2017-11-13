@@ -20,6 +20,14 @@ public interface ReservationDao {
     void create(Reservation reservation);
     
     /**
+     * Method updates a reservation r in database
+     * 
+     * @param r reservation to update
+     * @return updated reservation
+     */
+    Reservation update(Reservation r);
+    
+    /**
      * Get all current persisted reservations.
      * 
      * @return List of Reservations, null if there are no reservations.

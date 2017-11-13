@@ -28,10 +28,10 @@ import org.testng.annotations.Test;
 public class TripDaoTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
-    public TripDao tripDao;
+    private TripDao tripDao;
     
     @Autowired
-    public ExcursionDao excursionDao;
+    private ExcursionDao excursionDao;
     
     private Trip t1;
     private Trip t2;
@@ -71,6 +71,33 @@ public class TripDaoTest extends AbstractTestNGSpringContextTests {
         
         tripDao.create(t2);
     }
+    
+    @Test
+    public void createTest() {
+        Trip trip = tripDao.findById(t1.getId());
+        Assert.assertEquals(t1, trip);
+        Assert.assertEquals(t1.getId(), trip.getId());
+        Assert.assertEquals(t1.getAvailableSpots(), trip.getAvailableSpots());
+        Assert.assertEquals(t1.getDateFrom(), trip.getDateFrom());
+        Assert.assertEquals(t1.getDateTo(), trip.getDateTo());
+        Assert.assertEquals(t1.getDestination(), trip.getDestination());
+        Assert.assertEquals(t1.getPrice(), trip.getPrice());
+    }
+    
+    /*@Test
+    public void updateTest() {
+        Trip oldTrip = tripDao.findById(t1.getId());
+        oldTrip.setName("new name");
+        tripDao.update(oldTrip);
+        Trip updatedTrip = tripDao.findById(t1.getId());
+        Assert.assertEquals(oldTrip, updatedTrip);
+        Assert.assertEquals(oldTrip.getId(), updatedTrip.getId());
+        Assert.assertEquals(oldTrip.getAvailableSpots(), updatedTrip.getAvailableSpots());
+        Assert.assertEquals(oldTrip.getDateFrom(), updatedTrip.getDateFrom());
+        Assert.assertEquals(oldTrip.getDateTo(), updatedTrip.getDateTo());
+        Assert.assertEquals(oldTrip.getDestination(), updatedTrip.getDestination());
+        Assert.assertEquals(oldTrip.getPrice(), updatedTrip.getPrice());
+    }*/
     
     @Test
     public void findAllTest() {
@@ -115,6 +142,12 @@ public class TripDaoTest extends AbstractTestNGSpringContextTests {
     public void findByNameTest() {
         List<Trip> found = tripDao.findByName("Trip1");
         Assert.assertEquals(found.size(), 1);
+        Assert.assertEquals(found.get(0).getDateFrom(), dateFrom1);
+        Assert.assertEquals(found.get(0).getDateTo(), dateTo1);
+        Assert.assertEquals(found.get(0).getName(), "Trip1");
+        Assert.assertEquals(found.get(0).getDestination(), "Location1");
+        Assert.assertEquals(found.get(0).getAvailableSpots(), 10);
+        Assert.assertEquals(found.get(0).getPrice(), new BigDecimal("1000.00"));
     }
     
     @Test
