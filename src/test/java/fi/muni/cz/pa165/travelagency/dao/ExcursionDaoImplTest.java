@@ -50,15 +50,15 @@ public class ExcursionDaoImplTest extends AbstractTestNGSpringContextTests {
         europe.setName("europe");
         Trip world = new Trip();
         world.setName("world");
-        castle = createExcursion("castle", "france", 2, calendar.getTime(), BigDecimal.valueOf(1999), europe);
+        castle = new Excursion("castle", "france", 2, calendar.getTime(), BigDecimal.valueOf(1999), europe);
         calendar.set(1999, 11, 31);
-        beach = createExcursion("beach", "turkey", 4, calendar.getTime(), BigDecimal.valueOf(99.9999), europe, world);
+        beach = new Excursion("beach", "turkey", 4, calendar.getTime(), BigDecimal.valueOf(99.9999), europe, world);
         calendar.set(2099, 0, 30);
-        hike = createExcursion("hike", "italy", 8, calendar.getTime(), BigDecimal.valueOf(100), europe);
+        hike = new Excursion("hike", "italy", 8, calendar.getTime(), BigDecimal.valueOf(100), europe);
         calendar.set(1222, 3, 3);
-        mountain = createExcursion("mountain", "india", 10, calendar.getTime(), BigDecimal.valueOf(4232), world);
+        mountain = new Excursion("mountain", "india", 10, calendar.getTime(), BigDecimal.valueOf(4232), world);
         calendar.set(1111, 1, 1);
-        swim = createExcursion("swim", "greece", 1, calendar.getTime(), BigDecimal.valueOf(1));
+        swim = new Excursion("swim", "greece", 1, calendar.getTime(), BigDecimal.valueOf(1));
 
         tripDao.create(europe);
         tripDao.create(world);
@@ -100,11 +100,11 @@ public class ExcursionDaoImplTest extends AbstractTestNGSpringContextTests {
     public void findTripsTest() {
         SoftAssertions softly = new SoftAssertions();
 
-        softly.assertThat(excursionDao.findById(beach.getId()).getTrips().size()).isEqualTo(2);
-        softly.assertThat(excursionDao.findById(hike.getId()).getTrips().size()).isEqualTo(1);
-        softly.assertThat(excursionDao.findById(swim.getId()).getTrips().size()).isEqualTo(0);
-        softly.assertThat(excursionDao.findById(mountain.getId()).getTrips().size()).isEqualTo(1);
-        softly.assertThat(excursionDao.findById(castle.getId()).getTrips().size()).isEqualTo(1);
+        softly.assertThat(excursionDao.findById(beach.getId())).isNotNull().isEqualToComparingFieldByFieldRecursively(beach);
+        softly.assertThat(excursionDao.findById(hike.getId())).isNotNull().isEqualToComparingFieldByFieldRecursively(hike);
+        softly.assertThat(excursionDao.findById(swim.getId())).isNotNull().isEqualToComparingFieldByFieldRecursively(swim);
+        softly.assertThat(excursionDao.findById(mountain.getId())).isNotNull().isEqualToComparingFieldByFieldRecursively(mountain);
+        softly.assertThat(excursionDao.findById(castle.getId())).isNotNull().isEqualToComparingFieldByFieldRecursively(castle);
 
         softly.assertAll();
     }
@@ -113,28 +113,11 @@ public class ExcursionDaoImplTest extends AbstractTestNGSpringContextTests {
     public void findByDestinationTest() {
         SoftAssertions softly = new SoftAssertions();
 
-        softly.assertThat(excursionDao.findByDestination("turkey").size()).isEqualTo(1);
-        softly.assertThat(excursionDao.findByDestination("turke")).isEmpty();
-        softly.assertThat(excursionDao.findByDestination("adswqw")).isEmpty();
-        softly.assertThat(excursionDao.findByDestination("france").size()).isEqualTo(1);
+        softly.assertThat(excursionDao.findByDestination("turkey")).isNotNull().containsExactly(beach);
+        softly.assertThat(excursionDao.findByDestination("turke")).isNotNull().isEmpty();
+        softly.assertThat(excursionDao.findByDestination("adswqw")).isNotNull().isEmpty();
+        softly.assertThat(excursionDao.findByDestination("france")).isNotNull().containsExactly(castle);
 
         softly.assertAll();
-    }
-
-    @Test
-    public void findTest() {
-        assertThat(excursionDao.findById(hike.getId())).isEqualTo(hike);
-    }
-
-    private Excursion createExcursion(String description, String destination, Integer duration, Date date, BigDecimal price, Trip... trips) {
-        Excursion e = new Excursion();
-        e.setDescription(description);
-        e.setDestination(destination);
-        e.setDuration(duration);
-        e.setExcursionDate(date);
-        e.setPrice(price);
-        e.addAllTrips(Arrays.asList(trips));
-
-        return e;
     }
 }

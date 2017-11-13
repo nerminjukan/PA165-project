@@ -2,6 +2,7 @@ package fi.muni.cz.pa165.travelagency.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -27,7 +28,33 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 public class Excursion implements Serializable {
-    
+
+    /**
+     * Creates an Excursion with given parameters
+     * @param description given description
+     * @param destination given destination
+     * @param duration given duration
+     * @param date given date
+     * @param price given price
+     * @param trips given trips
+     */
+    public Excursion(String description, String destination, Integer duration,
+                     Date date, BigDecimal price, Trip... trips) {
+        this();
+        setDescription(description);
+        setDestination(destination);
+        setDuration(duration);
+        setExcursionDate(date);
+        setPrice(price);
+        addAllTrips(Arrays.asList(trips));
+    }
+
+    /**
+     * Creates an empty Excursion
+     */
+    public Excursion() {
+    }
+
     /*
      * The ID of the Excursion.
      * 
