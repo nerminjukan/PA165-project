@@ -214,7 +214,6 @@ public class Excursion implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 29 * hash + Objects.hashCode(this.id);
         hash = 29 * hash + Objects.hashCode(this.excursionDate);
         hash = 29 * hash + Objects.hashCode(this.duration);
         hash = 29 * hash + Objects.hashCode(this.description);
@@ -242,22 +241,19 @@ public class Excursion implements Serializable {
             return false;
         }
         final Excursion other = (Excursion) obj;
-        if (!Objects.equals(this.description, other.description)) {
+        if (!Objects.equals(this.description, other.getDescription())) {
             return false;
         }
-        if (!Objects.equals(this.destination, other.destination)) {
+        if (!Objects.equals(this.destination, other.getDestination())) {
             return false;
         }
-        if (!Objects.equals(this.id, other.id)) {
+        if (!Objects.equals(this.excursionDate, other.getExcursionDate())) {
             return false;
         }
-        if (!Objects.equals(this.excursionDate, other.excursionDate)) {
+        if (!Objects.equals(this.duration, other.getDuration())) {
             return false;
         }
-        if (!Objects.equals(this.duration, other.duration)) {
-            return false;
-        }
-        if (!Objects.equals(this.price, other.price)) {
+        if (!Objects.equals(this.price, other.getPrice())) {
             return false;
         }
         return true;
