@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -53,7 +54,7 @@ public class Trip implements Serializable {
     private Set<Excursion> excursions = new HashSet<>();
     
     @NotNull
-    @Column(nullable = false, unique=true)
+    @Column(nullable = false)
     private String name;
     
     private BigDecimal price;
@@ -204,11 +205,7 @@ public class Trip implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 1;
-        hash = 37*hash + (name == null ? 0 : name.hashCode());
-        hash = 37*hash + (dateTo == null ? 0 : dateTo.hashCode());
-        hash = 37*hash + (dateFrom == null ? 0 : dateFrom.hashCode());
-        return hash;
+        return Objects.hash(name, dateTo, dateFrom);
     }
 
     @Override
@@ -217,12 +214,9 @@ public class Trip implements Serializable {
             return false;
         }
         Trip trip = (Trip) object;
-        return ((this.name == null && trip.getName() == null) ||
-                        (this.name != null && this.name.equals(trip.getName())) &&
-                (this.dateFrom == null && trip.getDateFrom() == null) ||
-                        (this.dateFrom != null && this.dateFrom.equals(trip.getDateFrom())) &&
-                (this.dateTo == null && trip.getDateTo() == null) ||
-                        (this.dateTo != null && this.dateTo.equals(trip.getDateTo())));
+        return Objects.equals(this.name, trip.getName()) &&
+                Objects.equals(this.dateFrom, trip.getDateFrom()) &&
+                Objects.equals(this.dateTo, trip.getDateTo());
     }
 
     @Override

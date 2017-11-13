@@ -117,14 +117,16 @@ public class TripDaoTest extends AbstractTestNGSpringContextTests {
 	tripDao.create(trip);
         List<Trip> found = tripDao.findAll();
     }
-    
+
+    //commented out, uniqueness of name is not desired at the moment
+    /*
     @Test(expectedExceptions=DataAccessException.class)
     public void nameIsUniqueTest(){
 	Trip trip = new Trip();
 	trip.setName("Trip1");
 	tripDao.create(trip);
         List<Trip> found = tripDao.findAll();
-    }
+    }*/
     
     @Test
     public void findByIdTest() {
