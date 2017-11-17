@@ -22,31 +22,31 @@ public interface ExcursionFacade {
      * @param e *CHANGE ME*
      * @return *CHANGE ME*
      */
-    public int createExcursion(ExcursionCreateDTO e);
+    int createExcursion(ExcursionCreateDTO e);
     
     /**
      *
      * @return *CHANGE ME*
      */
-    public List<ExcursionDTO> getAllExcursions();
+    List<ExcursionDTO> getAllExcursions();
     
     /**
      *
      * @param excursion *CHANGE ME*
      * @return *CHANGE ME*
      */
-    public ExcursionDTO getExcursionByID(Long excursion);
+    ExcursionDTO getExcursionByID(Long excursion);
     
     /**
      *
      * @param excursionId *CHANGE ME*
      */
-    public void deleteExcursion(Long excursionId);
+    void deleteExcursion(Long excursionId);
     
     /**
      *
      * @param e *CHANGE ME*
      */
-    public void updateExcursion(ExcursionUpdateDTO e);
+    void updateExcursion(ExcursionUpdateDTO e);
     
 }
