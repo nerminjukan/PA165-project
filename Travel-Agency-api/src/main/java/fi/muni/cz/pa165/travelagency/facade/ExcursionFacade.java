@@ -19,33 +19,33 @@ public interface ExcursionFacade {
     
     /**
      *
-     * @param e
-     * @return
+     * @param e *CHANGE ME*
+     * @return *CHANGE ME*
      */
     public int createExcursion(ExcursionCreateDTO e);
     
     /**
      *
-     * @return
+     * @return *CHANGE ME*
      */
     public List<ExcursionDTO> getAllExcursions();
     
     /**
      *
-     * @param excursion
-     * @return
+     * @param excursion *CHANGE ME*
+     * @return *CHANGE ME*
      */
     public ExcursionDTO getExcursionByID(Long excursion);
     
     /**
      *
-     * @param excursionId
+     * @param excursionId *CHANGE ME*
      */
     public void deleteExcursion(Long excursionId);
     
     /**
      *
-     * @param e
+     * @param e *CHANGE ME*
      */
     public void updateExcursion(ExcursionUpdateDTO e);
     
