@@ -22,7 +22,7 @@ public interface ExcursionFacade {
      * @param e *CHANGE ME*
      * @return *CHANGE ME*
      */
-    int createExcursion(ExcursionCreateDTO e);
+    Long createExcursion(ExcursionCreateDTO e);
     
     /**
      *
