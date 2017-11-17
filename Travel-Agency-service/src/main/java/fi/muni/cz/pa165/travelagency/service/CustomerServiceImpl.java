@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * CustomerService implementation
+ * @author Martin Sevcik <422365>
+ */
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
