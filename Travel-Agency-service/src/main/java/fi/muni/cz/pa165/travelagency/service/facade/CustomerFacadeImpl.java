@@ -1,9 +1,12 @@
 package fi.muni.cz.pa165.travelagency.service.facade;
 
 import fi.muni.cz.pa165.travelagency.dto.CustomerDTO;
+import fi.muni.cz.pa165.travelagency.dto.ReservationDTO;
+import fi.muni.cz.pa165.travelagency.entity.Customer;
+import fi.muni.cz.pa165.travelagency.entity.Reservation;
 import fi.muni.cz.pa165.travelagency.facade.CustomerFacade;
+import fi.muni.cz.pa165.travelagency.service.BeanMappingService;
 import fi.muni.cz.pa165.travelagency.service.CustomerService;
-import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -17,34 +20,62 @@ public class CustomerFacadeImpl implements CustomerFacade {
     @Autowired
     private CustomerService customerService;
 
+    @Autowired
+    private BeanMappingService beanMappingService;
 
     @Override
-    public void create(CustomerDTO customer) {
-        throw new NotYetImplementedException();
+    public void create(CustomerDTO customerDTO) {
+        Customer customer = beanMappingService.mapTo(customerDTO, Customer.class);
+
+        if (customer != null) {
+            throw new IllegalArgumentException();
+        }
+
+        customerService.create(customer);
     }
 
     @Override
     public List<CustomerDTO> findAll() {
-        throw new NotYetImplementedException();
+        return beanMappingService.mapTo(customerService.findAll(), CustomerDTO.class);
     }
 
     @Override
     public CustomerDTO findById(Long id) {
-        throw new NotYetImplementedException();
+        Customer customer = customerService.findById(id);
+        return customer == null ? null : beanMappingService.mapTo(customer, CustomerDTO.class);
     }
 
     @Override
-    public void remove(CustomerDTO customer) {
-        throw new NotYetImplementedException();
+    public void remove(CustomerDTO customerDTO) {
+        Customer customer = beanMappingService.mapTo(customerDTO, Customer.class);
+
+        if (customer != null) {
+            throw new IllegalArgumentException();
+        }
+
+        customerService.remove(customer);
     }
 
     @Override
-    public void update(CustomerDTO customer) {
-        throw new NotYetImplementedException();
+    public void update(CustomerDTO customerDTO) {
+        Customer customer = beanMappingService.mapTo(customerDTO, Customer.class);
+
+        if (customer != null) {
+            throw new IllegalArgumentException();
+        }
+
+        customerService.update(customer);
     }
 
     @Override
-    public CustomerDTO findByReservation(CustomerDTO reservation) {
-        throw new NotYetImplementedException();
+    public CustomerDTO findByReservation(ReservationDTO reservationDTO) {
+        if (reservationDTO == null) {
+            return null;
+        }
+
+        Reservation reservation = beanMappingService.mapTo(reservationDTO, Reservation.class);
+
+        Customer customer = customerService.findByReservation(reservation);
+        return customer == null ? null : beanMappingService.mapTo(customer, CustomerDTO.class);
     }
 }

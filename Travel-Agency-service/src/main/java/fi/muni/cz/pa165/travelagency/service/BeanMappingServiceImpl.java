@@ -1,13 +1,16 @@
 package fi.muni.cz.pa165.travelagency.service;
 
 import org.dozer.Mapper;
-import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Impl of BeanMappingService
+ * @author Martin Sevcik <422365>
+ */
 public class BeanMappingServiceImpl implements BeanMappingService {
 
     @Autowired

@@ -126,7 +126,8 @@ public class CustomerDTO {
 
         CustomerDTO that = (CustomerDTO) o;
 
-        return this.idCardNumber != null ? this.idCardNumber.equals(that.getIdCardNumber()) : that.getIdCardNumber() == null;
+        return this.idCardNumber != null ?
+                this.idCardNumber.equals(that.getIdCardNumber()) : that.getIdCardNumber() == null;
     }
 
     /**

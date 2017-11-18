@@ -1,6 +1,7 @@
 package fi.muni.cz.pa165.travelagency.facade;
 
 import fi.muni.cz.pa165.travelagency.dto.CustomerDTO;
+import fi.muni.cz.pa165.travelagency.dto.ReservationDTO;
 
 import java.util.List;
 
@@ -12,9 +13,9 @@ public interface CustomerFacade {
 
     /**
      * Create operation for CustomerDao
-     * @param customer Customer
+     * @param customerDTO Customer
      */
-    void create(CustomerDTO customer);
+    void create(CustomerDTO customerDTO);
 
     /**
      * Finds all Customers
@@ -31,20 +32,20 @@ public interface CustomerFacade {
 
     /**
      * Removes Customer
-     * @param customer Customer
+     * @param customerDTO Customer
      */
-    void remove(CustomerDTO customer);
+    void remove(CustomerDTO customerDTO);
 
     /**
      * Updates Customer
-     * @param customer Customer
+     * @param customerDTO Customer
      */
-    void update(CustomerDTO customer);
+    void update(CustomerDTO customerDTO);
 
     /**
      * Finds customers based on reservation
-     * @param reservation Reservation
+     * @param reservationDTO ReservationDTO
      * @return Customer
      */
-    CustomerDTO findByReservation(CustomerDTO reservation);
+    CustomerDTO findByReservation(ReservationDTO reservationDTO);
 }
