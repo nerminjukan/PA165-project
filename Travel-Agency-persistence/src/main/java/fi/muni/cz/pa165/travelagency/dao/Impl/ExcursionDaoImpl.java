@@ -52,5 +52,10 @@ public class ExcursionDaoImpl implements ExcursionDao{
                 Excursion.class);
         return query.getResultList();
     }
+
+    @Override
+    public Excursion update(Excursion e) {
+        return em.merge(e);
+    }
     
 }

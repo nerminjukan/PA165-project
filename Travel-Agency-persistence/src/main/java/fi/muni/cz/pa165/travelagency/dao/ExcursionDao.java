@@ -65,4 +65,14 @@ public interface ExcursionDao {
      * 
      */
     List<Excursion> findAll();
+    
+    /**
+     * The UPDATE Excursion operation.
+     *
+     * Updates the existing Excursion in the database.
+     * 
+     * @param e Excursion
+     * @return Excursion
+     */
+    Excursion update(Excursion e);
 }
