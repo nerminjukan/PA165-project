@@ -155,6 +155,15 @@ public class ReservationDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
+    public void testFindByTrip() {
+        reservationDao.create(reservation);
+        
+        List<Reservation> resList = reservationDao.findByTrip(reservation.getReservedTrip());
+        Assert.assertTrue(resList.size() == 1);
+        Assert.assertEquals(resList.get(0), reservation);
+    }
+    
+    @Test
     public void getReservationsCreatedBetweenTest(){
         Calendar cal = Calendar.getInstance();
 
