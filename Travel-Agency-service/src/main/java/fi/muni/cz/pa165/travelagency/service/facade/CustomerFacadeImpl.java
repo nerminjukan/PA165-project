@@ -78,4 +78,16 @@ public class CustomerFacadeImpl implements CustomerFacade {
         Customer customer = customerService.findByReservation(reservation);
         return customer == null ? null : beanMappingService.mapTo(customer, CustomerDTO.class);
     }
+
+    @Override
+    public CustomerDTO findByIdCardNumber(String idCardNumber) {
+        Customer customer = customerService.findByIdCardNumber(idCardNumber);
+        return customer == null ? null : beanMappingService.mapTo(customer, CustomerDTO.class);
+    }
+
+    @Override
+    public CustomerDTO findByEmail(String email) {
+        Customer customer = customerService.findByEmail(email);
+        return customer == null ? null : beanMappingService.mapTo(customer, CustomerDTO.class);
+    }
 }

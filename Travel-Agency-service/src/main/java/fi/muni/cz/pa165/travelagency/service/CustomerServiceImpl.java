@@ -47,4 +47,14 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer findByReservation(Reservation reservation) {
         return customerDao.findByReservation(reservation);
     }
+
+    @Override
+    public Customer findByIdCardNumber(String idCardNumber) {
+        return customerDao.findByIdCardNumber(idCardNumber);
+    }
+
+    @Override
+    public Customer findByEmail(String email) {
+        return customerDao.findByEmail(email);
+    }
 }

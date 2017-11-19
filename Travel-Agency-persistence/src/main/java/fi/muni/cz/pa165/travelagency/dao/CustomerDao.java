@@ -48,4 +48,18 @@ public interface CustomerDao {
      * @return Customer
      */
     Customer findByReservation(Reservation reservation);
+
+    /**
+     * Finds Customer by id card number
+     * @param idCardNumber id card number
+     * @return Customer
+     */
+    Customer findByIdCardNumber(String idCardNumber);
+
+    /**
+     * Finds Customer by email
+     * @param email email
+     * @return Customer
+     */
+    Customer findByEmail(String email);
 }

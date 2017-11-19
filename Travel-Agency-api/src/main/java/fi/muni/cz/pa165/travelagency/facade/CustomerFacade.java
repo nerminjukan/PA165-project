@@ -13,39 +13,53 @@ public interface CustomerFacade {
 
     /**
      * Create operation for CustomerDao
-     * @param customerDTO Customer
+     * @param customerDTO CustomerDTO
      */
     void create(CustomerDTO customerDTO);
 
     /**
      * Finds all Customers
-     * @return Customer's list
+     * @return CustomerDTO's list
      */
     List<CustomerDTO> findAll();
 
     /**
      * Finds specified customer
      * @param id id of customer
-     * @return Customer
+     * @return CustomerDTO
      */
     CustomerDTO findById(Long id);
 
     /**
      * Removes Customer
-     * @param customerDTO Customer
+     * @param customerDTO CustomerDTO
      */
     void remove(CustomerDTO customerDTO);
 
     /**
      * Updates Customer
-     * @param customerDTO Customer
+     * @param customerDTO CustomerDTO
      */
     void update(CustomerDTO customerDTO);
 
     /**
      * Finds customers based on reservation
      * @param reservationDTO ReservationDTO
-     * @return Customer
+     * @return CustomerDTO
      */
     CustomerDTO findByReservation(ReservationDTO reservationDTO);
+
+    /**
+     * Finds Customer by id card number
+     * @param idCardNumber id card number
+     * @return CustomerDTO
+     */
+    CustomerDTO findByIdCardNumber(String idCardNumber);
+
+    /**
+     * Finds Customer by email
+     * @param email email
+     * @return CustomerDTO
+     */
+    CustomerDTO findByEmail(String email);
 }
