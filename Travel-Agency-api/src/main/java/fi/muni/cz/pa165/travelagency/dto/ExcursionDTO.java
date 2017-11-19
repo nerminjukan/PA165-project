@@ -1,5 +1,8 @@
 package fi.muni.cz.pa165.travelagency.dto;
 
-class ExcursionDTO {
+/**
+ * @author *Change ME*
+ */
+public class ExcursionDTO {
     
 }
