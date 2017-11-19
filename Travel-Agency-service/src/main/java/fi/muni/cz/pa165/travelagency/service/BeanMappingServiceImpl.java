@@ -1,16 +1,17 @@
 package fi.muni.cz.pa165.travelagency.service;
 
-import org.dozer.Mapper;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import org.dozer.Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
- * Impl of BeanMappingService
- * @author Martin Sevcik <422365>
+ * Bean mapping
  */
+@Service
 public class BeanMappingServiceImpl implements BeanMappingService {
 
     @Autowired

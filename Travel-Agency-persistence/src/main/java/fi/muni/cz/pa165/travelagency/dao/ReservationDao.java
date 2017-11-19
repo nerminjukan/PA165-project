@@ -5,6 +5,7 @@ import java.util.List;
 
 import fi.muni.cz.pa165.travelagency.entity.Reservation;
 import fi.muni.cz.pa165.travelagency.entity.Customer;
+import fi.muni.cz.pa165.travelagency.entity.Trip;
 
 /**
  * An interface that defines a Data access to the {@link Reservation} entity.
@@ -49,6 +50,14 @@ public interface ReservationDao {
      * @return  Reservation with specific id, null if there is no sich reservation.
      */
     Reservation findById(Long id);
+    
+    /**
+     * Get reservations for specified trip.
+     * 
+     * @param trip trip to find reservations for
+     * @return list of reservation for specified trip
+     */
+    List<Reservation> findByTrip(Trip trip);
     
     /**
      * Remove specified persisted reservation from database.

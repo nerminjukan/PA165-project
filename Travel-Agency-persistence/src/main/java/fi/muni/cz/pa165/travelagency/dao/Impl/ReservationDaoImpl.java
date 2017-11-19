@@ -3,6 +3,7 @@ package fi.muni.cz.pa165.travelagency.dao.Impl;
 import fi.muni.cz.pa165.travelagency.dao.ReservationDao;
 import fi.muni.cz.pa165.travelagency.entity.Reservation;
 import fi.muni.cz.pa165.travelagency.entity.Customer;
+import fi.muni.cz.pa165.travelagency.entity.Trip;
 
 import java.util.Date;
 import java.util.List;
@@ -52,6 +53,14 @@ public class ReservationDaoImpl implements ReservationDao {
         return em.find(Reservation.class, id);
     }
 
+    @Override
+    public List<Reservation> findByTrip(Trip trip) {
+        TypedQuery<Reservation> query = em.createQuery("SELECT o FROM Reservation "
+                + "o WHERE o.reservedTrip.id = :tripId", Reservation.class);
+        query.setParameter("tripId", trip.getId());
+        return query.getResultList();
+    }
+    
     @Override
     public void remove(Reservation reservation) throws IllegalArgumentException {
         em.remove(em.contains(reservation) ? reservation : em.merge(reservation));

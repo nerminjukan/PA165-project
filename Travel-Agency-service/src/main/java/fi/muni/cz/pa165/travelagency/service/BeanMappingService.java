@@ -1,5 +1,6 @@
 package fi.muni.cz.pa165.travelagency.service;
 
+
 import org.dozer.Mapper;
 
 import java.util.Collection;
@@ -17,6 +18,7 @@ public interface BeanMappingService {
      * @param mapToClass desired class
      * @param <T> Type
      * @return mapped collection
+
      */
     <T> List<T> mapTo(Collection<?> objects, Class<T> mapToClass);
 

@@ -1,5 +1,6 @@
 package fi.muni.cz.pa165.travelagency.dto;
 
+
 import java.util.Date;
 import java.util.Set;
 
