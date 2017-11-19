@@ -1,32 +1,39 @@
 package fi.muni.cz.pa165.travelagency.service;
 
-import java.util.Collection;
-import java.util.List;
+
 import org.dozer.Mapper;
 
+import java.util.Collection;
+import java.util.List;
+
 /**
- * Bean mapping
+ * Mapper class
+ * @author Martin Sevcik <422365>
  */
 public interface BeanMappingService {
+
     /**
-     * @param <T> type
-     * @param objects collection to be mapped
-     * @param mapToClass class to be mapped into
-     * @return mapped list
+     * MapTo method for mapping collection
+     * @param objects collection of objects
+     * @param mapToClass desired class
+     * @param <T> Type
+     * @return mapped collection
+
      */
     <T> List<T> mapTo(Collection<?> objects, Class<T> mapToClass);
 
     /**
-     * @param <T> type
-     * @param u object to be mapped
-     * @param mapToClass class to be mapped into
+     * MapTo method for mapping objects
+     * @param u object
+     * @param mapToClass desired class
+     * @param <T> Type
      * @return mapped object
      */
     <T> T mapTo(Object u, Class<T> mapToClass);
-    
+
     /**
+     * Basic getter
      * @return Mapper
      */
     Mapper getMapper();
-    
 }

@@ -1,5 +1,6 @@
 package fi.muni.cz.pa165.travelagency.service;
 
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -15,7 +16,7 @@ public class BeanMappingServiceImpl implements BeanMappingService {
 
     @Autowired
     private Mapper dozer;
-    
+
     @Override
     public <T> List<T> mapTo(Collection<?> objects, Class<T> mapToClass) {
         List<T> mappedCollection = new ArrayList<>();
@@ -34,5 +35,4 @@ public class BeanMappingServiceImpl implements BeanMappingService {
     public Mapper getMapper() {
         return dozer;
     }
-    
 }

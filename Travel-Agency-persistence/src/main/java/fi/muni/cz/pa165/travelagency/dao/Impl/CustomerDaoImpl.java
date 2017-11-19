@@ -51,4 +51,16 @@ public class CustomerDaoImpl implements CustomerDao {
                 " where r.id = :reservationId", Customer.class)
                 .setParameter("reservationId", reservation.getId()).getSingleResult();
     }
+
+    @Override
+    public Customer findByIdCardNumber(String idCardNumber) {
+        return em.createQuery("select c from Customer c where c.idCardNumber = :idCardNumber", Customer.class)
+                .setParameter("idCardNumber", idCardNumber).getSingleResult();
+    }
+
+    @Override
+    public Customer findByEmail(String email) {
+        return em.createQuery("select c from Customer c where c.email = :email", Customer.class)
+                .setParameter("email", email).getSingleResult();
+    }
 }

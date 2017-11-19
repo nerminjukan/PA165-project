@@ -1,16 +1,17 @@
-package fi.muni.cz.pa165.travelagency.dao;
+package fi.muni.cz.pa165.travelagency.service;
 
 import fi.muni.cz.pa165.travelagency.entity.Customer;
 import fi.muni.cz.pa165.travelagency.entity.Reservation;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
- * Created by martin on 22.10.2017.7
+ * Customer service interface
  * @author Martin Sevcik <422365>
  */
-public interface CustomerDao {
-
+@Service
+public interface CustomerService {
     /**
      * Create operation for CustomerDao
      * @param customer Customer
