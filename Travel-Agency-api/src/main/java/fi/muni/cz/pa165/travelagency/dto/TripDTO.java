@@ -1,5 +1,5 @@
 package fi.muni.cz.pa165.travelagency.dto;
 
-class TripDTO {
+public class TripDTO {
     
 }
