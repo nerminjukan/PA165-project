@@ -4,7 +4,10 @@ import fi.muni.cz.pa165.travelagency.dto.ReservationCreateDTO;
 import fi.muni.cz.pa165.travelagency.dto.ReservationDTO;
 import fi.muni.cz.pa165.travelagency.facade.ReservationFacade;
 import fi.muni.cz.pa165.travelagency.service.BeanMappingService;
+import fi.muni.cz.pa165.travelagency.service.CustomerService;
+import fi.muni.cz.pa165.travelagency.service.ExcursionService;
 import fi.muni.cz.pa165.travelagency.service.ReservationService;
+import fi.muni.cz.pa165.travelagency.service.TripService;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,16 +23,16 @@ public class ReservationFacadeImpl implements ReservationFacade {
 
     @Autowired
     private ReservationService reservationService;
-    /**
+    
     @Autowired
-    private CustomerService CustomerService;
+    private CustomerService customerService;
 
     @Autowired
     private TripService tripService;
 
     @Autowired
     private ExcursionService excursionService;
-    */
+    
     @Autowired
     private BeanMappingService beanMappingService;
     
