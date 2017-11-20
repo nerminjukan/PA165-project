@@ -49,7 +49,6 @@ public interface TripFacade {
     /**
      * *CHANGE ME*
      * @param tripId *CHANGE ME*
-     * @param excursionIds *CHANGE ME*
      */
     void deleteTrip(Long tripId);
     
