@@ -3,9 +3,11 @@ package fi.muni.cz.pa165.travelagency.service;
 import fi.muni.cz.pa165.travelagency.entity.Excursion;
 import fi.muni.cz.pa165.travelagency.entity.Trip;
 
+import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 
+@Service
 public interface TripService {
     
     /**
