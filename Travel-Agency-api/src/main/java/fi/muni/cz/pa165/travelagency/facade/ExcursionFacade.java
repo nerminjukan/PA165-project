@@ -1,8 +1,6 @@
 package fi.muni.cz.pa165.travelagency.facade;
 
-import fi.muni.cz.pa165.travelagency.dto.ExcursionCreateDTO;
 import fi.muni.cz.pa165.travelagency.dto.ExcursionDTO;
-import fi.muni.cz.pa165.travelagency.dto.ExcursionUpdateDTO;
 import java.util.List;
 
 
@@ -19,7 +17,7 @@ public interface ExcursionFacade {
      * @param excursion ExcursionCreateDTO of new Excursion.
      * @return ID of newly created Excursion.
      */
-    Long create(ExcursionCreateDTO excursion);
+    Long create(ExcursionDTO excursion);
     
     /**
      * Get all Excursion.
@@ -37,7 +35,7 @@ public interface ExcursionFacade {
     ExcursionDTO getByID(Long excursionId);
     
     /**
-     * Delete Excursion with specified ID.
+     * Delete Excursion with specified ID (also from all the Trips it belonged to).
      *
      * @param excursionDTO ID of Excursion which should be removed.
      */
@@ -48,6 +46,6 @@ public interface ExcursionFacade {
      *
      * @param excursionUpdate DTO of updated Excursion.
      */
-    void updateExcursion(ExcursionUpdateDTO excursionUpdate);
+    void updateExcursion(ExcursionDTO excursionUpdate);
     
 }

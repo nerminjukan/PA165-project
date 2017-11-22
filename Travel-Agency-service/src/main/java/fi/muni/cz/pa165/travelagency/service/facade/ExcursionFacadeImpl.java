@@ -1,13 +1,15 @@
 package fi.muni.cz.pa165.travelagency.service.facade;
 
-import fi.muni.cz.pa165.travelagency.dto.ExcursionCreateDTO;
 import fi.muni.cz.pa165.travelagency.dto.ExcursionDTO;
-import fi.muni.cz.pa165.travelagency.dto.ExcursionUpdateDTO;
+import fi.muni.cz.pa165.travelagency.dto.TripDTO;
 import fi.muni.cz.pa165.travelagency.entity.Excursion;
+import fi.muni.cz.pa165.travelagency.entity.Trip;
 import fi.muni.cz.pa165.travelagency.facade.ExcursionFacade;
 import fi.muni.cz.pa165.travelagency.service.BeanMappingService;
 import fi.muni.cz.pa165.travelagency.service.ExcursionService;
+import fi.muni.cz.pa165.travelagency.service.TripService;
 import java.util.List;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -19,12 +21,15 @@ public class ExcursionFacadeImpl implements ExcursionFacade{
     
     @Autowired
     private ExcursionService excursionService;
+    
+    @Autowired
+    private TripService tripService;
 
     @Autowired
     private BeanMappingService beanMappingService;
 
     @Override
-    public Long create(ExcursionCreateDTO excursionDTO) {
+    public Long create(ExcursionDTO excursionDTO) {
         Excursion excursion = beanMappingService.mapTo(excursionDTO, Excursion.class);
 
         if (excursion != null) {
@@ -50,6 +55,13 @@ public class ExcursionFacadeImpl implements ExcursionFacade{
     @Override
     public void deleteExcursion(ExcursionDTO excursionDTO) {
         Excursion excursion = beanMappingService.mapTo(excursionDTO, Excursion.class);
+        
+        Set<TripDTO> removeFromTrips = excursionDTO.getTrips();
+        
+        for(TripDTO tripRemoveFrom : removeFromTrips){
+            Trip trip = beanMappingService.mapTo(tripRemoveFrom, Trip.class);
+            tripService.removeExcursion(trip, excursion);
+        }
 
         if (excursion != null) {
             throw new IllegalArgumentException();
@@ -59,7 +71,7 @@ public class ExcursionFacadeImpl implements ExcursionFacade{
     }
 
     @Override
-    public void updateExcursion(ExcursionUpdateDTO excursionUpdate) {
+    public void updateExcursion(ExcursionDTO excursionUpdate) {
         Excursion excursion = beanMappingService.mapTo(excursionUpdate, Excursion.class);
 
         if (excursion != null) {
