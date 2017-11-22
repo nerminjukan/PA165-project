@@ -95,6 +95,9 @@ public class Excursion implements Serializable {
     @NotNull
     private BigDecimal price;
     
+    /*
+     * The Trips set of the Excursion.
+     */
     @ManyToMany(mappedBy = "excursions")
     private Set<Trip> trips = new HashSet<>();
 

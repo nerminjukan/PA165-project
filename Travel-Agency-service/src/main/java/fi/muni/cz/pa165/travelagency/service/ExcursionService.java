@@ -4,46 +4,53 @@ import fi.muni.cz.pa165.travelagency.entity.Excursion;
 import java.util.List;
 
 /**
- * @author *CHANGE ME*
+ * Excursion Service for the Travel Angecy project.
+ * 
+ * @author (name = "Nermin Jukan", UCO = "<473370>")
  */
 public interface ExcursionService {
     
     /**
+     * Add new Excursion into database.
      * 
-     * @param e *CHANGE ME*
-     * @return *CHANGE ME*
+     * @param excursion Excursion to be added.
      */
-    Excursion create(Excursion e);
+    void create(Excursion excursion);
     
     /**
+     * Get Excursion with specific ID.
      * 
-     * @param id *CHANGE ME*
-     * @return *CHANGE ME*
+     * @param id ID of Excursion to be found.
+     * @return Excursion with provided ID.
      */
     Excursion findById(Long id);
     
     /**
+     * Get all Excursions from database.
      * 
-     * @return *CHANGE ME*
+     * @return List of Excursions.
      */
     List<Excursion> getAllExcursions();
     
     /**
+     * Get Excursion with specific destination.
      * 
-     * @param destination *CHANGE ME*
-     * @return *CHANGE ME*
+     * @param destination Destination of Excursion to be found.
+     * @return List of Excursions with specific destination.
      */
     List<Excursion> findByDestination(String destination);
     
     /**
+     * Remove Excursion from database.
      * 
-     * @param e *CHANGE ME*
+     * @param excursion Excursion to be removed.
      */
-    void deleteExcursion(Excursion e);
+    void deleteExcursion(Excursion excursion);
     
     /**
+     * Update Excursion in database.
      * 
-     * @param e *CHANGE ME*
+     * @param excursion Excursion to be updated.
      */
-    void updateExcursion(Excursion e);
+    void updateExcursion(Excursion excursion);
 }
