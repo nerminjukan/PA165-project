@@ -37,25 +37,17 @@ public interface ExcursionFacade {
     ExcursionDTO getByID(Long excursionId);
     
     /**
-     * Get Excursion by specified destination.
-     *
-     * @param destination Destination of requested Excursion.
-     * @return ExcursionDTO of requested destination.
-     */
-    List<ExcursionDTO> findByDestination(String destination);
-    
-    /**
      * Delete Excursion with specified ID.
      *
-     * @param excursionId ID of Excursion which should be removed.
+     * @param excursionDTO ID of Excursion which should be removed.
      */
-    void deleteExcursion(Long excursionId);
+    void deleteExcursion(ExcursionDTO excursionDTO);
     
     /**
      * Update Excursion.
      *
-     * @param excursion DTO of updated Excursion.
+     * @param excursionUpdate DTO of updated Excursion.
      */
-    void updateExcursion(ExcursionUpdateDTO excursion);
+    void updateExcursion(ExcursionUpdateDTO excursionUpdate);
     
 }

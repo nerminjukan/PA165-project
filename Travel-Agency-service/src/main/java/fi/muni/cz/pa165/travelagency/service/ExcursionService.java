@@ -14,8 +14,9 @@ public interface ExcursionService {
      * Add new Excursion into database.
      * 
      * @param excursion Excursion to be added.
+     * @return Excursion that is created.
      */
-    void create(Excursion excursion);
+    Excursion create(Excursion excursion);
     
     /**
      * Get Excursion with specific ID.
@@ -51,6 +52,32 @@ public interface ExcursionService {
      * Update Excursion in database.
      * 
      * @param excursion Excursion to be updated.
+     * @return Excursion that is updated.
      */
-    void updateExcursion(Excursion excursion);
+    Excursion updateExcursion(Excursion excursion);
+    
+        /**
+     * Find Excursions in database whitch prices are lower than or equal to the argument.
+     * 
+     * @param price Price value to be compared to.
+     * @return Excursions list that fits the criteria.
+     */
+    List<Excursion> findByPriceLowerThanOrEqual(Integer price);
+    
+        /**
+     * Find Excursions in database whitch prices are higher than or equal to the argument.
+     * 
+     * @param price Price value to be compared to.
+     * @return Excursions list that fits the criteria.
+     */
+    List<Excursion> findByPriceHigherThanOrEqual(Integer price);
+    
+    /**
+     * Find Excursions in database whitch duration is equal to the argument.
+     * 
+     * @param duration Duration value to be compared to.
+     * @return Excursions list that fits the criteria.
+     */    
+    List<Excursion> findByDuration(Integer duration);
+
 }
