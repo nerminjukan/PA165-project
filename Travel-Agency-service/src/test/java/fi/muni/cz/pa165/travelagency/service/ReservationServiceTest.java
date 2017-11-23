@@ -54,7 +54,7 @@ public class ReservationServiceTest extends AbstractTransactionalTestNGSpringCon
         reservation.addReservedExcursion(excursion);
     }
     
-    @Test
+    
     public void createReservationTest() {
         reservationService.createReservation(reservation);
         verify(reservationDao).create(reservation);
