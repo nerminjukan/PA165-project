@@ -179,5 +179,4 @@ public class ReservationFacadeImpl implements ReservationFacade {
                 beanMappingService.mapTo(reservation, Reservation.class)));
          return reservation;
     }
-    
 }
