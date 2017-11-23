@@ -6,12 +6,14 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import org.dozer.inject.Inject;
+import org.springframework.stereotype.Service;
 
 /**
  * Excursion Service Implementation for the Travel Angecy project.
  * 
  * @author (name = "Nermin Jukan", UCO = "<473370>")
  */
+@Service
 public class ExcursionServiceImpl implements ExcursionService{
     
     @Inject

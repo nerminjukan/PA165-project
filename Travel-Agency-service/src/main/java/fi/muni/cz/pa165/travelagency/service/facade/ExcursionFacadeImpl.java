@@ -11,12 +11,16 @@ import fi.muni.cz.pa165.travelagency.service.TripService;
 import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Excursion Facade Implementation for the Travel Angecy project.
  * 
  * @author (name = "Nermin Jukan", UCO = "<473370>")
  */
+@Service
+@Transactional
 public class ExcursionFacadeImpl implements ExcursionFacade{
     
     @Autowired
@@ -31,6 +35,13 @@ public class ExcursionFacadeImpl implements ExcursionFacade{
     @Override
     public Long create(ExcursionDTO excursionDTO) {
         Excursion excursion = beanMappingService.mapTo(excursionDTO, Excursion.class);
+        
+        Set<TripDTO> trips = excursionDTO.getTrips();
+        
+        // Uncomment when TripDTO is implemented!!!
+        //Set<Trip> trip = beanMappingService.mapTo(trips, Trip.class);
+        
+        //excursion.setTrips(trip);
 
         if (excursion != null) {
             throw new IllegalArgumentException();

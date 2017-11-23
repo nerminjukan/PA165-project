@@ -2,12 +2,14 @@ package fi.muni.cz.pa165.travelagency.service;
 
 import fi.muni.cz.pa165.travelagency.entity.Excursion;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 /**
  * Excursion Service for the Travel Angecy project.
  * 
  * @author (name = "Nermin Jukan", UCO = "<473370>")
  */
+@Service
 public interface ExcursionService {
     
     /**
