@@ -31,7 +31,7 @@ public class ReservationServiceImpl implements ReservationService {
             throw new TravelAgencyServiceException("Cannot create new "
                     + "reservation. There is no more free slot for this trip.");
         }
-        Trip trip = tripService.getTripWithId(reservation.getReservedTrip().getId());
+        Trip trip = tripService.findTripWithId(reservation.getReservedTrip().getId());
         trip.setAvailableSpots(trip.getAvailableSpots() - 1);
         tripService.updateTrip(trip);
         reservationDao.create(reservation);

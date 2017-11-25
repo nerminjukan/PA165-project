@@ -51,7 +51,7 @@ public class ReservationFacadeImpl implements ReservationFacade {
             throw new TravelAgencyServiceException("Not existing customer");
         } 
         
-        Trip trip = tripService.getTripWithId(reservation.getTripId());
+        Trip trip = tripService.findTripWithId(reservation.getTripId());
         if (trip == null) {
             throw new TravelAgencyServiceException("Not existing trip");
         }
@@ -144,7 +144,7 @@ public class ReservationFacadeImpl implements ReservationFacade {
     @Override
     public List<ReservationDTO> findReservationByTrip(Long tripId) {
         List<ReservationDTO> reservations = beanMappingService.mapTo(
-                reservationService.findByTrip(tripService.getTripWithId(tripId)),
+                reservationService.findByTrip(tripService.findTripWithId(tripId)),
                 ReservationDTO.class);
         return setPrice(reservations);
     }
