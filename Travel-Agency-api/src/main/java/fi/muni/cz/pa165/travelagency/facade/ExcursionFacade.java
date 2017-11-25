@@ -1,52 +1,51 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fi.muni.cz.pa165.travelagency.facade;
 
-import fi.muni.cz.pa165.travelagency.dto.ExcursionCreateDTO;
 import fi.muni.cz.pa165.travelagency.dto.ExcursionDTO;
-import fi.muni.cz.pa165.travelagency.dto.ExcursionUpdateDTO;
 import java.util.List;
 
 
 /**
- *
- * @author root
+ * Interface for Excursion facade for the Travel Angecy project.
+ * 
+ * @author (name = "Nermin Jukan", UCO = "<473370>")
  */
 public interface ExcursionFacade {
     
     /**
+     * Create new Excursion.
      *
-     * @param e *CHANGE ME*
-     * @return *CHANGE ME*
+     * @param excursion ExcursionCreateDTO of new Excursion.
+     * @return ID of newly created Excursion.
      */
-    Long createExcursion(ExcursionCreateDTO e);
+    Long create(ExcursionDTO excursion);
     
     /**
+     * Get all Excursion.
      *
-     * @return *CHANGE ME*
+     * @return List of all ExcursionDTOs.
      */
     List<ExcursionDTO> getAllExcursions();
     
     /**
+     * Get Excursion by specified ID.
      *
-     * @param excursion *CHANGE ME*
-     * @return *CHANGE ME*
+     * @param excursionId ID of requested Excursion.
+     * @return ExcursionDTO with requested ID.
      */
-    ExcursionDTO getExcursionByID(Long excursion);
+    ExcursionDTO getByID(Long excursionId);
     
     /**
+     * Delete Excursion with specified ID (also from all the Trips it belonged to).
      *
-     * @param excursionId *CHANGE ME*
+     * @param excursionDTO ID of Excursion which should be removed.
      */
-    void deleteExcursion(Long excursionId);
+    void deleteExcursion(ExcursionDTO excursionDTO);
     
     /**
+     * Update Excursion.
      *
-     * @param e *CHANGE ME*
+     * @param excursionUpdate DTO of updated Excursion.
      */
-    void updateExcursion(ExcursionUpdateDTO e);
+    void updateExcursion(ExcursionDTO excursionUpdate);
     
 }
