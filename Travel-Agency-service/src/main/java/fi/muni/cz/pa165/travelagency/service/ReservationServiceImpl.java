@@ -22,16 +22,18 @@ public class ReservationServiceImpl implements ReservationService {
     @Autowired
     private ReservationDao reservationDao;
     
-    //@Autowired
-    //private TripService tripService;;
+    @Autowired
+    private TripService tripService;;
     
-    //OR calling method from TripDAO to get available spots.
     @Override
     public Reservation createReservation(Reservation reservation) {
         if (reservation.getReservedTrip().getAvailableSpots() == 0) {
             throw new TravelAgencyServiceException("Cannot create new "
                     + "reservation. There is no more free slot for this trip.");
         }
+        Trip trip = tripService.getTripWithId(reservation.getReservedTrip().getId());
+        trip.setAvailableSpots(trip.getAvailableSpots() - 1);
+        tripService.updateTrip(trip);
         reservationDao.create(reservation);
         return reservation;
     }

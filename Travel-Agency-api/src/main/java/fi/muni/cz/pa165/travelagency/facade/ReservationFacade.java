@@ -82,14 +82,6 @@ public interface ReservationFacade {
     List<ReservationDTO> findReservationByTrip(Long tripId);
     
     /**
-     * Get total price of reservation.
-     * 
-     * @param reservationId id of reservation to find price for
-     * @return ReservationDTO with calculated total price
-     */
-    ReservationDTO getReservationTotalPrice(Long reservationId);
-    
-    /**
      * Get reservations created between dates.
      * 
      * @param start date from
