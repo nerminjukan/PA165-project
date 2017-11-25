@@ -29,7 +29,7 @@ import javax.validation.constraints.NotNull;
  * @author Pavel Kotala, 437164
  */
 @Entity
-public class Trip implements Serializable {
+public class Trip implements Serializable, Comparable<Trip> {
 
     private static final long serialVersionUID = 1L;
 
@@ -223,5 +223,15 @@ public class Trip implements Serializable {
     public String toString() {
         return "fi.muni.cz.pa165.travelagency.entity.Trip[ id=" + id + " ]";
     }
-    
+
+    @Override
+    public int compareTo(Trip o) {
+        if(dateFrom.equals(o.getDateFrom())) {
+            if(dateTo.equals(o.getDateTo())) {
+                return name.compareTo(o.getName());
+            }
+            return dateTo.compareTo(o.getDateTo());
+        }
+        return dateFrom.compareTo(o.getDateFrom());
+    }
 }

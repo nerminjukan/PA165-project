@@ -47,6 +47,11 @@ public class TripDaoImpl implements TripDao {
     }
 
     @Override
+    public void update(Trip trip) {
+        em.merge(trip);
+    }
+
+    @Override
     public List<Trip> getTripsBetween(Date start, Date end) {
         TypedQuery<Trip> query = em.createQuery("SELECT t FROM Trip t WHERE t.dateFrom BETWEEN :start AND :end AND " +
                 "t.dateTo BETWEEN :start AND :end", Trip.class);
