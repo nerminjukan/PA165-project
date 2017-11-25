@@ -8,16 +8,23 @@ import fi.muni.cz.pa165.travelagency.exceptions.TravelAgencyServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
-import java.util.function.Function;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
+/**
+ * @author Pavel Kotala
+ */
 @Service
 public class TripServiceImpl implements TripService {
     @Autowired
-    TripDao tripDao;
+    private TripDao tripDao;
 
     @Autowired
-    ExcursionDao excursionDao;
+    private ExcursionDao excursionDao;
 
     @Override
     public Trip createTrip(Trip trip) {
@@ -31,7 +38,7 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
-    public void addAllExcursions(Trip trip, List<Excursion> excursions) {
+    public void addAllExcursions(Trip trip, Set<Excursion> excursions) {
         trip.addAllExcursions(excursions);
     }
 
@@ -46,27 +53,32 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
-    public List<Trip> getAllTrips() {
+    public void updateTrip(Trip trip) {
+        tripDao.update(trip);
+    }
+
+    @Override
+    public List<Trip> findAllTrips() {
         return tripDao.findAll();
     }
 
     @Override
-    public List<Trip> getTripsByName(String tripName) {
+    public List<Trip> findTripsByName(String tripName) {
         return tripDao.findByName(tripName);
     }
 
     @Override
-    public List<Trip> getTripsBetween(Date start, Date end) {
+    public List<Trip> findTripsBetween(Date start, Date end) {
         return tripDao.getTripsBetween(start, end);
     }
 
     @Override
-    public Trip getTripWithId(Long id) {
+    public Trip findTripWithId(Long id) {
         return tripDao.findById(id);
     }
 
     @Override
-    public List<Excursion> getAllSuitableExcursions(Trip trip) {
+    public List<Excursion> findAllSuitableExcursions(Trip trip) {
         List<Excursion> allExcursions = excursionDao.findByDestination(trip.getDestination());
         List<Excursion> suitable = new ArrayList<>();
         for(Excursion ex : allExcursions) {
@@ -79,7 +91,7 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
-    public List<Trip> getNextTrips(Trip trip, int n) {
+    public List<Trip> findNextTrips(Trip trip, int n) {
         if(n <= 0) {
             throw new TravelAgencyServiceException("number of trips to return must be greater than zero");
         }

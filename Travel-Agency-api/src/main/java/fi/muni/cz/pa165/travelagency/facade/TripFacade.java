@@ -6,6 +6,7 @@ import fi.muni.cz.pa165.travelagency.dto.TripDTO;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Pavel Kotala, 437164
@@ -32,7 +33,7 @@ public interface TripFacade {
      * @param tripId id of trip to add excursions to
      * @param excursionIds ids of excursions to be added to trip
      */
-    void addAllExcursions(Long tripId, List<Long> excursionIds);
+    void addAllExcursions(Long tripId, Set<Long> excursionIds);
 
     /**
      * Removes given excursion from given trip.

@@ -6,6 +6,7 @@ import fi.muni.cz.pa165.travelagency.entity.Trip;
 import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Pavel Kotala
@@ -32,7 +33,7 @@ public interface TripService {
      * @param trip trip to add excursions to
      * @param excursions excursions to be added to trip
      */
-    void addAllExcursions(Trip trip, List<Excursion> excursions);
+    void addAllExcursions(Trip trip, Set<Excursion> excursions);
     
     /**
      * Removes given excursion from given trip.
@@ -46,19 +47,25 @@ public interface TripService {
      * @param trip trip to be deleted
      */
     void deleteTrip(Trip trip);
+
+    /**
+     * Updates given trip.
+     * @param trip trip to be updated
+     */
+    void updateTrip(Trip trip);
     
     /**
      * Returns all trips.
      * @return all trips
      */
-    List<Trip> getAllTrips();
+    List<Trip> findAllTrips();
     
     /**
      * Returns all trips with given name.
      * @param tripName name of the trips
      * @return all trips with given name
      */
-    List<Trip> getTripsByName(String tripName);
+    List<Trip> findTripsByName(String tripName);
     
     /**
      * Returns all trips between given dates.
@@ -66,14 +73,14 @@ public interface TripService {
      * @param end end date
      * @return all trips between given dates.
      */
-    List<Trip> getTripsBetween(Date start, Date end);
+    List<Trip> findTripsBetween(Date start, Date end);
     
     /**
      * Returns trip with given id.
      * @param id id of desired trip
      * @return trip with given id
      */
-    Trip getTripWithId(Long id);
+    Trip findTripWithId(Long id);
 
     /**
      * Returns all suitable excursions for given trip.
@@ -82,7 +89,7 @@ public interface TripService {
      * @param trip trip to find suitable excursions for
      * @return all suitable excursions
      */
-    List<Excursion> getAllSuitableExcursions(Trip trip);
+    List<Excursion> findAllSuitableExcursions(Trip trip);
 
     /**
      * Returns next n trips in the sequence after this trip.
@@ -92,5 +99,5 @@ public interface TripService {
      * @param n number of trips to return, positive integer
      * @return next 10 trips
      */
-    List<Trip> getNextTrips(Trip trip, int n);
+    List<Trip> findNextTrips(Trip trip, int n);
 }

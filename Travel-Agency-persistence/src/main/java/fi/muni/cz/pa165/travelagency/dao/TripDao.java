@@ -47,6 +47,12 @@ public interface TripDao {
     void remove(Trip trip);
 
     /**
+     * Updates given trip in database.
+     * @param trip trip to be updated
+     */
+    void update(Trip trip);
+
+    /**
      * Finds and returns list of all trips that take place between given dates.
      * @param start earliest possible start of the trips to be returned
      * @param end latest possible end of the trips to be returned
