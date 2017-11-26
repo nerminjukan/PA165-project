@@ -217,6 +217,15 @@ public class Customer implements Serializable {
     }
 
     /**
+     * Removes reservation from reservations
+     * @param reservation Reservation
+     * @return true if reservations contained reservation
+     */
+    public Boolean removeReservation(Reservation reservation) {
+        return this.reservations.remove(reservation);
+    }
+
+    /**
      * Overridden Equals
      * @param o object
      * @return True if equal, false otherwise

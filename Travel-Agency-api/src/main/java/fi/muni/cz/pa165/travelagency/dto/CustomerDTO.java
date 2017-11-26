@@ -115,6 +115,15 @@ public class CustomerDTO {
     }
 
     /**
+     * Removes reservation from reservations
+     * @param reservationDTO ReservationDTO
+     * @return true if reservations contained reservation
+     */
+    public Boolean removeReservation(ReservationDTO reservationDTO) {
+        return this.reservations.remove(reservationDTO);
+    }
+
+    /**
      * Overridden equals method
      * @param o object
      * @return true if objects are equal, false otherwise

@@ -1,5 +1,6 @@
 package fi.muni.cz.pa165.travelagency.dto;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -15,6 +16,17 @@ public class ReservationCreateDTO {
     @NotNull
     private Long tripId;
     
+    @NotNull
+    private Long customerId;
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
+    }
+    
     private Set<Long> excursionsId = new HashSet<>();
 
     public Long getTripId() {
@@ -26,7 +38,7 @@ public class ReservationCreateDTO {
     }
 
     public Set<Long> getExcursionsId() {
-        return excursionsId;
+        return Collections.unmodifiableSet(excursionsId);
     }
 
     public void setExcursionsId(Set<Long> excursionsId) {
@@ -37,6 +49,7 @@ public class ReservationCreateDTO {
     public int hashCode() {
         int hash = 5;
         hash = 97 * hash + Objects.hashCode(this.tripId);
+        hash = 97 * hash + Objects.hashCode(this.getCustomerId());
         hash = 97 * hash + Objects.hashCode(this.excursionsId);
         return hash;
     }
@@ -56,6 +69,9 @@ public class ReservationCreateDTO {
         if (!Objects.equals(this.getTripId(), other.getTripId())) {
             return false;
         }
+        if (!Objects.equals(this.getCustomerId(), other.getCustomerId())) {
+            return false;
+        }
         if (!Objects.equals(this.getExcursionsId(), other.getExcursionsId())) {
             return false;
         }
@@ -64,9 +80,11 @@ public class ReservationCreateDTO {
 
     @Override
     public String toString() {
-        return "ReservationCreateDTO{" + "tripId=" + tripId 
-                + ", excursionsId=" + excursionsId + '}';
+        return "ReservationCreateDTO{" + "tripId=" + tripId + ", customerId=" 
+                + customerId + ", excursionsId=" + excursionsId + '}';
     }
+
+    
     
     
     

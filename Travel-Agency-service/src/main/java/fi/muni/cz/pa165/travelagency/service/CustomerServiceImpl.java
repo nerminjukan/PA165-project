@@ -2,10 +2,13 @@ package fi.muni.cz.pa165.travelagency.service;
 
 import fi.muni.cz.pa165.travelagency.dao.CustomerDao;
 import fi.muni.cz.pa165.travelagency.entity.Customer;
+import fi.muni.cz.pa165.travelagency.entity.Excursion;
 import fi.muni.cz.pa165.travelagency.entity.Reservation;
-import org.dozer.inject.Inject;
+import fi.muni.cz.pa165.travelagency.exceptions.TravelAgencyServiceException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -15,46 +18,140 @@ import java.util.List;
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
-    @Inject
+    @Autowired
     private CustomerDao customerDao;
+
+    @Autowired
+    private ReservationService reservationService;
 
     @Override
     public void create(Customer customer) {
-        customerDao.create(customer);
+        try {
+            customerDao.create(customer);
+        } catch (NullPointerException npe){
+            throw npe;
+        } catch (Exception e){
+            throw new TravelAgencyServiceException(e);
+        }
     }
 
     @Override
     public List<Customer> findAll() {
-        return customerDao.findAll();
+       try {
+            return customerDao.findAll();
+       } catch (NullPointerException npe){
+           throw npe;
+       } catch (Exception e){
+           throw new TravelAgencyServiceException(e);
+       }
     }
 
     @Override
     public Customer findById(Long id) {
-        return customerDao.findById(id);
+        try {
+            return customerDao.findById(id);
+        } catch (NullPointerException npe){
+            throw npe;
+        } catch (Exception e){
+            throw new TravelAgencyServiceException(e);
+        }
+
+    }
+
+    @Override
+    public void changeCustomerOnReservation(Customer newCustomer, Reservation reservation) {
+        try {
+            Customer oldCustomer = reservation.getCustomer();
+            oldCustomer.removeReservation(reservation);
+            customerDao.update(oldCustomer);
+
+            reservation.setCustomer(newCustomer);
+            reservationService.updateReservation(reservation);
+
+            newCustomer.addReservation(reservation);
+            customerDao.update(newCustomer);
+        } catch (NullPointerException npe){
+            throw npe;
+        } catch (Exception e) {
+            throw new TravelAgencyServiceException(e);
+        }
+    }
+
+    @Override
+    public BigDecimal getTotalPriceCustomersReservations(Customer customer) {
+        try {
+            List<Reservation> reservationList =  reservationService.findByCustomer(customer);
+            BigDecimal totalSum = BigDecimal.ZERO;
+            for (Reservation reservation: reservationList) {
+                totalSum.add(reservation.getReservedTrip().getPrice());
+
+                if (reservation.getReservedExcursions() != null) {
+                    for (Excursion excursion: reservation.getReservedExcursions()) {
+                        totalSum.add(excursion.getPrice());
+                    }
+                }
+            }
+
+            return totalSum;
+        } catch (NullPointerException npe){
+            throw npe;
+        } catch (Exception e) {
+            throw new TravelAgencyServiceException(e);
+        }
     }
 
     @Override
     public void remove(Customer customer) {
-        customerDao.remove(customer);
+        try {
+            customerDao.remove(customer);
+        } catch (NullPointerException npe){
+            throw npe;
+        } catch (Exception e){
+            throw new TravelAgencyServiceException(e);
+        }
     }
 
     @Override
     public void update(Customer customer) {
-        customerDao.update(customer);
+        try {
+            customerDao.update(customer);
+        } catch (NullPointerException npe){
+            throw npe;
+        } catch (Exception e){
+            throw new TravelAgencyServiceException(e);
+        }
     }
 
     @Override
     public Customer findByReservation(Reservation reservation) {
-        return customerDao.findByReservation(reservation);
+        try {
+            return customerDao.findByReservation(reservation);
+        } catch (NullPointerException npe){
+            throw npe;
+        } catch (Exception e){
+            throw new TravelAgencyServiceException(e);
+        }
     }
 
     @Override
     public Customer findByIdCardNumber(String idCardNumber) {
-        return customerDao.findByIdCardNumber(idCardNumber);
+        try{
+            return customerDao.findByIdCardNumber(idCardNumber);
+        } catch (NullPointerException npe){
+            throw npe;
+        } catch (Exception e){
+            throw new TravelAgencyServiceException(e);
+        }
     }
 
     @Override
     public Customer findByEmail(String email) {
-        return customerDao.findByEmail(email);
+        try {
+            return customerDao.findByEmail(email);
+        } catch (NullPointerException npe){
+            throw npe;
+        } catch (Exception e){
+            throw new TravelAgencyServiceException(e);
+        }
     }
 }

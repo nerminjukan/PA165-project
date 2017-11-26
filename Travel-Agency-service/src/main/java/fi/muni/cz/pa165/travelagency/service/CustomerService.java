@@ -4,6 +4,7 @@ import fi.muni.cz.pa165.travelagency.entity.Customer;
 import fi.muni.cz.pa165.travelagency.entity.Reservation;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -63,4 +64,18 @@ public interface CustomerService {
      * @return Customer
      */
     Customer findByEmail(String email);
+
+    /**
+     * Sums all customers expenses
+     * @param customer Customer
+     * @return total expenses
+     */
+    BigDecimal getTotalPriceCustomersReservations(Customer customer);
+
+    /**
+     * Changes customer on reservation
+     * @param customer Customer
+     * @param reservation Reservation
+     */
+    void changeCustomerOnReservation(Customer customer, Reservation reservation);
 }
