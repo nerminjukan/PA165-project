@@ -37,6 +37,7 @@ public class ExcursionFacadeImpl implements ExcursionFacade{
 <<<<<<< HEAD
         
         Excursion excursion = beanMappingService.mapTo(excursionDTO, Excursion.class);
+<<<<<<< HEAD
 =======
 >>>>>>> 128d80516c9ef993810109631ad4760190007437
         
@@ -55,6 +56,13 @@ public class ExcursionFacadeImpl implements ExcursionFacade{
         excursion.setTrips(trip);
         */
 >>>>>>> 128d80516c9ef993810109631ad4760190007437
+=======
+        /*
+        Set<TripDTO> trips = excursionDTO.getTrips();
+        Set<Trip> trip = beanMappingService.mapTo(trips, Trip.class);
+        excursion.setTrips(trip);
+        */
+>>>>>>> cb9c06ac49fe633f83ae06878a1560dba121412b
         if (excursion != null) {
             throw new IllegalArgumentException();
         }

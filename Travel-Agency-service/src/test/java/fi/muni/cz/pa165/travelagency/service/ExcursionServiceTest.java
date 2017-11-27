@@ -12,7 +12,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> cb9c06ac49fe633f83ae06878a1560dba121412b
 import org.hibernate.service.spi.ServiceException;
 import org.junit.BeforeClass;
 import org.junit.Test;
