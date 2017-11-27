@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 /**
- * Excursion Service for the Travel Angecy project.
+ * Excursion service for the Travel Angecy project.
  * 
  * @author (name = "Nermin Jukan", UCO = "<473370>")
  */
@@ -56,9 +56,9 @@ public interface ExcursionService {
      * @param excursion Excursion to be updated.
      * @return Excursion that is updated.
      */
-    Excursion updateExcursion(Excursion excursion);
+    Excursion update(Excursion excursion);
     
-        /**
+    /**
      * Find Excursions in database whitch prices are lower than or equal to the argument.
      * 
      * @param price Price value to be compared to.
@@ -66,7 +66,7 @@ public interface ExcursionService {
      */
     List<Excursion> findByPriceLowerThanOrEqual(Integer price);
     
-        /**
+    /**
      * Find Excursions in database whitch prices are higher than or equal to the argument.
      * 
      * @param price Price value to be compared to.

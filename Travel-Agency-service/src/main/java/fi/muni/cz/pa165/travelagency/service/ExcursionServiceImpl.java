@@ -9,7 +9,7 @@ import org.dozer.inject.Inject;
 import org.springframework.stereotype.Service;
 
 /**
- * Excursion Service Implementation for the Travel Angecy project.
+ * Excursion service Implementation for the Travel Angecy project.
  * 
  * @author (name = "Nermin Jukan", UCO = "<473370>")
  */
@@ -46,7 +46,7 @@ public class ExcursionServiceImpl implements ExcursionService{
     }
 
     @Override
-    public Excursion updateExcursion(Excursion excursion) {
+    public Excursion update(Excursion excursion) {
         return excursionDao.update(excursion);
     }
 

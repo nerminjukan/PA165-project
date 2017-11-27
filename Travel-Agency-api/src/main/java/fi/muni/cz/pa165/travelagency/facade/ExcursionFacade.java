@@ -48,4 +48,27 @@ public interface ExcursionFacade {
      */
     void updateExcursion(ExcursionDTO excursionUpdate);
     
+    /**
+     * Find Excursions in database whitch prices are lower than or equal to the argument.
+     * 
+     * @param price Price value to be compared to.
+     * @return ExcursionDTO list that fits the criteria.
+     */
+    List<ExcursionDTO> findByPriceLowerThanOrEqual(Integer price);
+    
+    /**
+     * Find Excursions in database whitch prices are higher than or equal to the argument.
+     * 
+     * @param price Price value to be compared to.
+     * @return ExcursionDTO list that fits the criteria.
+     */
+    List<ExcursionDTO> findByPriceHigherThanOrEqual(Integer price);
+    
+    /**
+     * Find Excursions in database whitch duration is equal to the argument.
+     * 
+     * @param duration Duration value to be compared to.
+     * @return ExcursionDTO list that fits the criteria.
+     */    
+    List<ExcursionDTO> findByDuration(Integer duration);
 }

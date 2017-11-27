@@ -34,15 +34,13 @@ public class ExcursionFacadeImpl implements ExcursionFacade{
 
     @Override
     public Long create(ExcursionDTO excursionDTO) {
+        
         Excursion excursion = beanMappingService.mapTo(excursionDTO, Excursion.class);
-        
+        /*
         Set<TripDTO> trips = excursionDTO.getTrips();
-        
-        // Uncomment when TripDTO is implemented!!!
-        //Set<Trip> trip = beanMappingService.mapTo(trips, Trip.class);
-        
-        //excursion.setTrips(trip);
-
+        Set<Trip> trip = beanMappingService.mapTo(trips, Trip.class);
+        excursion.setTrips(trip);
+        */
         if (excursion != null) {
             throw new IllegalArgumentException();
         }
@@ -89,7 +87,28 @@ public class ExcursionFacadeImpl implements ExcursionFacade{
             throw new IllegalArgumentException();
         }
 
-        excursionService.updateExcursion(excursion);
+        excursionService.update(excursion);
+    }
+
+    @Override
+    public List<ExcursionDTO> findByPriceLowerThanOrEqual(Integer price) {
+        List<ExcursionDTO> lowerOrEqual = beanMappingService.mapTo(excursionService.
+                findByPriceLowerThanOrEqual(price), ExcursionDTO.class);
+        return lowerOrEqual;
+    }
+
+    @Override
+    public List<ExcursionDTO> findByPriceHigherThanOrEqual(Integer price) {
+        List<ExcursionDTO> higherOrEqual = beanMappingService.mapTo(excursionService.
+                findByPriceHigherThanOrEqual(price), ExcursionDTO.class);
+        return higherOrEqual;
+    }
+
+    @Override
+    public List<ExcursionDTO> findByDuration(Integer duration) {
+        List<ExcursionDTO> equalDuration = beanMappingService.mapTo(excursionService.
+                findByDuration(duration), ExcursionDTO.class);
+        return equalDuration;
     }
     
 }
