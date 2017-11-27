@@ -3,6 +3,7 @@ package fi.muni.cz.pa165.travelagency.facade;
 import fi.muni.cz.pa165.travelagency.dto.CustomerDTO;
 import fi.muni.cz.pa165.travelagency.dto.ReservationDTO;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -62,4 +63,18 @@ public interface CustomerFacade {
      * @return CustomerDTO
      */
     CustomerDTO findByEmail(String email);
+
+    /**
+     * Sums all customers expenses
+     * @param customerDTO CustomerDTO
+     * @return total expenses
+     */
+    BigDecimal getTotalPriceCustomersReservations(CustomerDTO customerDTO);
+
+    /**
+     * Changes customer on reservation
+     * @param customerDTO CustomerDTO
+     * @param reservationDTO ReservationDTO
+     */
+    void changeCustomerOnReservation(CustomerDTO customerDTO, ReservationDTO reservationDTO);
 }

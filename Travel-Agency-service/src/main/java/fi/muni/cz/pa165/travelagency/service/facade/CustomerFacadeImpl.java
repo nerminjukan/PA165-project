@@ -9,6 +9,7 @@ import fi.muni.cz.pa165.travelagency.service.BeanMappingService;
 import fi.muni.cz.pa165.travelagency.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -25,9 +26,13 @@ public class CustomerFacadeImpl implements CustomerFacade {
 
     @Override
     public void create(CustomerDTO customerDTO) {
+        if (customerDTO == null){
+            throw new IllegalArgumentException("customerDTO is null");
+        }
+
         Customer customer = beanMappingService.mapTo(customerDTO, Customer.class);
 
-        if (customer != null) {
+        if (customer == null) {
             throw new IllegalArgumentException();
         }
 
@@ -47,9 +52,13 @@ public class CustomerFacadeImpl implements CustomerFacade {
 
     @Override
     public void remove(CustomerDTO customerDTO) {
+        if (customerDTO == null){
+            throw new IllegalArgumentException("customerDTO is null");
+        }
+
         Customer customer = beanMappingService.mapTo(customerDTO, Customer.class);
 
-        if (customer != null) {
+        if (customer == null) {
             throw new IllegalArgumentException();
         }
 
@@ -58,9 +67,13 @@ public class CustomerFacadeImpl implements CustomerFacade {
 
     @Override
     public void update(CustomerDTO customerDTO) {
+        if (customerDTO == null){
+            throw new IllegalArgumentException("customerDTO is null");
+        }
+
         Customer customer = beanMappingService.mapTo(customerDTO, Customer.class);
 
-        if (customer != null) {
+        if (customer == null) {
             throw new IllegalArgumentException();
         }
 
@@ -70,10 +83,13 @@ public class CustomerFacadeImpl implements CustomerFacade {
     @Override
     public CustomerDTO findByReservation(ReservationDTO reservationDTO) {
         if (reservationDTO == null) {
-            return null;
+            throw new IllegalArgumentException("reservationDTO is null");
         }
 
         Reservation reservation = beanMappingService.mapTo(reservationDTO, Reservation.class);
+        if (reservation == null) {
+            throw new IllegalArgumentException("reservation is null");
+        }
 
         Customer customer = customerService.findByReservation(reservation);
         return customer == null ? null : beanMappingService.mapTo(customer, CustomerDTO.class);
@@ -89,5 +105,42 @@ public class CustomerFacadeImpl implements CustomerFacade {
     public CustomerDTO findByEmail(String email) {
         Customer customer = customerService.findByEmail(email);
         return customer == null ? null : beanMappingService.mapTo(customer, CustomerDTO.class);
+    }
+
+    @Override
+    public BigDecimal getTotalPriceCustomersReservations(CustomerDTO customerDTO) {
+        if (customerDTO == null){
+            throw new IllegalArgumentException("customerDTO is null");
+        }
+
+        Customer customer = beanMappingService.mapTo(customerDTO, Customer.class);
+        if (customer == null){
+            throw new IllegalArgumentException("customer is null");
+        }
+
+        return customerService.getTotalPriceCustomersReservations(customer);
+    }
+
+    @Override
+    public void changeCustomerOnReservation(CustomerDTO customerDTO, ReservationDTO reservationDTO) {
+        if (customerDTO == null){
+            throw new IllegalArgumentException("customerDTO is null");
+        }
+
+        if (reservationDTO == null) {
+            throw new IllegalArgumentException("reservationDTO is null");
+        }
+
+        Customer customer = beanMappingService.mapTo(customerDTO, Customer.class);
+        if (customer == null){
+            throw new IllegalArgumentException("customer is null");
+        }
+
+        Reservation reservation = beanMappingService.mapTo(reservationDTO, Reservation.class);
+        if (reservation == null) {
+            throw new IllegalArgumentException("reservation is null");
+        }
+
+        customerService.changeCustomerOnReservation(customer, reservation);
     }
 }

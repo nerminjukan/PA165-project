@@ -17,6 +17,8 @@ public interface ReservationService {
     
     /**
      * Add new reservation into database.
+     * Throws TravelAgencyServiceException when there is no 
+     * more free slots for trip.
      * 
      * @param reservation reservation to be added
      * @return added reservation
@@ -40,6 +42,8 @@ public interface ReservationService {
     
     /**
      * Adding excursion to existing reservation.
+     * Throws TravelAgencyServiceException when reserved trip 
+     * doesn't contains such excursion.
      * 
      * @param reservation reservation to add to
      * @param excursion excursion to be added to reservation
@@ -48,6 +52,8 @@ public interface ReservationService {
     
     /**
      * Add excursions to existing reservation.
+     * Throws TravelAgencyServiceException when reserved trip doesn't 
+     * contains one of excrusions.
      * 
      * @param reservation reservation to add to
      * @param excursions list of excursions to be added
@@ -60,6 +66,20 @@ public interface ReservationService {
      * @return list of all reservations
      */
     List<Reservation> findAll();
+    
+    /**
+     * Get all reservations sorted by date of creation.
+     * 
+     * @return list of sorted reservations.
+     */
+    List<Reservation> findAllSortedByDate();
+    
+    /**
+     * Get all not paid reservations.
+     * 
+     * @return list of all not paid reservations.
+     */
+    List<Reservation> findAllNotPaid();
     
     /**
      * Get reservation by id.
@@ -95,6 +115,7 @@ public interface ReservationService {
     
     /**
      * Get reservations created between dates.
+     * Throws TravelAgencyServiceException when start date is after end.
      * 
      * @param start date from
      * @param end date to

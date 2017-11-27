@@ -27,6 +27,20 @@ import javax.persistence.ManyToMany;
 @Entity
 public class Reservation implements Serializable {
 
+    /**
+     * Constructor
+     */
+    public Reservation() {
+    }
+
+    /**
+     * Constructor
+     * @param id specific id
+     */
+    public Reservation(Long id) {
+        this.id = id;
+    }
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

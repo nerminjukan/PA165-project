@@ -22,16 +22,18 @@ public class ReservationServiceImpl implements ReservationService {
     @Autowired
     private ReservationDao reservationDao;
     
-    //@Autowired
-    //private TripService tripService;;
+    @Autowired
+    private TripService tripService;;
     
-    //OR calling method from TripDAO to get available spots.
     @Override
     public Reservation createReservation(Reservation reservation) {
         if (reservation.getReservedTrip().getAvailableSpots() == 0) {
             throw new TravelAgencyServiceException("Cannot create new "
                     + "reservation. There is no more free slot for this trip.");
         }
+        Trip trip = tripService.findTripWithId(reservation.getReservedTrip().getId());
+        trip.setAvailableSpots(trip.getAvailableSpots() - 1);
+        tripService.updateTrip(trip);
         reservationDao.create(reservation);
         return reservation;
     }
@@ -48,6 +50,10 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public void addExcursionToReservation(Reservation reservation, Excursion excursion) {
+        if (!reservation.getReservedTrip().getExcursions().contains(excursion)) { 
+            throw new TravelAgencyServiceException("Cannot add excrusion to "
+                    + "reservation. There is no such excrusion available for this trip.");
+        }
         reservation = reservationDao.findById(reservation.getId());
         reservation.addReservedExcursion(excursion);
         reservationDao.update(reservation);
@@ -55,6 +61,10 @@ public class ReservationServiceImpl implements ReservationService {
     
     @Override
     public void addExcrusionsToReservation(Reservation reservation, List<Excursion> excursions) {
+        if (!reservation.getReservedTrip().getExcursions().containsAll(excursions)) { 
+            throw new TravelAgencyServiceException("Cannot add excrusions to "
+                    + "reservation. One of excursions is not available for this trip.");
+        }
         reservation = reservationDao.findById(reservation.getId());
         reservation.addAllReservedExcursions(excursions);
         reservationDao.update(reservation);
@@ -93,6 +103,9 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public List<Reservation> getReservationsCreatedBetween(Date start, Date end) {
+        if (start.after(end)) { 
+            throw new TravelAgencyServiceException("Wrong order of dates.");
+        }
         return reservationDao.getReservationsCreatedBetween(start, end);
     }
 
@@ -109,4 +122,22 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.setPaymentState(PaymentStateType.NotPaid);
         reservationDao.update(reservation);
     } 
+
+    @Override
+    public List<Reservation> findAllSortedByDate() {
+        List<Reservation> all = reservationDao.findAll();
+        all.sort((o1, o2) -> o1.getCreated().compareTo(o2.getCreated()));
+        return all;
+    }
+
+    @Override
+    public List<Reservation> findAllNotPaid() {
+        List<Reservation> all = reservationDao.findAll();
+        for (Reservation r : all) {
+            if (r.getPaymentState() == PaymentStateType.Paid) {
+                all.remove(r);
+            }
+        }
+        return all;
+    }
 }
