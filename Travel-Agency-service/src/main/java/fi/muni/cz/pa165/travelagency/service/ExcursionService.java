@@ -58,7 +58,7 @@ public interface ExcursionService {
      */
     Excursion update(Excursion excursion);
     
-        /**
+    /**
      * Find Excursions in database whitch prices are lower than or equal to the argument.
      * 
      * @param price Price value to be compared to.
@@ -66,7 +66,7 @@ public interface ExcursionService {
      */
     List<Excursion> findByPriceLowerThanOrEqual(Integer price);
     
-        /**
+    /**
      * Find Excursions in database whitch prices are higher than or equal to the argument.
      * 
      * @param price Price value to be compared to.
