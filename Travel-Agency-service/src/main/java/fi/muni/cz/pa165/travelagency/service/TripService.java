@@ -97,7 +97,7 @@ public interface TripService {
      * Trips that take place later than one month from the start of given trip will be disregarded.
      * @param trip trip to find trips after
      * @param n number of trips to return, positive integer
-     * @return next 10 trips
+     * @return next n trips
      */
     List<Trip> findNextTrips(Trip trip, int n);
 }
