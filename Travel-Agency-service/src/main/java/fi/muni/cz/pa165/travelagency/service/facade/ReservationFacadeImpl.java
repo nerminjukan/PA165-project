@@ -13,10 +13,9 @@ import fi.muni.cz.pa165.travelagency.service.CustomerService;
 import fi.muni.cz.pa165.travelagency.service.ExcursionService;
 import fi.muni.cz.pa165.travelagency.service.ReservationService;
 import fi.muni.cz.pa165.travelagency.service.TripService;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,7 +58,7 @@ public class ReservationFacadeImpl implements ReservationFacade {
         Reservation newReservation = new Reservation();
         newReservation.setCustomer(customer);
         newReservation.setReservedTrip(trip);
-        newReservation.setCreated(new Date());
+        newReservation.setCreated(reservation.getDate());
         if (reservation.getExcursionsId() != null) {
             for (Long excursionId : reservation.getExcursionsId()) {
                 Excursion excursion = excursionService.findById(excursionId);
@@ -70,7 +69,7 @@ public class ReservationFacadeImpl implements ReservationFacade {
         }
         
         customer.addReservation(newReservation);
-        customerService.update(customer);
+        customerService.updateCustomer(customer);
         reservationService.createReservation(newReservation);
         return newReservation.getId();
     }
@@ -96,16 +95,16 @@ public class ReservationFacadeImpl implements ReservationFacade {
 
     @Override
     public void addExcursionToReservation(Long reservationId, Long excursionId) {
-        reservationService.findById(reservationId).addReservedExcursion(
-                excursionService.findById(excursionId));
-        
+        Reservation r = reservationService.findById(reservationId);  
+        Excursion e = excursionService.findById(excursionId);
+        reservationService.addExcursionToReservation(r, e);
     }
 
     @Override
     public void addExcrusionsToReservation(Long reservationId, List<Long> excursionsId) {
         Reservation reservation = reservationService.findById(reservationId);
         
-        Set<Excursion> excursions = new HashSet<>();
+        List<Excursion> excursions = new ArrayList<>();
                 
         for (Long excursionId : excursionsId) {
             Excursion excursion = excursionService.findById(excursionId); 
@@ -114,7 +113,7 @@ public class ReservationFacadeImpl implements ReservationFacade {
             }
         }
         
-        reservation.addAllReservedExcursions(excursions);
+        reservationService.addExcrusionsToReservation(reservation, excursions);
     }
 
     @Override
@@ -150,7 +149,7 @@ public class ReservationFacadeImpl implements ReservationFacade {
     }
     
     @Override
-    public List<ReservationDTO> getReservationsCreatedBetween(Date start, Date end) {
+    public List<ReservationDTO> findReservationsCreatedBetween(Date start, Date end) {
         List<ReservationDTO> reservations = beanMappingService.mapTo(
                 reservationService.getReservationsCreatedBetween(start, end),
                 ReservationDTO.class);
@@ -178,5 +177,21 @@ public class ReservationFacadeImpl implements ReservationFacade {
          reservation.setTotalPrice(reservationService.getTotalPrice(
                 beanMappingService.mapTo(reservation, Reservation.class)));
          return reservation;
+    }
+
+    @Override
+    public List<ReservationDTO> findAllSortedByDate() {
+        List<ReservationDTO> reservations = beanMappingService.mapTo(
+                        reservationService.findAllSortedByDate(),
+                        ReservationDTO.class);
+        return setPrice(reservations);
+    }
+
+    @Override
+    public List<ReservationDTO> findAllNotPaid() {
+        List<ReservationDTO> reservations = beanMappingService.mapTo(
+                        reservationService.findAllNotPaid(),
+                        ReservationDTO.class);
+        return setPrice(reservations);
     }
 }
