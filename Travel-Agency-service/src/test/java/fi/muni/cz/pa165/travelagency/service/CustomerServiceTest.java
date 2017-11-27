@@ -236,5 +236,5 @@ public class CustomerServiceTest extends AbstractTestNGSpringContextTests {
         Assert.assertEquals(customerNew.getName(), customerExpected.getName(), "Name Equality");
         Assert.assertEquals(customerNew.getReservations(), customerExpected.getReservations(), "Reservations Equality");
     }
-
+    
 }

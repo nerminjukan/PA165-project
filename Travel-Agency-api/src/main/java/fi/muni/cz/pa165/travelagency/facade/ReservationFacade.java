@@ -88,7 +88,7 @@ public interface ReservationFacade {
      * @param end date to
      * @return list of ReservationDTO created between dates
      */
-    List<ReservationDTO> getReservationsCreatedBetween(Date start, Date end);
+    List<ReservationDTO> findReservationsCreatedBetween(Date start, Date end);
     
     /**
      * Set reservation as PAID.
@@ -103,5 +103,19 @@ public interface ReservationFacade {
      * @param reservationId id of reservation
      */
     void setReservationNotPaid(Long reservationId);
+    
+    /**
+     * Get all reservations sorted by date of creation.
+     * 
+     * @return list of sorted ReservationDTO
+     */
+    List<ReservationDTO> findAllSortedByDate();
+    
+    /**
+     * Get all not paid reservations.
+     * 
+     * @return list of ReservationDTO that are not paid
+     */
+    List<ReservationDTO> findAllNotPaid();
     
 }

@@ -1,6 +1,7 @@
 package fi.muni.cz.pa165.travelagency.dto;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -18,6 +19,19 @@ public class ReservationCreateDTO {
     
     @NotNull
     private Long customerId;
+    
+    @NotNull
+    private Date date;
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+    
+    private Set<Long> excursionsId = new HashSet<>();
 
     public Long getCustomerId() {
         return customerId;
@@ -27,7 +41,7 @@ public class ReservationCreateDTO {
         this.customerId = customerId;
     }
     
-    private Set<Long> excursionsId = new HashSet<>();
+    
 
     public Long getTripId() {
         return tripId;
