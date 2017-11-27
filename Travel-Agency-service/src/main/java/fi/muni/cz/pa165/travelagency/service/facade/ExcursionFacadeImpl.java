@@ -39,10 +39,10 @@ public class ExcursionFacadeImpl implements ExcursionFacade{
         
         Set<TripDTO> trips = excursionDTO.getTrips();
         
-        //Uncomment when TripDTO is implemented!!!
-        //Set<Trip> trip = beanMappingService.mapTo(trips, Trip.class);
         
-        //excursion.setTrips(trip);
+        Set<Trip> trip = beanMappingService.mapTo(trips, Trip.class);
+        
+        excursion.setTrips(trip);
 
         if (excursion != null) {
             throw new IllegalArgumentException();
