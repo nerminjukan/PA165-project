@@ -33,6 +33,33 @@ public class Trip implements Serializable, Comparable<Trip> {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Creates empty trip
+     */
+    public Trip() {
+    }
+
+    /**
+     * Creates trip with given parameters
+     * @param dateFrom start date
+     * @param dateTo end date
+     * @param destination destination
+     * @param availableSpots available spots
+     * @param excursions excursions
+     * @param name name
+     * @param price price
+     */
+    public Trip(Date dateFrom, Date dateTo, String destination, int availableSpots,
+                Set<Excursion> excursions, String name, BigDecimal price) {
+        this.dateFrom = dateFrom;
+        this.dateTo = dateTo;
+        this.destination = destination;
+        this.availableSpots = availableSpots;
+        this.excursions.addAll(excursions);
+        this.name = name;
+        this.price = price;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

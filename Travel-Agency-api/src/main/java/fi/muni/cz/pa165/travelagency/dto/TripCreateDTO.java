@@ -33,6 +33,33 @@ public class TripCreateDTO {
     private BigDecimal price;
 
     /**
+     * Creates empty TripCreateDTO
+     */
+    public TripCreateDTO() {
+    }
+
+    /**
+     * Creates TripCreateDTO with given parameters
+     * @param dateFrom start date
+     * @param dateTo end date
+     * @param destination destination
+     * @param availableSpots available spots
+     * @param excursionId id of initial excursion
+     * @param name name
+     * @param price price
+     */
+    public TripCreateDTO(Date dateFrom, Date dateTo, String destination,
+                         int availableSpots, Long excursionId, String name, BigDecimal price) {
+        this.dateFrom = dateFrom;
+        this.dateTo = dateTo;
+        this.destination = destination;
+        this.availableSpots = availableSpots;
+        this.excursionId = excursionId;
+        this.name = name;
+        this.price = price;
+    }
+
+    /**
      * Returns date of start of the trip.
      * @return date of start of the trip
      */

@@ -37,7 +37,7 @@ public interface TripService {
     
     /**
      * Removes given excursion from given trip.
-     * @param trip trip to remove excursion from
+     * @param trip trip to removeCustomer excursion from
      * @param excursion excursion to be removed from trip
      */
     void removeExcursion(Trip trip, Excursion excursion);
@@ -97,7 +97,7 @@ public interface TripService {
      * Trips that take place later than one month from the start of given trip will be disregarded.
      * @param trip trip to find trips after
      * @param n number of trips to return, positive integer
-     * @return next 10 trips
+     * @return next n trips
      */
     List<Trip> findNextTrips(Trip trip, int n);
 }

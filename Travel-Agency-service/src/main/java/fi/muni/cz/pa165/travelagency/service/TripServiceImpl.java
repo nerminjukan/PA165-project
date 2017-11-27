@@ -106,6 +106,17 @@ public class TripServiceImpl implements TripService {
         Collections.sort(allTrips);
         List<Trip> toRtn = new ArrayList<>();
         for(int i = 0; i < n; i++) {
+            if(i >= allTrips.size()) {
+                break;
+            }
+
+            Trip current = allTrips.get(i);
+
+            if(trip.compareTo(current) >= 0) {
+                n++;
+                continue;
+            }
+
             toRtn.add(allTrips.get(i));
         }
 

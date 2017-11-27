@@ -8,8 +8,11 @@ import fi.muni.cz.pa165.travelagency.entity.Trip;
 import fi.muni.cz.pa165.travelagency.enums.PaymentStateType;
 import fi.muni.cz.pa165.travelagency.exceptions.TravelAgencyServiceException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.EntityExistsException;
+import javax.persistence.TransactionRequiredException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,82 +26,140 @@ public class ReservationServiceImpl implements ReservationService {
     private ReservationDao reservationDao;
     
     @Autowired
-    private TripService tripService;;
+    private TripService tripService;
     
     @Override
     public Reservation createReservation(Reservation reservation) {
-        if (reservation.getReservedTrip().getAvailableSpots() == 0) {
-            throw new TravelAgencyServiceException("Cannot create new "
-                    + "reservation. There is no more free slot for this trip.");
+        try {
+            if (reservation.getReservedTrip().getAvailableSpots() == 0) {
+                throw new TravelAgencyServiceException("Cannot create new "
+                        + "reservation. There is no more free slot for this trip.");
+            }
+            Trip trip = tripService.findTripWithId(reservation.getReservedTrip().getId());
+            trip.setAvailableSpots(trip.getAvailableSpots() - 1);
+            tripService.updateTrip(trip);
+            reservationDao.create(reservation);
+            return reservation;
+        } catch (EntityExistsException e) {
+            throw new TravelAgencyServiceException("the entity already exists.", e);
+        } catch (IllegalArgumentException e) {
+            throw new TravelAgencyServiceException("Not an entity.", e);
+        } catch (TransactionRequiredException e) {
+            throw new TravelAgencyServiceException(e);
         }
-        Trip trip = tripService.findTripWithId(reservation.getReservedTrip().getId());
-        trip.setAvailableSpots(trip.getAvailableSpots() - 1);
-        tripService.updateTrip(trip);
-        reservationDao.create(reservation);
-        return reservation;
     }
 
     @Override
     public Reservation updateReservation(Reservation reservation) {
-        return reservationDao.update(reservation);
+        try {
+            return reservationDao.update(reservation);
+        } catch (IllegalArgumentException e) {
+            throw new TravelAgencyServiceException("Not entity or removed.", e);
+        } catch (TransactionRequiredException e) {
+            throw new TravelAgencyServiceException(e);
+        }
     }
 
     @Override
     public void removeReservation(Reservation reservation) {
-        reservationDao.remove(reservation);
+        try {
+            reservationDao.remove(reservation);
+        }  catch (IllegalArgumentException e) {
+            throw new TravelAgencyServiceException("Not entity or removed.", e);
+        } catch (TransactionRequiredException e) {
+            throw new TravelAgencyServiceException(e);
+        }
     }
 
     @Override
     public void addExcursionToReservation(Reservation reservation, Excursion excursion) {
-        if (!reservation.getReservedTrip().getExcursions().contains(excursion)) { 
-            throw new TravelAgencyServiceException("Cannot add excrusion to "
-                    + "reservation. There is no such excrusion available for this trip.");
+        try {
+            if (!reservation.getReservedTrip().getExcursions().contains(excursion)) { 
+                throw new TravelAgencyServiceException("Cannot add excrusion to "
+                        + "reservation. There is no such excrusion available for this trip.");
+            }
+            reservation = reservationDao.findById(reservation.getId());
+            reservation.addReservedExcursion(excursion);
+            reservationDao.update(reservation);
+        } catch (IllegalArgumentException e) {
+            throw new TravelAgencyServiceException("Not entity.", e);
+        } catch (TransactionRequiredException e) {
+            throw new TravelAgencyServiceException(e);
         }
-        reservation = reservationDao.findById(reservation.getId());
-        reservation.addReservedExcursion(excursion);
-        reservationDao.update(reservation);
     }
     
     @Override
     public void addExcrusionsToReservation(Reservation reservation, List<Excursion> excursions) {
-        if (!reservation.getReservedTrip().getExcursions().containsAll(excursions)) { 
-            throw new TravelAgencyServiceException("Cannot add excrusions to "
-                    + "reservation. One of excursions is not available for this trip.");
+        try {
+            if (!reservation.getReservedTrip().getExcursions().containsAll(excursions)) { 
+                throw new TravelAgencyServiceException("Cannot add excrusions to "
+                        + "reservation. One of excursions is not available for this trip.");
+            }
+            reservation = reservationDao.findById(reservation.getId());
+            reservation.addAllReservedExcursions(excursions);
+            reservationDao.update(reservation);
+        } catch (IllegalArgumentException e) {
+            throw new TravelAgencyServiceException("Not entity.", e);
+        } catch (TransactionRequiredException e) {
+            throw new TravelAgencyServiceException(e);
         }
-        reservation = reservationDao.findById(reservation.getId());
-        reservation.addAllReservedExcursions(excursions);
-        reservationDao.update(reservation);
     }
     
 
     @Override
     public List<Reservation> findAll() {
-        return reservationDao.findAll();
+        try {
+            return reservationDao.findAll();
+        } catch (IllegalArgumentException e) {
+            throw new TravelAgencyServiceException("Invalid Query.", e);
+        } catch (Exception e) {
+            throw new TravelAgencyServiceException(e);
+        }
     }
 
     @Override
     public Reservation findById(Long id) {
-        return reservationDao.findById(id);
+        try {
+            return reservationDao.findById(id);
+        } catch (IllegalArgumentException e) {
+            throw new TravelAgencyServiceException("not valid key or null.", e);
+        }
     }
 
     @Override
     public List<Reservation> findByCustomer(Customer customer) {
-        return reservationDao.findByCustomer(customer);
+        try {
+            return reservationDao.findByCustomer(customer);
+        } catch (IllegalArgumentException e) {
+            throw new TravelAgencyServiceException("Invalid Query.", e);
+        } catch (Exception e) {
+            throw new TravelAgencyServiceException(e);
+        }
     }
 
     @Override
     public List<Reservation> findByTrip(Trip trip) {
-        return reservationDao.findByTrip(trip);
+        try {
+            return reservationDao.findByTrip(trip);
+        } catch (IllegalArgumentException e) {
+            throw new TravelAgencyServiceException("Invalid Query.", e);
+        } catch (Exception e) {
+            throw new TravelAgencyServiceException(e);
+        }
     }
 
     @Override
     public BigDecimal getTotalPrice(Reservation reservation) {
-        Reservation r = reservationDao.findById(reservation.getId());
-        BigDecimal price = r.getReservedTrip().getPrice();
-        for (Excursion e: r.getReservedExcursions()) {
-            price.add(e.getPrice());
+        try {
+            Reservation r = reservationDao.findById(reservation.getId());
+            BigDecimal price = r.getReservedTrip().getPrice();
+            for (Excursion e: r.getReservedExcursions()) {
+                price = price.add(e.getPrice());
+            }
+            return price;
+        } catch (IllegalArgumentException e) {
+            throw new TravelAgencyServiceException("not valid key or null.", e);
         }
-        return price;
     }
 
     @Override
@@ -106,38 +167,62 @@ public class ReservationServiceImpl implements ReservationService {
         if (start.after(end)) { 
             throw new TravelAgencyServiceException("Wrong order of dates.");
         }
-        return reservationDao.getReservationsCreatedBetween(start, end);
+        try {
+            return reservationDao.getReservationsCreatedBetween(start, end);
+        } catch (IllegalArgumentException e) {
+            throw new TravelAgencyServiceException("Invalid Query.", e);
+        } catch (Exception e) {
+            throw new TravelAgencyServiceException(e);
+        }
     }
 
     @Override
     public void setPaidState(Reservation reservation) {
-        reservation = reservationDao.findById(reservation.getId());
-        reservation.setPaymentState(PaymentStateType.Paid);
-        reservationDao.update(reservation);
+        try {
+            reservation = reservationDao.findById(reservation.getId());
+            reservation.setPaymentState(PaymentStateType.Paid);
+        } catch (IllegalArgumentException e) {
+            throw new TravelAgencyServiceException("not valid key or null.", e);
+        }
     }
     
     @Override
     public void setNotPaidState(Reservation reservation) {
-        reservation = reservationDao.findById(reservation.getId());
-        reservation.setPaymentState(PaymentStateType.NotPaid);
-        reservationDao.update(reservation);
+        try {
+            reservation = reservationDao.findById(reservation.getId());
+            reservation.setPaymentState(PaymentStateType.NotPaid);
+        } catch (IllegalArgumentException e) {
+            throw new TravelAgencyServiceException("not valid key or null.", e);
+        }
     } 
 
     @Override
     public List<Reservation> findAllSortedByDate() {
-        List<Reservation> all = reservationDao.findAll();
-        all.sort((o1, o2) -> o1.getCreated().compareTo(o2.getCreated()));
-        return all;
+        try {
+            List<Reservation> all = reservationDao.findAll();
+            all.sort((o1, o2) -> o1.getCreated().compareTo(o2.getCreated()));
+            return all;
+        } catch (IllegalArgumentException e) {
+            throw new TravelAgencyServiceException("Invalid Query.", e);
+        } catch (Exception e) {
+            throw new TravelAgencyServiceException(e);
+        }
     }
 
     @Override
     public List<Reservation> findAllNotPaid() {
-        List<Reservation> all = reservationDao.findAll();
-        for (Reservation r : all) {
-            if (r.getPaymentState() == PaymentStateType.Paid) {
-                all.remove(r);
+        try {
+            List<Reservation> notPaid = new ArrayList<>();
+            for (Reservation r : reservationDao.findAll()) {
+                if (r.getPaymentState() == PaymentStateType.NotPaid) {
+                    notPaid.add(r);
+                }
             }
+            return notPaid;
+        } catch (IllegalArgumentException e) {
+            throw new TravelAgencyServiceException("Invalid Query.", e);
+        } catch (Exception e) {
+            throw new TravelAgencyServiceException(e);
         }
-        return all;
     }
 }

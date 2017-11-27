@@ -5,11 +5,14 @@ import fi.muni.cz.pa165.travelagency.entity.Customer;
 import fi.muni.cz.pa165.travelagency.entity.Excursion;
 import fi.muni.cz.pa165.travelagency.entity.Reservation;
 import fi.muni.cz.pa165.travelagency.entity.Trip;
+import fi.muni.cz.pa165.travelagency.service.ExcursionService;
 import fi.muni.cz.pa165.travelagency.service.config.ServiceConfiguration;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+
+
 import org.hibernate.service.spi.ServiceException;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -25,7 +28,7 @@ import static org.mockito.Mockito.verify;
 import static org.testng.Assert.assertEquals;
 
 /**
- * Excursion Service Tests for the Travel Angecy project.
+ * Excursion service Tests for the Travel Angecy project.
  * 
  * @author (name = "Nermin Jukan", UCO = "<473370>")
  */
