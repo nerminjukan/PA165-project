@@ -36,14 +36,11 @@ public class ExcursionFacadeImpl implements ExcursionFacade{
     public Long create(ExcursionDTO excursionDTO) {
         
         Excursion excursion = beanMappingService.mapTo(excursionDTO, Excursion.class);
-        
+        /*
         Set<TripDTO> trips = excursionDTO.getTrips();
-        
-        
         Set<Trip> trip = beanMappingService.mapTo(trips, Trip.class);
-        
         excursion.setTrips(trip);
-
+        */
         if (excursion != null) {
             throw new IllegalArgumentException();
         }
