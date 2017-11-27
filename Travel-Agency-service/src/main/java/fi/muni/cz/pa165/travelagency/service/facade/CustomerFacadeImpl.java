@@ -8,6 +8,8 @@ import fi.muni.cz.pa165.travelagency.facade.CustomerFacade;
 import fi.muni.cz.pa165.travelagency.service.BeanMappingService;
 import fi.muni.cz.pa165.travelagency.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -16,6 +18,8 @@ import java.util.List;
  * Customer Facade impl class
  * @author Martin Sevcik <422365>
  */
+@Service
+@Transactional
 public class CustomerFacadeImpl implements CustomerFacade {
 
     @Autowired
@@ -25,7 +29,7 @@ public class CustomerFacadeImpl implements CustomerFacade {
     private BeanMappingService beanMappingService;
 
     @Override
-    public void create(CustomerDTO customerDTO) {
+    public void createCustomer(CustomerDTO customerDTO) {
         if (customerDTO == null){
             throw new IllegalArgumentException("customerDTO is null");
         }
@@ -33,10 +37,10 @@ public class CustomerFacadeImpl implements CustomerFacade {
         Customer customer = beanMappingService.mapTo(customerDTO, Customer.class);
 
         if (customer == null) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("customer is null");
         }
 
-        customerService.create(customer);
+        customerService.createCustomer(customer);
     }
 
     @Override
@@ -51,7 +55,7 @@ public class CustomerFacadeImpl implements CustomerFacade {
     }
 
     @Override
-    public void remove(CustomerDTO customerDTO) {
+    public void removeCustomer(CustomerDTO customerDTO) {
         if (customerDTO == null){
             throw new IllegalArgumentException("customerDTO is null");
         }
@@ -59,14 +63,14 @@ public class CustomerFacadeImpl implements CustomerFacade {
         Customer customer = beanMappingService.mapTo(customerDTO, Customer.class);
 
         if (customer == null) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("customer is null");
         }
 
-        customerService.remove(customer);
+        customerService.removeCustomer(customer);
     }
 
     @Override
-    public void update(CustomerDTO customerDTO) {
+    public void updateCustomer(CustomerDTO customerDTO) {
         if (customerDTO == null){
             throw new IllegalArgumentException("customerDTO is null");
         }
@@ -74,10 +78,10 @@ public class CustomerFacadeImpl implements CustomerFacade {
         Customer customer = beanMappingService.mapTo(customerDTO, Customer.class);
 
         if (customer == null) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("customer is null");
         }
 
-        customerService.update(customer);
+        customerService.updateCustomer(customer);
     }
 
     @Override
@@ -122,7 +126,7 @@ public class CustomerFacadeImpl implements CustomerFacade {
     }
 
     @Override
-    public void changeCustomerOnReservation(CustomerDTO customerDTO, ReservationDTO reservationDTO) {
+    public CustomerDTO changeCustomerOnReservation(CustomerDTO customerDTO, ReservationDTO reservationDTO) {
         if (customerDTO == null){
             throw new IllegalArgumentException("customerDTO is null");
         }
@@ -141,6 +145,7 @@ public class CustomerFacadeImpl implements CustomerFacade {
             throw new IllegalArgumentException("reservation is null");
         }
 
-        customerService.changeCustomerOnReservation(customer, reservation);
+        Customer customerToReturn = customerService.changeCustomerOnReservation(customer, reservation);
+        return customerToReturn == null ? null : beanMappingService.mapTo(customerToReturn, CustomerDTO.class);
     }
 }

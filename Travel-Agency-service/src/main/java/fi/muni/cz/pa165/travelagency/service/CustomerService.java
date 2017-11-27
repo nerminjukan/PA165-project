@@ -15,12 +15,15 @@ import java.util.List;
 public interface CustomerService {
     /**
      * Create operation for CustomerDao
+     * @throws NullPointerException when NullPointerException occurs
+     * @throws TravelAgencyServiceException if some error occurs
      * @param customer Customer
      */
-    void create(Customer customer);
+    void createCustomer(Customer customer);
 
     /**
      * Finds all Customers
+     * @throws TravelAgencyServiceException if some error occurs
      * @return Customer's list
      */
     List<Customer> findAll();
@@ -28,6 +31,8 @@ public interface CustomerService {
     /**
      * Finds specified customer
      * @param id id of customer
+     * @throws NullPointerException when NullPointerException occurs
+     * @throws TravelAgencyServiceException if some error occurs
      * @return Customer
      */
     Customer findById(Long id);
@@ -36,17 +41,22 @@ public interface CustomerService {
      * Removes Customer
      * @param customer Customer
      */
-    void remove(Customer customer);
+    void removeCustomer(Customer customer);
 
     /**
      * Updates Customer
      * @param customer Customer
+     * @throws NullPointerException when NullPointerException occurs
+     * @throws TravelAgencyServiceException if some error occurs
+     * @return customer
      */
-    void update(Customer customer);
+    Customer updateCustomer(Customer customer);
 
     /**
      * Finds customers based on reservation
      * @param reservation Reservation
+     * @throws NullPointerException when NullPointerException occurs
+     * @throws TravelAgencyServiceException if some error occurs
      * @return Customer
      */
     Customer findByReservation(Reservation reservation);
@@ -54,6 +64,8 @@ public interface CustomerService {
     /**
      * Finds Customer by id card number
      * @param idCardNumber id card number
+     * @throws NullPointerException when NullPointerException occurs
+     * @throws TravelAgencyServiceException if some error occurs
      * @return Customer
      */
     Customer findByIdCardNumber(String idCardNumber);
@@ -61,6 +73,8 @@ public interface CustomerService {
     /**
      * Finds Customer by email
      * @param email email
+     * @throws NullPointerException when NullPointerException occurs
+     * @throws TravelAgencyServiceException if some error occurs
      * @return Customer
      */
     Customer findByEmail(String email);
@@ -68,6 +82,8 @@ public interface CustomerService {
     /**
      * Sums all customers expenses
      * @param customer Customer
+     * @throws NullPointerException when NullPointerException occurs
+     * @throws TravelAgencyServiceException if some error occurs
      * @return total expenses
      */
     BigDecimal getTotalPriceCustomersReservations(Customer customer);
@@ -76,6 +92,9 @@ public interface CustomerService {
      * Changes customer on reservation
      * @param customer Customer
      * @param reservation Reservation
+     * @throws NullPointerException when NullPointerException occurs
+     * @throws TravelAgencyServiceException if some error occurs
+     * @return Customer
      */
-    void changeCustomerOnReservation(Customer customer, Reservation reservation);
+    Customer changeCustomerOnReservation(Customer customer, Reservation reservation);
 }
