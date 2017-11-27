@@ -8,7 +8,6 @@ import fi.muni.cz.pa165.travelagency.entity.Trip;
 import fi.muni.cz.pa165.travelagency.service.config.ServiceConfiguration;
 import java.math.BigDecimal;
 import java.util.Calendar;
-import java.util.Date;
 import org.hibernate.service.spi.ServiceException;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -60,4 +59,12 @@ public class ExcursionServiceTest extends AbstractTransactionalTestNGSpringConte
         excursionService.create(excursion);
         verify(excursionDao).create(excursion);
     }
+    
+    @Test
+    public void updateExcursion(){
+        excursionService.update(excursion);
+        verify(excursionDao).update(excursion);
+    }
+    
+    
 }

@@ -89,7 +89,7 @@ public class ExcursionFacadeImpl implements ExcursionFacade{
             throw new IllegalArgumentException();
         }
 
-        excursionService.updateExcursion(excursion);
+        excursionService.update(excursion);
     }
     
 }

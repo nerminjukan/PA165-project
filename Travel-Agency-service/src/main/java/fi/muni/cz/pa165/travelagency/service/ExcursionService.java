@@ -56,7 +56,7 @@ public interface ExcursionService {
      * @param excursion Excursion to be updated.
      * @return Excursion that is updated.
      */
-    Excursion updateExcursion(Excursion excursion);
+    Excursion update(Excursion excursion);
     
         /**
      * Find Excursions in database whitch prices are lower than or equal to the argument.
