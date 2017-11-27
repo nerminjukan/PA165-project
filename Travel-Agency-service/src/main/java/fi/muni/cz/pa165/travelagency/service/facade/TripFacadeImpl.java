@@ -9,7 +9,6 @@ import fi.muni.cz.pa165.travelagency.facade.TripFacade;
 import fi.muni.cz.pa165.travelagency.service.BeanMappingService;
 import fi.muni.cz.pa165.travelagency.service.ExcursionService;
 import fi.muni.cz.pa165.travelagency.service.TripService;
-import org.dozer.inject.Inject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,10 +25,10 @@ import java.util.Set;
 @Transactional
 public class TripFacadeImpl implements TripFacade {
 
-    @Inject
+    @Autowired
     private TripService tripService;
 
-    @Inject
+    @Autowired
     private ExcursionService excursionService;
 
     @Autowired
