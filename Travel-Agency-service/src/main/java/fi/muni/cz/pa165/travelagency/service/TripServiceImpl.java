@@ -8,6 +8,8 @@ import fi.muni.cz.pa165.travelagency.exceptions.TravelAgencyServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityExistsException;
+import javax.persistence.TransactionRequiredException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -28,58 +30,130 @@ public class TripServiceImpl implements TripService {
 
     @Override
     public Trip createTrip(Trip trip) {
-        tripDao.create(trip);
+        try {
+            tripDao.create(trip);
+        } catch (EntityExistsException e) {
+            throw new TravelAgencyServiceException("entity exists", e);
+        } catch (IllegalArgumentException e) {
+            throw new TravelAgencyServiceException("not an entity", e);
+        } catch (TransactionRequiredException e) {
+            throw new TravelAgencyServiceException("transaction required", e);
+        }
         return trip;
     }
 
     @Override
     public void addExcursion(Trip trip, Excursion excursion) {
         trip.addExcursion(excursion);
+        try {
+            tripDao.update(trip);
+        } catch (IllegalArgumentException e) {
+            throw new TravelAgencyServiceException("not an entity", e);
+        } catch (TransactionRequiredException e) {
+            throw new TravelAgencyServiceException("transaction required", e);
+        }
     }
 
     @Override
     public void addAllExcursions(Trip trip, Set<Excursion> excursions) {
         trip.addAllExcursions(excursions);
+        try {
+            tripDao.update(trip);
+        } catch (IllegalArgumentException e) {
+            throw new TravelAgencyServiceException("not an entity", e);
+        } catch (TransactionRequiredException e) {
+            throw new TravelAgencyServiceException("transaction required", e);
+        }
     }
 
     @Override
     public void removeExcursion(Trip trip, Excursion excursion) {
         trip.removeExcursion(excursion);
+        try {
+            tripDao.update(trip);
+        } catch (IllegalArgumentException e) {
+            throw new TravelAgencyServiceException("not an entity", e);
+        } catch (TransactionRequiredException e) {
+            throw new TravelAgencyServiceException("transaction required", e);
+        }
     }
 
     @Override
     public void deleteTrip(Trip trip) {
-        tripDao.remove(trip);
+        try {
+            tripDao.remove(trip);
+        } catch (IllegalArgumentException e) {
+            throw new TravelAgencyServiceException("not an entity or is a removed entity", e);
+        } catch (TransactionRequiredException e) {
+            throw new TravelAgencyServiceException("transaction required", e);
+        }
     }
 
     @Override
     public void updateTrip(Trip trip) {
-        tripDao.update(trip);
+        try {
+            tripDao.update(trip);
+        } catch (IllegalArgumentException e) {
+            throw new TravelAgencyServiceException("not an entity or is a removed entity", e);
+        } catch (TransactionRequiredException e) {
+            throw new TravelAgencyServiceException("transaction required", e);
+        }
     }
 
     @Override
     public List<Trip> findAllTrips() {
-        return tripDao.findAll();
+        try {
+            return tripDao.findAll();
+        } catch (IllegalArgumentException e) {
+            throw new TravelAgencyServiceException("invalid query", e);
+        } catch (Exception e) {
+            throw new TravelAgencyServiceException(e);
+        }
     }
 
     @Override
     public List<Trip> findTripsByName(String tripName) {
-        return tripDao.findByName(tripName);
+        try {
+            return tripDao.findByName(tripName);
+        } catch (IllegalArgumentException e) {
+            throw new TravelAgencyServiceException("invalid query", e);
+        } catch (Exception e) {
+            throw new TravelAgencyServiceException(e);
+        }
     }
 
     @Override
     public List<Trip> findTripsBetween(Date start, Date end) {
-        return tripDao.getTripsBetween(start, end);
+        try {
+            return tripDao.getTripsBetween(start, end);
+        } catch (IllegalArgumentException e) {
+            throw new TravelAgencyServiceException("invalid query", e);
+        } catch (Exception e) {
+            throw new TravelAgencyServiceException(e);
+        }
     }
 
     @Override
     public Trip findTripWithId(Long id) {
-        return tripDao.findById(id);
+        try {
+            return tripDao.findById(id);
+        } catch (IllegalArgumentException e) {
+            throw new TravelAgencyServiceException("invalid key or key is null", e);
+        } catch (Exception e) {
+            throw new TravelAgencyServiceException(e);
+        }
     }
 
     @Override
     public List<Excursion> findAllSuitableExcursions(Trip trip) {
-        List<Excursion> allExcursions = excursionDao.findByDestination(trip.getDestination());
+        List<Excursion> allExcursions;
+        try {
+            allExcursions = excursionDao.findByDestination(trip.getDestination());
+        } catch (IllegalArgumentException e) {
+            throw new TravelAgencyServiceException("invalid query", e);
+        } catch (Exception e) {
+            throw new TravelAgencyServiceException(e);
+        }
         List<Excursion> suitable = new ArrayList<>();
         for(Excursion ex : allExcursions) {
             if(ex.getExcursionDate().compareTo(trip.getDateFrom()) >= 0 &&
@@ -101,7 +175,14 @@ public class TripServiceImpl implements TripService {
         cal.setTime(start);
         cal.add(Calendar.MONTH, 1);
         Date end = cal.getTime();
-        List<Trip> allTrips = tripDao.getTripsBetween(start, end);
+        List<Trip> allTrips;
+        try {
+            allTrips = tripDao.getTripsBetween(start, end);
+        } catch (IllegalArgumentException e) {
+            throw new TravelAgencyServiceException("invalid query", e);
+        } catch (Exception e) {
+            throw new TravelAgencyServiceException(e);
+        }
 
         Collections.sort(allTrips);
         List<Trip> toRtn = new ArrayList<>();
