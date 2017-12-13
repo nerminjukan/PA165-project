@@ -16,6 +16,8 @@ public interface ExcursionService {
      * Add new Excursion into database.
      * 
      * @param excursion Excursion to be added.
+     * @throws NullPointerException when NullPointerException occurs
+     * @throws TravelAgencyServiceException if some error occurs
      * @return Excursion that is created.
      */
     Excursion create(Excursion excursion);
@@ -23,6 +25,8 @@ public interface ExcursionService {
     /**
      * Get Excursion with specific ID.
      * 
+     * @throws NullPointerException when NullPointerException occurs
+     * @throws TravelAgencyServiceException if some error occurs
      * @param id ID of Excursion to be found.
      * @return Excursion with provided ID.
      */
@@ -31,6 +35,7 @@ public interface ExcursionService {
     /**
      * Get all Excursions from database.
      * 
+     * @throws TravelAgencyServiceException if some error occurs
      * @return List of Excursions.
      */
     List<Excursion> getAllExcursions();
@@ -38,6 +43,8 @@ public interface ExcursionService {
     /**
      * Get Excursion with specific destination.
      * 
+     * @throws NullPointerException when NullPointerException occurs
+     * @throws TravelAgencyServiceException if some error occurs
      * @param destination Destination of Excursion to be found.
      * @return List of Excursions with specific destination.
      */
@@ -46,6 +53,8 @@ public interface ExcursionService {
     /**
      * Remove Excursion from database.
      * 
+     * @throws NullPointerException when NullPointerException occurs
+     * @throws TravelAgencyServiceException if some error occurs
      * @param excursion Excursion to be removed.
      */
     void deleteExcursion(Excursion excursion);
@@ -53,6 +62,8 @@ public interface ExcursionService {
     /**
      * Update Excursion in database.
      * 
+     * @throws NullPointerException when NullPointerException occurs
+     * @throws TravelAgencyServiceException if some error occurs
      * @param excursion Excursion to be updated.
      * @return Excursion that is updated.
      */
@@ -61,6 +72,8 @@ public interface ExcursionService {
     /**
      * Find Excursions in database whitch prices are lower than or equal to the argument.
      * 
+     * @throws NullPointerException when NullPointerException occurs
+     * @throws TravelAgencyServiceException if some error occurs
      * @param price Price value to be compared to.
      * @return Excursions list that fits the criteria.
      */
@@ -69,6 +82,8 @@ public interface ExcursionService {
     /**
      * Find Excursions in database whitch prices are higher than or equal to the argument.
      * 
+     * @throws NullPointerException when NullPointerException occurs
+     * @throws TravelAgencyServiceException if some error occurs
      * @param price Price value to be compared to.
      * @return Excursions list that fits the criteria.
      */
@@ -77,6 +92,8 @@ public interface ExcursionService {
     /**
      * Find Excursions in database whitch duration is equal to the argument.
      * 
+     * @throws NullPointerException when NullPointerException occurs
+     * @throws TravelAgencyServiceException if some error occurs
      * @param duration Duration value to be compared to.
      * @return Excursions list that fits the criteria.
      */    

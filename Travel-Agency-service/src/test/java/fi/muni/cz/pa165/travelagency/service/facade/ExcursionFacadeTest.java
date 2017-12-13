@@ -178,16 +178,25 @@ public class ExcursionFacadeTest {
     
     @Test
     public void findExcursionByPriceLowerThanOrEqualTest(){
-        
+        when(excursonService.getAllExcursions()).thenReturn(Arrays.asList(ex1, ex2));
+        when(beanMappingService.mapTo(Matchers.anyCollection(),
+                Matchers.eq(ExcursionDTO.class))).thenReturn(exDTOList);
+        assertEquals(excursionFacade.findByPriceLowerThanOrEqual(500).size(), 1);
     }
     
     @Test
     public void findExcursionByPriceHigherThanOrEqualTest(){
-        
+        when(excursonService.getAllExcursions()).thenReturn(Arrays.asList(ex1, ex2));
+        when(beanMappingService.mapTo(Matchers.anyCollection(),
+                Matchers.eq(ExcursionDTO.class))).thenReturn(exDTOList);
+        assertEquals(excursionFacade.findByPriceHigherThanOrEqual(500).size(), 1);
     }
     
     @Test
     public void findExcursionByDestinationTest(){
-        
+        when(excursonService.getAllExcursions()).thenReturn(Arrays.asList(ex1, ex2));
+        when(beanMappingService.mapTo(Matchers.anyCollection(),
+                Matchers.eq(ExcursionDTO.class))).thenReturn(exDTOList);
+        assertEquals(excursionFacade.findByDuration(2).size(), 1);
     }
 }
