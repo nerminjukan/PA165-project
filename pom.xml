@@ -10,10 +10,10 @@
         <module>Travel-Agency-persistence</module>
         <module>Travel-Agency-service</module>
         <module>Travel-Agency-api</module>
+        <module>Travel-Agency-spring-mvc</module>
         <module>Travel-Agency-rest</module>
         <module>Travel-Agency-sampledata</module>
-    <module>Travel-Agency-spring-mvc</module>
-  </modules>
+    </modules>
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
