@@ -1,11 +1,10 @@
 package fi.muni.cz.pa165.travelagency.service;
 
 import fi.muni.cz.pa165.travelagency.dao.ExcursionDao;
-import fi.muni.cz.pa165.travelagency.entity.Customer;
+import fi.muni.cz.pa165.travelagency.entity.User;
 import fi.muni.cz.pa165.travelagency.entity.Excursion;
 import fi.muni.cz.pa165.travelagency.entity.Reservation;
 import fi.muni.cz.pa165.travelagency.entity.Trip;
-import fi.muni.cz.pa165.travelagency.service.ExcursionService;
 import fi.muni.cz.pa165.travelagency.service.config.ServiceConfiguration;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -54,14 +53,14 @@ public class ExcursionServiceTest extends AbstractTransactionalTestNGSpringConte
     private Excursion excursionLake;
     private Excursion excursionHill;
     private Trip trip;
-    private Customer customer;
+    private User user;
     private Reservation reservation;
     
     @BeforeMethod
     public void prepareTests(){
         trip = new Trip();
         reservation = new Reservation();
-        customer = new Customer();
+        user = new User();
         
         Calendar calendar =  Calendar.getInstance();
         calendar.set(2012, 4, 20);

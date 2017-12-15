@@ -18,7 +18,7 @@ public class ReservationCreateDTO {
     private Long tripId;
     
     @NotNull
-    private Long customerId;
+    private Long userId;
     
     @NotNull
     private Date date;
@@ -33,12 +33,12 @@ public class ReservationCreateDTO {
     
     private Set<Long> excursionsId = new HashSet<>();
 
-    public Long getCustomerId() {
-        return customerId;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
     
     
@@ -63,7 +63,7 @@ public class ReservationCreateDTO {
     public int hashCode() {
         int hash = 5;
         hash = 97 * hash + Objects.hashCode(this.tripId);
-        hash = 97 * hash + Objects.hashCode(this.getCustomerId());
+        hash = 97 * hash + Objects.hashCode(this.getUserId());
         hash = 97 * hash + Objects.hashCode(this.excursionsId);
         return hash;
     }
@@ -83,7 +83,7 @@ public class ReservationCreateDTO {
         if (!Objects.equals(this.getTripId(), other.getTripId())) {
             return false;
         }
-        if (!Objects.equals(this.getCustomerId(), other.getCustomerId())) {
+        if (!Objects.equals(this.getUserId(), other.getUserId())) {
             return false;
         }
         if (!Objects.equals(this.getExcursionsId(), other.getExcursionsId())) {
@@ -94,8 +94,8 @@ public class ReservationCreateDTO {
 
     @Override
     public String toString() {
-        return "ReservationCreateDTO{" + "tripId=" + tripId + ", customerId=" 
-                + customerId + ", excursionsId=" + excursionsId + '}';
+        return "ReservationCreateDTO{" + "tripId=" + tripId + ", userId="
+                + userId + ", excursionsId=" + excursionsId + '}';
     }
 
     

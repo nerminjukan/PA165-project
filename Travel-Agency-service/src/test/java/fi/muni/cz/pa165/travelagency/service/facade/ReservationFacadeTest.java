@@ -1,19 +1,14 @@
 package fi.muni.cz.pa165.travelagency.service.facade;
 
-import fi.muni.cz.pa165.travelagency.dto.CustomerDTO;
-import fi.muni.cz.pa165.travelagency.dto.ExcursionDTO;
-import fi.muni.cz.pa165.travelagency.dto.ReservationCreateDTO;
-import fi.muni.cz.pa165.travelagency.dto.ReservationDTO;
-import fi.muni.cz.pa165.travelagency.dto.TripDTO;
-import fi.muni.cz.pa165.travelagency.entity.Customer;
+import fi.muni.cz.pa165.travelagency.dto.*;
+import fi.muni.cz.pa165.travelagency.dto.UserDTO;
+import fi.muni.cz.pa165.travelagency.entity.User;
 import fi.muni.cz.pa165.travelagency.entity.Excursion;
 import fi.muni.cz.pa165.travelagency.entity.Reservation;
 import fi.muni.cz.pa165.travelagency.entity.Trip;
-import fi.muni.cz.pa165.travelagency.facade.CustomerFacade;
 import fi.muni.cz.pa165.travelagency.facade.ReservationFacade;
-import fi.muni.cz.pa165.travelagency.facade.TripFacade;
 import fi.muni.cz.pa165.travelagency.service.BeanMappingService;
-import fi.muni.cz.pa165.travelagency.service.CustomerService;
+import fi.muni.cz.pa165.travelagency.service.UserService;
 import fi.muni.cz.pa165.travelagency.service.TripService;
 import fi.muni.cz.pa165.travelagency.service.ExcursionService;
 import fi.muni.cz.pa165.travelagency.service.ReservationService;
@@ -36,11 +31,9 @@ import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 
 
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
+
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 import org.testng.annotations.BeforeClass;
@@ -54,7 +47,7 @@ import org.testng.annotations.Test;
 public class ReservationFacadeTest extends AbstractTestNGSpringContextTests {
     
     @Mock
-    private CustomerService customerService;
+    private UserService userService;
     
     @Mock
     private ReservationService reservationService;
@@ -74,12 +67,12 @@ public class ReservationFacadeTest extends AbstractTestNGSpringContextTests {
    
     
     private ReservationDTO reservationDTO;
-    private CustomerDTO customerDTO;
+    private UserDTO userDTO;
     private TripDTO tripDTO;
     private ExcursionDTO excursionDTO;
             
     
-    private Customer customer;
+    private User user;
     private Trip trip;
     private Excursion excursion;
     private Reservation reservation;
@@ -92,12 +85,12 @@ public class ReservationFacadeTest extends AbstractTestNGSpringContextTests {
     
     @BeforeMethod
     public void setUpMethod() {
-        customer = new Customer();
-        customer.setId(1l);
-        customer.setSurname("Name");
-        customer.setEmail("name@email.com");
-        customer.setBirthDate(Date.valueOf("2000-1-1"));
-        customer.setIdCardNumber("Id Card");
+        user = new User();
+        user.setId(1l);
+        user.setSurname("Name");
+        user.setEmail("name@email.com");
+        user.setBirthDate(Date.valueOf("2000-1-1"));
+        user.setIdCardNumber("Id Card");
         
         trip = new Trip();
         trip.setId(1l);
@@ -119,16 +112,16 @@ public class ReservationFacadeTest extends AbstractTestNGSpringContextTests {
         reservation = new Reservation();
         reservation.setId(1l);
         reservation.setCreated(Date.valueOf("2014-1-1"));
-        reservation.setCustomer(customer);
+        reservation.setUser(user);
         reservation.addReservedExcursion(excursion);
         reservation.setReservedTrip(trip);
         
-        customerDTO = new CustomerDTO();
-        customerDTO.setId(1l);
-        customerDTO.setSurname("Name");
-        customerDTO.setEmail("name@email.com");
-        customerDTO.setBirthDate(Date.valueOf("2000-1-1"));
-        customerDTO.setIdCardNumber("Id Card");
+        userDTO = new UserDTO();
+        userDTO.setId(1l);
+        userDTO.setSurname("Name");
+        userDTO.setEmail("name@email.com");
+        userDTO.setBirthDate(Date.valueOf("2000-1-1"));
+        userDTO.setIdCardNumber("Id Card");
         
         tripDTO = new TripDTO();
         tripDTO.setId(1l);
@@ -150,7 +143,7 @@ public class ReservationFacadeTest extends AbstractTestNGSpringContextTests {
         reservationDTO = new ReservationDTO();
         reservationDTO.setId(1l);
         reservationDTO.setCreated(Date.valueOf("2014-1-1"));
-        reservationDTO.setCustomer(customerDTO);
+        reservationDTO.setUser(userDTO);
         reservationDTO.setExcursions(Sets.newLinkedHashSet(excursionDTO));
         reservationDTO.setTrip(tripDTO);
 
@@ -162,14 +155,14 @@ public class ReservationFacadeTest extends AbstractTestNGSpringContextTests {
         Set<Long> excursionsId = new HashSet<>();
         excursionsId.add(1l);
         
-        customer.setId(1l);
-        rcdto.setCustomerId(customer.getId());
+        user.setId(1l);
+        rcdto.setUserId(user.getId());
         rcdto.setExcursionsId(excursionsId);
         rcdto.setDate(Date.valueOf("2014-1-1"));
         trip.setId(1l);
         rcdto.setTripId(trip.getId());
         
-        when(customerService.findById(rcdto.getCustomerId())).thenReturn(customer);
+        when(userService.findById(rcdto.getUserId())).thenReturn(user);
         when(tripService.findTripWithId(rcdto.getTripId())).thenReturn(trip);
         when(excursionService.findById(1l)).thenReturn(excursion);
         
@@ -220,7 +213,7 @@ public class ReservationFacadeTest extends AbstractTestNGSpringContextTests {
         when(reservationService.getTotalPrice(beanMappingService
                 .mapTo(reservationDTO, Reservation.class))).thenReturn(new BigDecimal("2000"));
         assertEquals(reservationFacade.findAllReservations().get(0).getCreated(), reservationDTO.getCreated());
-        assertEquals(reservationFacade.findAllReservations().get(0).getCustomer(), reservationDTO.getCustomer());
+        assertEquals(reservationFacade.findAllReservations().get(0).getUser(), reservationDTO.getUser());
         assertEquals(reservationFacade.findAllReservations().get(0).getExcursions().size(), reservationDTO.getExcursions().size());
         assertEquals(reservationFacade.findAllReservations().get(0).getTotalPrice(), reservationDTO.getTotalPrice());
         assertEquals(reservationFacade.findAllReservations().get(0).getTrip(), reservationDTO.getTrip());
@@ -235,16 +228,16 @@ public class ReservationFacadeTest extends AbstractTestNGSpringContextTests {
     }
     
     @Test
-    public void findReservationByCustomerTest() {
+    public void findReservationByUserTest() {
         
         when(beanMappingService.mapTo(
-                reservationService.findByCustomer(
-                        customerService.findById(1l)), ReservationDTO.class))
+                reservationService.findByUser(
+                        userService.findById(1l)), ReservationDTO.class))
                 .thenReturn(Arrays.asList(reservationDTO));
         when(reservationService.getTotalPrice(
                beanMappingService.mapTo(reservationDTO, Reservation.class))).thenReturn(new BigDecimal("2000"));
-        assertEquals(reservationFacade.findReservationByCustomer(1l).get(0), reservationDTO);
-        assertEquals(reservationFacade.findReservationByCustomer(1l).get(0).getTotalPrice(), new BigDecimal("2000"));
+        assertEquals(reservationFacade.findReservationByUser(1l).get(0), reservationDTO);
+        assertEquals(reservationFacade.findReservationByUser(1l).get(0).getTotalPrice(), new BigDecimal("2000"));
     }
     
     @Test

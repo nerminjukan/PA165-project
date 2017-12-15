@@ -27,16 +27,16 @@ public class ReservationDTO {
     private Set<ExcursionDTO> excursions = new HashSet<>();
 
     @NotNull
-    private CustomerDTO customer;
+    private UserDTO user;
     
     private BigDecimal totalPrice;
 
-    public CustomerDTO getCustomer() {
-        return customer;
+    public UserDTO getUser() {
+        return user;
     }
 
-    public void setCustomer(CustomerDTO customer) {
-        this.customer = customer;
+    public void setUser(UserDTO user) {
+        this.user = user;
     }
 
     public Long getId() {
@@ -85,7 +85,7 @@ public class ReservationDTO {
         int result = 1;
         result = prime * result + Objects.hashCode(created);
         result = prime * result + Objects.hashCode(trip);
-        result = prime * result + Objects.hashCode(customer);
+        result = prime * result + Objects.hashCode(user);
         return result;
     }
     
@@ -108,7 +108,7 @@ public class ReservationDTO {
         if (!Objects.equals(this.getTrip(), other.getTrip())) {
             return false;
         }
-        if (!Objects.equals(this.getCustomer(), other.getCustomer())) {
+        if (!Objects.equals(this.getUser(), other.getUser())) {
             return false;
         }
         
@@ -119,7 +119,7 @@ public class ReservationDTO {
     public String toString() {
         return "ReservationDTO{" + "id=" + id + ", created=" + created 
                 + ", trip=" + trip + ", excursions=" + excursions 
-                + ", customer=" + customer + ", totalPrice=" + totalPrice + '}';
+                + ", user=" + user + ", totalPrice=" + totalPrice + '}';
     }
     
     

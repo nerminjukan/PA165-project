@@ -5,7 +5,7 @@ import fi.muni.cz.pa165.travelagency.dto.TripDTO;
 import fi.muni.cz.pa165.travelagency.entity.Excursion;
 import fi.muni.cz.pa165.travelagency.entity.Trip;
 import fi.muni.cz.pa165.travelagency.service.BeanMappingService;
-import fi.muni.cz.pa165.travelagency.service.CustomerService;
+import fi.muni.cz.pa165.travelagency.service.UserService;
 import fi.muni.cz.pa165.travelagency.service.ExcursionService;
 import fi.muni.cz.pa165.travelagency.service.ReservationService;
 import fi.muni.cz.pa165.travelagency.service.TripService;
@@ -44,7 +44,7 @@ public class ExcursionFacadeTest {
     private ExcursionService excursonService;
     
     @Mock
-    private CustomerService userService;
+    private UserService userService;
     
     @Mock
     private TripService tripService;

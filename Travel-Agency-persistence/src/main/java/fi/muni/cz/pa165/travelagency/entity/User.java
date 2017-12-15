@@ -1,8 +1,11 @@
 package fi.muni.cz.pa165.travelagency.entity;
 
 
+import fi.muni.cz.pa165.travelagency.enums.UserRoleType;
+
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,6 +13,7 @@ import javax.persistence.Column;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.OneToMany;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 import java.util.HashSet;
@@ -21,64 +25,74 @@ import java.util.Collections;
  * @author Martin Sevcik <422365>
  */
 @Entity
-public class Customer implements Serializable {
+@Table(name = "Users")
+public class User implements Serializable {
 
     /**
      * Non-parametric constructor
      */
-    public Customer(){
+    public User(){
         this.reservations = new HashSet<>();
     }
 
     /**
-     * Id of customer
+     * Id of user
      */
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
     /**
-     * First name of customer
+     * First name of user
      */
     private String name;
 
     /**
-     * Surname of customer
+     * Surname of user
      */
     @NotNull
     private String surname;
 
     /**
-     * PhoneNumber of customer
+     * PhoneNumber of user
      */
     private String phoneNumber;
 
     /**
-     * IdCard number of customer
+     * IdCard number of user
      */
     @NotNull
     @Column(nullable = false, unique=true)
     private String idCardNumber;
 
     /**
-     * Email of customer
+     * Email of user
      */
     @NotNull
     @Column(nullable = false, unique=true)
     private String email;
 
     /**
-     * Birth date of customer
+     * Birth date of user
      */
     @NotNull
     @Temporal(TemporalType.DATE)
     private Date birthDate;
 
     /**
-     * Reservations of customer
+     * Reservations of user
      */
-    @OneToMany(mappedBy="customer")
+    @OneToMany(mappedBy="user")
     private Set<Reservation> reservations;
+
+    /**
+     * Representing hash of password
+     */
+    @NotNull
+    private String passwordHash;
+
+    @Enumerated
+    private UserRoleType userRoleType;
 
     /**
      * Basic getter
@@ -225,6 +239,22 @@ public class Customer implements Serializable {
         return this.reservations.remove(reservation);
     }
 
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
+
+    public UserRoleType getUserRoleType() {
+        return userRoleType;
+    }
+
+    public void setUserRoleType(UserRoleType userRoleType) {
+        this.userRoleType = userRoleType;
+    }
+
     /**
      * Overridden Equals
      * @param o object
@@ -234,11 +264,11 @@ public class Customer implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null) return false;
-        if (!(o instanceof Customer)) return false;
+        if (!(o instanceof User)) return false;
 
-        Customer customer = (Customer) o;
+        User user = (User) o;
 
-        return this.idCardNumber.equals(customer.getIdCardNumber());
+        return this.idCardNumber.equals(user.getIdCardNumber());
     }
 
     /**
@@ -248,5 +278,9 @@ public class Customer implements Serializable {
     @Override
     public int hashCode() {
         return 31 * idCardNumber.hashCode();
+    }
+
+    public boolean isAdmin() {
+        return this.getUserRoleType() == UserRoleType.ADMINISTRATOR;
     }
 }
