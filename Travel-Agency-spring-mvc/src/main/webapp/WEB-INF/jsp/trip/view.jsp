@@ -38,14 +38,6 @@
 
         <div class="row">
             <div class="col-xs-6">
-                    <div class="panel panel-default">
-                    <div class="panel-body">
-                <img class="img-responsive img-rounded"
-                     src="${pageContext.request.contextPath}/shopping/productImage/${product.id}">
-                    </div>
-                    </div>
-            </div>
-            <div class="col-xs-6">
                 <table class="table">
                     <caption>Suitable Excursions</caption>
                     <thead>
