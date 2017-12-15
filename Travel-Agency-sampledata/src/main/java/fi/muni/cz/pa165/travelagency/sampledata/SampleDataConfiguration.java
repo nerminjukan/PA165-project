@@ -1,10 +1,7 @@
 package fi.muni.cz.pa165.travelagency.sampledata;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import fi.muni.cz.pa165.travelagency.service.config.ServiceConfiguration;
-import java.io.IOException;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -21,14 +18,15 @@ import org.springframework.context.annotation.Import;
 @ComponentScan(basePackageClasses = {SampleDataLoadingFacadeImpl.class})
 public class SampleDataConfiguration {
     
-    final static Logger log = LoggerFactory.getLogger(SampleDataConfiguration.class);
     
     @Autowired
-    SampleDataLoadingFacade sampleDataLoadingFacade;
+    private SampleDataLoadingFacade sampleDataLoadingFacade;
     
+    /**
+     * Loads the data trough sampleDataLoadingFacade.
+     */
     @PostConstruct
-    public void dataLoading() throws IOException{
-        log.debug("dataLoading()");
+    public void dataLoading(){
         sampleDataLoadingFacade.loadData();
     }
 }

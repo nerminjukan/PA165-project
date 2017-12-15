@@ -1,7 +1,5 @@
 package fi.muni.cz.pa165.travelagency.sampledata;
 
-import java.io.IOException;
-
 /**
  * Populates database with sample data.
  *
@@ -9,5 +7,8 @@ import java.io.IOException;
  */
 public interface SampleDataLoadingFacade {
     
-    void loadData() throws IOException;
+    /**
+     * Creates the sample data for the application.
+     */
+    void loadData();
 }

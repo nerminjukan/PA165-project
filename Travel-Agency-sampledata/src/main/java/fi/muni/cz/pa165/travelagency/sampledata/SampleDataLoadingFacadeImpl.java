@@ -10,16 +10,12 @@ import fi.muni.cz.pa165.travelagency.service.ExcursionService;
 import fi.muni.cz.pa165.travelagency.service.ReservationService;
 import fi.muni.cz.pa165.travelagency.service.TripService;
 import fi.muni.cz.pa165.travelagency.service.UserService;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Level;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,9 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 @Transactional
 public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade{
-    
-    final static Logger log = LoggerFactory.getLogger(SampleDataLoadingFacadeImpl.class);
-    
+        
     @Autowired
     private ExcursionService excursionService;
             
@@ -49,13 +43,12 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade{
 
     @Override
     @SuppressWarnings("unused")
-    public void loadData() throws IOException {
+    public void loadData(){
         
         try {
             Set<Excursion> excursionSet = new HashSet();
             Set<Reservation> reservationSet = new HashSet();
             
-            log.info("Loading data (Excursion)...");
             Excursion castle = excursion(date("05/6/2018"), 5, "Visiting the castle", "Paris",
                     bigDecimal(60));
             Excursion hill = excursion(date("11/6/2018"), 2, "Visiting the hill viewpoint", "Paris",
@@ -79,7 +72,6 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade{
             Excursion caves = excursion(date("06/10/2018"), 1, "Visiting the caves", "Brno",
                     bigDecimal(15));
             
-            log.info("Loading data (Trip)...");
             Trip paris = trip(date("04/6/2018"), date("14/6/2018"), "Paris", 50, excursionSet,
                     "Paris", bigDecimal(2400));
             paris.addExcursion(castle);
@@ -100,7 +92,6 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade{
             brno.addExcursion(prague);
             brno.addExcursion(caves);
             
-            log.info("Loading data (User)...");
             User helga = user("Helga", "Steinke", "000", "helga@user.com", "000000",
                 reservationSet, date("26/1/1994"), "000000000", UserRoleType.CUSTOMER);
             User mark = user("Mark", "Smith", "001", "mark@user.com", "001001",
@@ -116,7 +107,6 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade{
             User pepa = user("Pepa", "Petak", "111", "pepa@user.com", "111111",
                 reservationSet, date("03/9/1995"), "111111111", UserRoleType.CUSTOMER);
             
-            log.info("Loading data (Reservation)...");
             Reservation markParis = reservation(paris, excursionSet, mark, date("10/12/2017"),
                 PaymentStateType.Paid);
             mark.addReservation(markParis);
@@ -149,7 +139,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade{
             michal.addReservation(michalBrno);
         
         } catch (ParseException ex) {
-            log.info("Error parsing data. " + ex.toString());
+            // WHAT SHOULD I PUT HERE?
         }
         
         
@@ -174,11 +164,11 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade{
         return excursion;
     }
     
-    private Trip trip(Date dateFrom, Date dateTo, String destination, int AvailableTrips,
+    private Trip trip(Date dateFrom, Date dateTo, String destination, int availableTrips,
             Set<Excursion> excursions, String name, BigDecimal price){
         
         Trip trip = new Trip();
-        trip.setAvailableSpots(AvailableTrips);
+        trip.setAvailableSpots(availableTrips);
         trip.setDateFrom(dateFrom);
         trip.setDateTo(dateTo);
         trip.setDestination(destination);
@@ -202,14 +192,14 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade{
         return reservation;
     }
     
-    private User user(String name, String surname, String IDCardNumber, String email,
+    private User user(String name, String surname, String idCardNumber, String email,
             String phoneNumber, Set<Reservation> reservations, Date birthDate, String passHash,
             UserRoleType userType){
         
         User user = new User();
         user.setBirthDate(birthDate);
         user.setEmail(email);
-        user.setIdCardNumber(IDCardNumber);
+        user.setIdCardNumber(idCardNumber);
         user.setName(name);
         user.setPasswordHash(passHash);
         user.setPhoneNumber(phoneNumber);
@@ -226,7 +216,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade{
             SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
             parsedDate = sdf.parse(date);
         } catch (ParseException parseException) {
-            log.info("Date could not be parsed correctly (check format).");
+            // WHAT SHOULD I PUT HERE?
         }
         return parsedDate;
     }
