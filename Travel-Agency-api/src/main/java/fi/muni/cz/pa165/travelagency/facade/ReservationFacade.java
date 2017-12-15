@@ -66,12 +66,12 @@ public interface ReservationFacade {
     ReservationDTO findReservationById(Long id);
     
     /**
-     * Get reservations with specific customer.
+     * Get reservations with specific user.
      * 
-     * @param customerId id of customer
-     * @return list of ReservationDTO for specific customer
+     * @param userId id of user
+     * @return list of ReservationDTO for specific user
      */
-    List<ReservationDTO> findReservationByCustomer(Long customerId);
+    List<ReservationDTO> findReservationByUser(Long userId);
     
     /**
      * Get reservations for specific trip.

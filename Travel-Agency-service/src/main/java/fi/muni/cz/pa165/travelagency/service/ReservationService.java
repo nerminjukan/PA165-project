@@ -1,12 +1,13 @@
 package fi.muni.cz.pa165.travelagency.service;
 
-import fi.muni.cz.pa165.travelagency.entity.Customer;
+import fi.muni.cz.pa165.travelagency.entity.User;
 import fi.muni.cz.pa165.travelagency.entity.Excursion;
 import fi.muni.cz.pa165.travelagency.entity.Reservation;
 import fi.muni.cz.pa165.travelagency.entity.Trip;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 /**
@@ -90,12 +91,12 @@ public interface ReservationService {
     Reservation findById(Long id);
     
     /**
-     * Get list of reservations for customer.
+     * Get list of reservations for user.
      * 
-     * @param customer customr to find reservations for
-     * @return list of reservations for specific customer
+     * @param user user to find reservations for
+     * @return list of reservations for specific user
      */
-    List<Reservation> findByCustomer(Customer customer);
+    List<Reservation> findByUser(User user);
     
     /**
      * Get list of reservations for trip.

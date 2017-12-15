@@ -1,8 +1,7 @@
 package fi.muni.cz.pa165.travelagency.service;
 
-import fi.muni.cz.pa165.travelagency.dto.CustomerDTO;
-import fi.muni.cz.pa165.travelagency.entity.Customer;
-import fi.muni.cz.pa165.travelagency.service.BeanMappingService;
+import fi.muni.cz.pa165.travelagency.dto.UserDTO;
+import fi.muni.cz.pa165.travelagency.entity.User;
 import fi.muni.cz.pa165.travelagency.service.config.ServiceConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -24,103 +23,103 @@ public class BeanMappingServiceTest extends AbstractTestNGSpringContextTests {
     @Autowired
     private BeanMappingService beanMappingService;
 
-    private Customer customer1, customer2;
-    private CustomerDTO customerDTO1, customerDTO2;
-    private List<Customer> customerList;
-    private List<CustomerDTO> customerDTOList;
+    private User user1, user2;
+    private UserDTO userDTO1, userDTO2;
+    private List<User> userList;
+    private List<UserDTO> userDTOList;
 
     @BeforeMethod
     public void setup() {
         Calendar cal = Calendar.getInstance();
 
-        customer1 = new Customer();
-        customer1.setEmail("email1@email.com");
-        customer1.setIdCardNumber("idCardNumber1");
-        customer1.setName("Name1");
-        customer1.setSurname("Surname1");
-        customer1.setPhoneNumber("78945561231");
+        user1 = new User();
+        user1.setEmail("email1@email.com");
+        user1.setIdCardNumber("idCardNumber1");
+        user1.setName("Name1");
+        user1.setSurname("Surname1");
+        user1.setPhoneNumber("78945561231");
         cal.set(2017, 28, 10);
-        customer1.setBirthDate(cal.getTime());
+        user1.setBirthDate(cal.getTime());
 
-        customer2 = new Customer();
-        customer2.setEmail("email2@email.com");
-        customer2.setIdCardNumber("idCardNumber2");
-        customer2.setName("Name2");
-        customer2.setSurname("Surname2");
-        customer2.setPhoneNumber("78945561232");
+        user2 = new User();
+        user2.setEmail("email2@email.com");
+        user2.setIdCardNumber("idCardNumber2");
+        user2.setName("Name2");
+        user2.setSurname("Surname2");
+        user2.setPhoneNumber("78945561232");
         cal.set(2017, 29, 10);
-        customer2.setBirthDate(cal.getTime());
+        user2.setBirthDate(cal.getTime());
 
-        customerDTO1 = new CustomerDTO();
-        customerDTO1.setEmail("email1@email.com");
-        customerDTO1.setIdCardNumber("idCardNumber1");
-        customerDTO1.setName("Name1");
-        customerDTO1.setSurname("Surname1");
-        customerDTO1.setPhoneNumber("78945561231");
+        userDTO1 = new UserDTO();
+        userDTO1.setEmail("email1@email.com");
+        userDTO1.setIdCardNumber("idCardNumber1");
+        userDTO1.setName("Name1");
+        userDTO1.setSurname("Surname1");
+        userDTO1.setPhoneNumber("78945561231");
         cal.set(2017, 28, 10);
-        customerDTO1.setBirthDate(cal.getTime());
+        userDTO1.setBirthDate(cal.getTime());
 
-        customerDTO2 = new CustomerDTO();
-        customerDTO2.setEmail("email2@email.com");
-        customerDTO2.setIdCardNumber("idCardNumber2");
-        customerDTO2.setName("Name2");
-        customerDTO2.setSurname("Surname2");
-        customerDTO2.setPhoneNumber("78945561232");
+        userDTO2 = new UserDTO();
+        userDTO2.setEmail("email2@email.com");
+        userDTO2.setIdCardNumber("idCardNumber2");
+        userDTO2.setName("Name2");
+        userDTO2.setSurname("Surname2");
+        userDTO2.setPhoneNumber("78945561232");
         cal.set(2017, 29, 10);
-        customerDTO2.setBirthDate(cal.getTime());
+        userDTO2.setBirthDate(cal.getTime());
 
-        customerList = new ArrayList<>();
-        customerList.add(customer1);
-        customerList.add(customer2);
+        userList = new ArrayList<>();
+        userList.add(user1);
+        userList.add(user2);
 
-        customerDTOList = new ArrayList<>();
-        customerDTOList.add(customerDTO1);
-        customerDTOList.add(customerDTO2);
+        userDTOList = new ArrayList<>();
+        userDTOList.add(userDTO1);
+        userDTOList.add(userDTO2);
     }
 
     @Test
-    public void testMapping2CustomerEntityList() {
-        List<Customer> customerMappedList = beanMappingService.mapTo(customerDTOList, Customer.class);
-        customerEqualsTest(customerMappedList.get(0), customer1);
-        customerEqualsTest(customerMappedList.get(1), customer2);
+    public void testMapping2UserEntityList() {
+        List<User> userMappedList = beanMappingService.mapTo(userDTOList, User.class);
+        userEqualsTest(userMappedList.get(0), user1);
+        userEqualsTest(userMappedList.get(1), user2);
     }
 
     @Test
-    public void testMapping2CustomerDTOEntityList() {
-        List<CustomerDTO> customerMappedList = beanMappingService.mapTo(customerList, CustomerDTO.class);
-        customerEqualsDTOTest(customerMappedList.get(0), customerDTO1);
-        customerEqualsDTOTest(customerMappedList.get(1), customerDTO2);
+    public void testMapping2UserDTOEntityList() {
+        List<UserDTO> userMappedList = beanMappingService.mapTo(userList, UserDTO.class);
+        userEqualsDTOTest(userMappedList.get(0), userDTO1);
+        userEqualsDTOTest(userMappedList.get(1), userDTO2);
     }
 
     @Test
-    public void testMapping2CustomerEntity() {
-        Customer found = beanMappingService.mapTo(customerDTO1, Customer.class);
-        customerEqualsTest(found, customer1);
+    public void testMapping2UserEntity() {
+        User found = beanMappingService.mapTo(userDTO1, User.class);
+        userEqualsTest(found, user1);
     }
 
     @Test
-    public void testMapping2CustomerDTOEntity() {
-        CustomerDTO foundDTO = beanMappingService.mapTo(customer1, CustomerDTO.class);
-        customerEqualsDTOTest(foundDTO, customerDTO1);
+    public void testMapping2UserDTOEntity() {
+        UserDTO foundDTO = beanMappingService.mapTo(user1, UserDTO.class);
+        userEqualsDTOTest(foundDTO, userDTO1);
     }
 
-    public void customerEqualsTest(Customer customerNew, Customer customerExpected) {
-        Assert.assertEquals(customerNew.getIdCardNumber(), customerExpected.getIdCardNumber(),"IdCardNumber Equality");
-        Assert.assertEquals(customerNew.getSurname(), customerExpected.getSurname(), "Surname Equality");
-        Assert.assertEquals(customerNew.getName(), customerExpected.getName(), "Name Equality");
-        Assert.assertEquals(customerNew.getReservations(), customerExpected.getReservations(), "Reservations Equality");
-        Assert.assertEquals(customerNew.getPhoneNumber(), customerExpected.getPhoneNumber(), "PhoneNumber Equality");
-        Assert.assertEquals(customerNew.getBirthDate(), customerExpected.getBirthDate(), "BirthDate Equality");
-        Assert.assertEquals(customerNew.getEmail(), customerExpected.getEmail(), "Email Equality");
+    public void userEqualsTest(User userNew, User userExpected) {
+        Assert.assertEquals(userNew.getIdCardNumber(), userExpected.getIdCardNumber(),"IdCardNumber Equality");
+        Assert.assertEquals(userNew.getSurname(), userExpected.getSurname(), "Surname Equality");
+        Assert.assertEquals(userNew.getName(), userExpected.getName(), "Name Equality");
+        Assert.assertEquals(userNew.getReservations(), userExpected.getReservations(), "Reservations Equality");
+        Assert.assertEquals(userNew.getPhoneNumber(), userExpected.getPhoneNumber(), "PhoneNumber Equality");
+        Assert.assertEquals(userNew.getBirthDate(), userExpected.getBirthDate(), "BirthDate Equality");
+        Assert.assertEquals(userNew.getEmail(), userExpected.getEmail(), "Email Equality");
     }
 
-    public void customerEqualsDTOTest(CustomerDTO customerDTONew, CustomerDTO customerDTOExpected) {
-        Assert.assertEquals(customerDTONew.getIdCardNumber(), customerDTOExpected.getIdCardNumber(),"IdCardNumber Equality");
-        Assert.assertEquals(customerDTONew.getSurname(), customerDTOExpected.getSurname(), "Surname Equality");
-        Assert.assertEquals(customerDTONew.getName(), customerDTOExpected.getName(), "Name Equality");
-        Assert.assertEquals(customerDTONew.getReservations(), customerDTOExpected.getReservations(), "Reservations Equality");
-        Assert.assertEquals(customerDTONew.getPhoneNumber(), customerDTOExpected.getPhoneNumber(), "PhoneNumber Equality");
-        Assert.assertEquals(customerDTONew.getBirthDate(), customerDTOExpected.getBirthDate(), "BirthDate Equality");
-        Assert.assertEquals(customerDTONew.getEmail(), customerDTOExpected.getEmail(), "Email Equality");
+    public void userEqualsDTOTest(UserDTO userDTONew, UserDTO userDTOExpected) {
+        Assert.assertEquals(userDTONew.getIdCardNumber(), userDTOExpected.getIdCardNumber(),"IdCardNumber Equality");
+        Assert.assertEquals(userDTONew.getSurname(), userDTOExpected.getSurname(), "Surname Equality");
+        Assert.assertEquals(userDTONew.getName(), userDTOExpected.getName(), "Name Equality");
+        Assert.assertEquals(userDTONew.getReservations(), userDTOExpected.getReservations(), "Reservations Equality");
+        Assert.assertEquals(userDTONew.getPhoneNumber(), userDTOExpected.getPhoneNumber(), "PhoneNumber Equality");
+        Assert.assertEquals(userDTONew.getBirthDate(), userDTOExpected.getBirthDate(), "BirthDate Equality");
+        Assert.assertEquals(userDTONew.getEmail(), userDTOExpected.getEmail(), "Email Equality");
     }
 }

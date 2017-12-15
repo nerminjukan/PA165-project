@@ -2,7 +2,7 @@ package fi.muni.cz.pa165.travelagency.dao.Impl;
 
 import fi.muni.cz.pa165.travelagency.dao.ReservationDao;
 import fi.muni.cz.pa165.travelagency.entity.Reservation;
-import fi.muni.cz.pa165.travelagency.entity.Customer;
+import fi.muni.cz.pa165.travelagency.entity.User;
 import fi.muni.cz.pa165.travelagency.entity.Trip;
 
 import java.util.Date;
@@ -10,6 +10,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+
 import org.springframework.stereotype.Repository;
 
 /**
@@ -40,11 +41,11 @@ public class ReservationDaoImpl implements ReservationDao {
     }
     
     @Override
-    public List<Reservation> findByCustomer(Customer customer) {
+    public List<Reservation> findByUser(User user) {
         TypedQuery<Reservation> query = em.createQuery("Select o from Reservation o "
-                + "where o.customer = :customerid",
+                + "where o.user = :userid",
                 Reservation.class);
-        query.setParameter("customerid", customer);
+        query.setParameter("userid", user);
         return query.getResultList();
     }
 

@@ -2,14 +2,14 @@ package fi.muni.cz.pa165.travelagency.service.facade;
 
 import fi.muni.cz.pa165.travelagency.dto.ReservationCreateDTO;
 import fi.muni.cz.pa165.travelagency.dto.ReservationDTO;
-import fi.muni.cz.pa165.travelagency.entity.Customer;
+import fi.muni.cz.pa165.travelagency.entity.User;
 import fi.muni.cz.pa165.travelagency.entity.Excursion;
 import fi.muni.cz.pa165.travelagency.entity.Reservation;
 import fi.muni.cz.pa165.travelagency.entity.Trip;
 import fi.muni.cz.pa165.travelagency.exceptions.TravelAgencyServiceException;
 import fi.muni.cz.pa165.travelagency.facade.ReservationFacade;
 import fi.muni.cz.pa165.travelagency.service.BeanMappingService;
-import fi.muni.cz.pa165.travelagency.service.CustomerService;
+import fi.muni.cz.pa165.travelagency.service.UserService;
 import fi.muni.cz.pa165.travelagency.service.ExcursionService;
 import fi.muni.cz.pa165.travelagency.service.ReservationService;
 import fi.muni.cz.pa165.travelagency.service.TripService;
@@ -31,7 +31,7 @@ public class ReservationFacadeImpl implements ReservationFacade {
     private ReservationService reservationService;
     
     @Autowired
-    private CustomerService customerService;
+    private UserService userService;
 
     @Autowired
     private TripService tripService;
@@ -45,9 +45,9 @@ public class ReservationFacadeImpl implements ReservationFacade {
     @Override
     public Long createReservation(ReservationCreateDTO reservation) {
         
-        Customer customer = customerService.findById(reservation.getCustomerId());
-        if (customer == null ) {
-            throw new TravelAgencyServiceException("Not existing customer");
+        User user = userService.findById(reservation.getUserId());
+        if (user == null ) {
+            throw new TravelAgencyServiceException("Not existing user");
         } 
         
         Trip trip = tripService.findTripWithId(reservation.getTripId());
@@ -56,7 +56,7 @@ public class ReservationFacadeImpl implements ReservationFacade {
         }
         
         Reservation newReservation = new Reservation();
-        newReservation.setCustomer(customer);
+        newReservation.setUser(user);
         newReservation.setReservedTrip(trip);
         newReservation.setCreated(reservation.getDate());
         if (reservation.getExcursionsId() != null) {
@@ -68,8 +68,8 @@ public class ReservationFacadeImpl implements ReservationFacade {
             }
         }
         
-        customer.addReservation(newReservation);
-        customerService.updateCustomer(customer);
+        user.addReservation(newReservation);
+        userService.updateUser(user);
         reservationService.createReservation(newReservation);
         return newReservation.getId();
     }
@@ -79,8 +79,8 @@ public class ReservationFacadeImpl implements ReservationFacade {
         Reservation newReservation = beanMappingService.mapTo(
                 reservation, Reservation.class);
         
-        newReservation.setCustomer(
-                beanMappingService.mapTo(reservation.getCustomer(), Customer.class));
+        newReservation.setUser(
+                beanMappingService.mapTo(reservation.getUser(), User.class));
         
         newReservation.addAllReservedExcursions(beanMappingService.
                 mapTo(reservation.getExcursions(), Excursion.class));
@@ -132,10 +132,10 @@ public class ReservationFacadeImpl implements ReservationFacade {
     }
 
     @Override
-    public List<ReservationDTO> findReservationByCustomer(Long customerId) {
+    public List<ReservationDTO> findReservationByUser(Long userId) {
         List<ReservationDTO> reservations = beanMappingService.mapTo(
-                reservationService.findByCustomer(
-                        customerService.findById(customerId)),
+                reservationService.findByUser(
+                        userService.findById(userId)),
                 ReservationDTO.class);
         return setPrice(reservations);
     }

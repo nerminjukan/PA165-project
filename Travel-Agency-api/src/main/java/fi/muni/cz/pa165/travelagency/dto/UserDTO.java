@@ -1,15 +1,17 @@
 package fi.muni.cz.pa165.travelagency.dto;
 
 
+import fi.muni.cz.pa165.travelagency.enums.UserRoleType;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Customer DTO class
+ * user DTO class
  * @author Martin Sevcik <422365>
  */
-public class CustomerDTO {
+public class UserDTO {
 
     /**
      * Representing id
@@ -17,44 +19,49 @@ public class CustomerDTO {
     private Long id;
 
     /**
-     * First name of customer
+     * First name of user
      */
     private String name;
 
     /**
-     * Surname of customer
+     * Surname of user
      */
     private String surname;
 
     /**
-     * PhoneNumber of customer
+     * PhoneNumber of user
      */
     private String phoneNumber;
 
     /**
-     * IdCard number of customer
+     * IdCard number of user
      */
     private String idCardNumber;
 
     /**
-     * Email of customer
+     * Email of user
      */
     private String email;
 
     /**
-     * Birth date of customer
+     * Birth date of user
      */
     private Date birthDate;
 
     /**
-     * Reservations of customer
+     * Reservations of user
      */
     private Set<ReservationDTO> reservations;
 
     /**
+     * Representing role of user
+     */
+    private UserRoleType userRoleType;
+
+    /**
      * Non parametric constructor
      */
-    public CustomerDTO() {
+    public UserDTO() {
         this.reservations = new HashSet<>();
     }
 
@@ -64,6 +71,14 @@ public class CustomerDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public UserRoleType getUserRoleType() {
+        return userRoleType;
+    }
+
+    public void setUserRoleType(UserRoleType userRoleType) {
+        this.userRoleType = userRoleType;
     }
 
     public String getName() {
@@ -131,9 +146,9 @@ public class CustomerDTO {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null) return false;
-        if (!(o instanceof CustomerDTO)) return false;
+        if (!(o instanceof UserDTO)) return false;
 
-        CustomerDTO that = (CustomerDTO) o;
+        UserDTO that = (UserDTO) o;
 
         return this.idCardNumber != null ?
                 this.idCardNumber.equals(that.getIdCardNumber()) : that.getIdCardNumber() == null;

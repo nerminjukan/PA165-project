@@ -1,7 +1,7 @@
 package fi.muni.cz.pa165.travelagency.dao.Impl;
 
-import fi.muni.cz.pa165.travelagency.dao.CustomerDao;
-import fi.muni.cz.pa165.travelagency.entity.Customer;
+import fi.muni.cz.pa165.travelagency.dao.UserDao;
+import fi.muni.cz.pa165.travelagency.entity.User;
 import fi.muni.cz.pa165.travelagency.entity.Reservation;
 import org.springframework.stereotype.Repository;
 
@@ -15,46 +15,46 @@ import java.util.List;
  * @author Martin Sevcik <422365>
  */
 @Repository
-public class CustomerDaoImpl implements CustomerDao {
+public class UserDaoImpl implements UserDao {
 
     @PersistenceContext
     private EntityManager em;
 
     @Override
-    public void create(Customer customer) {
-        em.persist(customer);
+    public void create(User user) {
+        em.persist(user);
     }
 
     @Override
-    public List<Customer> findAll() {
-        return em.createQuery("select c from Customer c", Customer.class).getResultList();
+    public List<User> findAll() {
+        return em.createQuery("select u from User u", User.class).getResultList();
     }
 
     @Override
-    public Customer findById(Long id) {
-        return em.createQuery("select c from Customer c where c.id = :id", Customer.class)
+    public User findById(Long id) {
+        return em.createQuery("select u from User u where u.id = :id", User.class)
                 .setParameter("id", id).getSingleResult();
     }
 
     @Override
-    public void remove(Customer customer) {
-        em.remove(em.contains(customer) ? customer : em.merge(customer));
+    public void remove(User user) {
+        em.remove(em.contains(user) ? user : em.merge(user));
     }
 
     @Override
-    public Customer update(Customer customer) {
-        return em.merge(customer);
+    public User update(User user) {
+        return em.merge(user);
     }
 
     @Override
-    public Customer findByReservation(Reservation reservation){
+    public User findByReservation(Reservation reservation){
         if (reservation == null) {
             throw new IllegalArgumentException("reservation is null");
         }
 
         try {
-            return em.createQuery("select c from Customer c join c.reservations r" +
-                    " where r.id = :reservationId", Customer.class)
+            return em.createQuery("select u from User u join u.reservations r" +
+                    " where r.id = :reservationId", User.class)
                     .setParameter("reservationId", reservation.getId()).getSingleResult();
         } catch (NoResultException nre) {
             return null;
@@ -62,13 +62,13 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    public Customer findByIdCardNumber(String idCardNumber) {
+    public User findByIdCardNumber(String idCardNumber) {
         if (idCardNumber == null || idCardNumber.isEmpty()) {
             throw new IllegalArgumentException("idCardNumber is null or empty");
         }
 
         try{
-            return em.createQuery("select c from Customer c where c.idCardNumber = :idCardNumber", Customer.class)
+            return em.createQuery("select u from User u where u.idCardNumber = :idCardNumber", User.class)
                     .setParameter("idCardNumber", idCardNumber).getSingleResult();
         } catch (NoResultException nre) {
             return null;
@@ -76,13 +76,13 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    public Customer findByEmail(String email) {
+    public User findByEmail(String email) {
         if (email == null || email.isEmpty()) {
             throw new IllegalArgumentException("email is null or empty");
         }
 
         try {
-            return em.createQuery("select c from Customer c where c.email = :email", Customer.class)
+            return em.createQuery("select u from User u where u.email = :email", User.class)
                     .setParameter("email", email).getSingleResult();
         } catch (NoResultException nre) {
             return null;

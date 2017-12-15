@@ -1,7 +1,7 @@
 package fi.muni.cz.pa165.travelagency.service;
 
 import fi.muni.cz.pa165.travelagency.dao.ReservationDao;
-import fi.muni.cz.pa165.travelagency.entity.Customer;
+import fi.muni.cz.pa165.travelagency.entity.User;
 import fi.muni.cz.pa165.travelagency.entity.Excursion;
 import fi.muni.cz.pa165.travelagency.entity.Reservation;
 import fi.muni.cz.pa165.travelagency.entity.Trip;
@@ -127,9 +127,9 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<Reservation> findByCustomer(Customer customer) {
+    public List<Reservation> findByUser(User user) {
         try {
-            return reservationDao.findByCustomer(customer);
+            return reservationDao.findByUser(user);
         } catch (IllegalArgumentException e) {
             throw new TravelAgencyServiceException("Invalid Query.", e);
         } catch (Exception e) {

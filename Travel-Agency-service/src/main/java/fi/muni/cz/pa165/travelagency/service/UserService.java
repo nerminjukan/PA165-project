@@ -1,6 +1,6 @@
 package fi.muni.cz.pa165.travelagency.service;
 
-import fi.muni.cz.pa165.travelagency.entity.Customer;
+import fi.muni.cz.pa165.travelagency.entity.User;
 import fi.muni.cz.pa165.travelagency.entity.Reservation;
 import org.springframework.stereotype.Service;
 
@@ -8,93 +8,109 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * Customer service interface
+ * User service interface
  * @author Martin Sevcik <422365>
  */
 @Service
-public interface CustomerService {
+public interface UserService {
     /**
-     * Create operation for CustomerDao
+     * Create operation for UserDao
      * @throws NullPointerException when NullPointerException occurs
      * @throws TravelAgencyServiceException if some error occurs
-     * @param customer Customer
+     * @param user User
+     * @param password unencrypted password
      */
-    void createCustomer(Customer customer);
+    void registerUser(User user, String password);
 
     /**
-     * Finds all Customers
+     * Finds all Users
      * @throws TravelAgencyServiceException if some error occurs
-     * @return Customer's list
+     * @return User's list
      */
-    List<Customer> findAll();
+    List<User> findAll();
 
     /**
-     * Finds specified customer
-     * @param id id of customer
+     * Finds specified user
+     * @param id id of user
      * @throws NullPointerException when NullPointerException occurs
      * @throws TravelAgencyServiceException if some error occurs
-     * @return Customer
+     * @return User
      */
-    Customer findById(Long id);
+    User findById(Long id);
 
     /**
-     * Removes Customer
-     * @param customer Customer
+     * Removes User
+     * @param user User
      */
-    void removeCustomer(Customer customer);
+    void removeUser(User user);
 
     /**
-     * Updates Customer
-     * @param customer Customer
+     * Updates User
+     * @param user User
      * @throws NullPointerException when NullPointerException occurs
      * @throws TravelAgencyServiceException if some error occurs
-     * @return customer
+     * @return user
      */
-    Customer updateCustomer(Customer customer);
+    User updateUser(User user);
 
     /**
-     * Finds customers based on reservation
+     * Finds users based on reservation
      * @param reservation Reservation
      * @throws NullPointerException when NullPointerException occurs
      * @throws TravelAgencyServiceException if some error occurs
-     * @return Customer
+     * @return User
      */
-    Customer findByReservation(Reservation reservation);
+    User findByReservation(Reservation reservation);
 
     /**
-     * Finds Customer by id card number
+     * Finds User by id card number
      * @param idCardNumber id card number
      * @throws NullPointerException when NullPointerException occurs
      * @throws TravelAgencyServiceException if some error occurs
-     * @return Customer
+     * @return User
      */
-    Customer findByIdCardNumber(String idCardNumber);
+    User findByIdCardNumber(String idCardNumber);
 
     /**
-     * Finds Customer by email
+     * Finds User by email
      * @param email email
      * @throws NullPointerException when NullPointerException occurs
      * @throws TravelAgencyServiceException if some error occurs
-     * @return Customer
+     * @return User
      */
-    Customer findByEmail(String email);
+    User findByEmail(String email);
 
     /**
-     * Sums all customers expenses
-     * @param customer Customer
+     * Sums all users expenses
+     * @param user User
      * @throws NullPointerException when NullPointerException occurs
      * @throws TravelAgencyServiceException if some error occurs
      * @return total expenses
      */
-    BigDecimal getTotalPriceCustomersReservations(Customer customer);
+    BigDecimal getTotalPriceUsersReservations(User user);
 
     /**
-     * Changes customer on reservation
-     * @param customer Customer
+     * Changes user on reservation
+     * @param user User
      * @param reservation Reservation
      * @throws NullPointerException when NullPointerException occurs
      * @throws TravelAgencyServiceException if some error occurs
-     * @return Customer
+     * @return User
      */
-    Customer changeCustomerOnReservation(Customer customer, Reservation reservation);
+    User changeUserOnReservation(User user, Reservation reservation);
+
+    /**
+     * Tries to authenticate user
+     * @param user user
+     * @param password password hash
+     * @return true if user is authenticated, false otherwise
+     */
+    boolean authenticate(User user, String password);
+
+    /**
+     * Determines whether user is admin
+     * @param user user
+     * @return true if user is admin, false otherwise
+     */
+    boolean isAdmin(User user);
 }
