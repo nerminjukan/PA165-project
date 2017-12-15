@@ -1,14 +1,13 @@
 package fi.muni.cz.pa165.travelagency.service;
 
 import fi.muni.cz.pa165.travelagency.dao.ReservationDao;
-import fi.muni.cz.pa165.travelagency.entity.Customer;
+import fi.muni.cz.pa165.travelagency.entity.User;
 import fi.muni.cz.pa165.travelagency.entity.Excursion;
 import fi.muni.cz.pa165.travelagency.entity.Reservation;
 import fi.muni.cz.pa165.travelagency.entity.Trip;
 import fi.muni.cz.pa165.travelagency.enums.PaymentStateType;
 import fi.muni.cz.pa165.travelagency.exceptions.TravelAgencyServiceException;
 
-import fi.muni.cz.pa165.travelagency.service.ReservationService;
 import fi.muni.cz.pa165.travelagency.service.config.ServiceConfiguration;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -55,18 +54,18 @@ public class ReservationServiceTest extends AbstractTransactionalTestNGSpringCon
     private Reservation reservation;
     private Trip trip;
     private Excursion excursion;
-    private Customer customer;
+    private User user;
     
     @BeforeMethod
     public void prepareTest() { 
         trip = newTrip("1");
-        customer = newCustomer("1");
+        user = newUser("1");
         excursion = newExcursion("1");
         
         reservation = new Reservation();
         trip.addExcursion(excursion);
         reservation.setCreated(Date.valueOf("2014-1-1"));
-        reservation.setCustomer(customer);
+        reservation.setUser(user);
         reservation.setReservedTrip(trip);
         reservation.addReservedExcursion(excursion);
     }
@@ -162,18 +161,18 @@ public class ReservationServiceTest extends AbstractTransactionalTestNGSpringCon
     }
     
     @Test
-    public void findByCustomerTest() {
-        when(reservationDao.findByCustomer(customer)
+    public void findByUserTest() {
+        when(reservationDao.findByUser(user)
         ).thenReturn(Arrays.asList(reservation));
-        assertEquals(reservationService.findByCustomer(customer), Arrays.asList(reservation));
+        assertEquals(reservationService.findByUser(user), Arrays.asList(reservation));
     }
     
     @Test
-    public void findByCustomerWithNoReservationTest() {
-        Customer c = newCustomer("2");
-        when(reservationDao.findByCustomer(c)
+    public void findByUserWithNoReservationTest() {
+        User c = newUser("2");
+        when(reservationDao.findByUser(c)
         ).thenReturn(new ArrayList<>());
-        assertEquals(reservationService.findByCustomer(c).size(), 0);
+        assertEquals(reservationService.findByUser(c).size(), 0);
     }
     
     @Test
@@ -247,7 +246,7 @@ public class ReservationServiceTest extends AbstractTransactionalTestNGSpringCon
         assertEquals(reservation1, reservation2);
         assertEquals(reservation1.getId(), reservation2.getId());
         assertEquals(reservation1.getCreated(), reservation2.getCreated());
-        assertEquals(reservation1.getCustomer(), reservation2.getCustomer());
+        assertEquals(reservation1.getUser(), reservation2.getUser());
         assertEquals(reservation1.getReservedExcursions(), reservation2.getReservedExcursions());
         assertEquals(reservation1.getReservedTrip(), reservation2.getReservedTrip());
         assertEquals(reservation1.getPaymentState(), reservation2.getPaymentState());
@@ -264,8 +263,8 @@ public class ReservationServiceTest extends AbstractTransactionalTestNGSpringCon
         return t;
     }
     
-    private Customer newCustomer(String s) {
-        Customer c = new Customer();
+    private User newUser(String s) {
+        User c = new User();
         c.setSurname("Name " + s);
         c.setEmail(s + "@email.com");
         c.setBirthDate(Date.valueOf("2000-1-1"));

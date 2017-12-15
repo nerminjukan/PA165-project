@@ -61,7 +61,7 @@ public class Reservation implements Serializable {
     
     @NotNull
     @ManyToOne(optional=false)
-    private Customer customer;
+    private User user;
     
     @Enumerated
     @NotNull
@@ -75,8 +75,8 @@ public class Reservation implements Serializable {
         this.paymentState = paymentState;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public User getUser() {
+        return user;
     }
 
     public Set<Excursion> getReservedExcursions() {
@@ -110,8 +110,8 @@ public class Reservation implements Serializable {
         this.reservedExcursions.addAll(excursions);
     }
     
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setUser(User user) {
+        this.user = user;
     }
     
     public Long getId() {
@@ -144,7 +144,7 @@ public class Reservation implements Serializable {
         int result = 1;
         result = prime * result + ((created == null) ? 0 : created.hashCode());
         result = prime * result + ((reservedTrip == null) ? 0 : reservedTrip.hashCode());
-        result = prime * result + ((customer == null) ? 0 : customer.hashCode());
+        result = prime * result + ((user == null) ? 0 : user.hashCode());
         return result;
     }
 
@@ -174,11 +174,11 @@ public class Reservation implements Serializable {
         } else if (!reservedTrip.equals(other.getReservedTrip())) {
             return false;
         }
-        if (customer == null) {
-            if (other.getCustomer() != null) {
+        if (user == null) {
+            if (other.getUser() != null) {
                 return false;
             }
-        } else if (!customer.equals(other.getCustomer())) {
+        } else if (!user.equals(other.getUser())) {
             return false;
         }
         return true;
@@ -187,6 +187,6 @@ public class Reservation implements Serializable {
     @Override
     public String toString() {
         return "Reservation{" + "id=" + id + ", created=" + created + 
-                ", reservedTrip=" + reservedTrip + ", customer=" + customer + '}';
+                ", reservedTrip=" + reservedTrip + ", user=" + user + '}';
     }
 }

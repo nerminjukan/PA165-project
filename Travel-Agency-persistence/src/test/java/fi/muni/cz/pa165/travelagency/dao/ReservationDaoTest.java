@@ -2,12 +2,11 @@ package fi.muni.cz.pa165.travelagency.dao;
 
 
 import fi.muni.cz.pa165.travelagency.PersistenceSampleApplicationContext;
-import fi.muni.cz.pa165.travelagency.entity.Customer;
+import fi.muni.cz.pa165.travelagency.entity.User;
 import fi.muni.cz.pa165.travelagency.entity.Reservation;
 import fi.muni.cz.pa165.travelagency.entity.Trip;
 import fi.muni.cz.pa165.travelagency.enums.PaymentStateType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -37,22 +36,23 @@ public class ReservationDaoTest extends AbstractTestNGSpringContextTests {
     private TripDao tripDao;
 
     @Autowired
-    private CustomerDao customerDao;
+    private UserDao userDao;
 
-    private Customer customer;
+    private User user;
     private Trip trip;
     private Reservation reservation;
 
     @BeforeMethod
     public void setup(){
-        customer = new Customer();
+        user = new User();
         Calendar cal = Calendar.getInstance();
         cal.set(2017, 11, 10);
-        customer.setBirthDate(cal.getTime());
-        customer.setEmail("name@name.com");
-        customer.setIdCardNumber("idCard");
-        customer.setSurname("Surname");
-        customerDao.create(customer);
+        user.setBirthDate(cal.getTime());
+        user.setEmail("name@name.com");
+        user.setIdCardNumber("idCard");
+        user.setSurname("Surname");
+        user.setPasswordHash("passwordHash");
+        userDao.create(user);
 
         trip = new Trip();
         trip.setName("Trip");
@@ -61,13 +61,13 @@ public class ReservationDaoTest extends AbstractTestNGSpringContextTests {
         reservation = new Reservation();
         reservation.setPaymentState(PaymentStateType.NotPaid);
         reservation.setCreated(cal.getTime());
-        reservation.setCustomer(customer);
+        reservation.setUser(user);
         reservation.setReservedTrip(trip);
     }
 
     private void assertReservationsEqual(Reservation compared){
         Assert.assertEquals(compared.getCreated(), this.reservation.getCreated());
-        Assert.assertEquals(compared.getCustomer(), this.reservation.getCustomer());
+        Assert.assertEquals(compared.getUser(), this.reservation.getUser());
         Assert.assertEquals(compared.getId(), this.reservation.getId());
         Assert.assertEquals(compared.getPaymentState(), this.reservation.getPaymentState());
         Assert.assertEquals(compared.getReservedExcursions(), this.reservation.getReservedExcursions());
@@ -101,29 +101,30 @@ public class ReservationDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void findByCustomerTest(){
+    public void findByUserTest(){
         reservationDao.create(reservation);
-        List<Reservation> list = reservationDao.findByCustomer(customer);
+        List<Reservation> list = reservationDao.findByUser(user);
 
         Assert.assertEquals(list.size(), 1);
         Assert.assertEquals(list.get(0), reservation);
-        Assert.assertEquals(list.get(0).getCustomer(), customer);
+        Assert.assertEquals(list.get(0).getUser(), user);
     }
 
     @Test
-    public void findByCustomerNoResultTest(){
-        Customer customer2 = new Customer();
+    public void findByUserNoResultTest(){
+        User user2 = new User();
         Calendar cal = Calendar.getInstance();
         cal.set(2016, 9, 9);
-        customer2.setBirthDate(cal.getTime());
-        customer2.setEmail("name2@name.com");
-        customer2.setIdCardNumber("idCard2");
-        customer2.setSurname("Surname2");
-        customerDao.create(customer2);
+        user2.setBirthDate(cal.getTime());
+        user2.setEmail("name2@name.com");
+        user2.setIdCardNumber("idCard2");
+        user2.setSurname("Surname2");
+        user2.setPasswordHash("passwordHash2");
+        userDao.create(user2);
 
-        reservation.setCustomer(customer2);
+        reservation.setUser(user2);
         reservationDao.create(reservation);
-        List<Reservation> list = reservationDao.findByCustomer(customer);
+        List<Reservation> list = reservationDao.findByUser(user);
 
         Assert.assertEquals(list.size(), 0);
     }
@@ -167,21 +168,23 @@ public class ReservationDaoTest extends AbstractTestNGSpringContextTests {
     public void getReservationsCreatedBetweenTest(){
         Calendar cal = Calendar.getInstance();
 
-        Customer customer2 = new Customer();
+        User user2 = new User();
         cal.set(2016, 9, 9);
-        customer2.setBirthDate(cal.getTime());
-        customer2.setEmail("name2@name.com");
-        customer2.setIdCardNumber("idCard2");
-        customer2.setSurname("Surname3");
-        customerDao.create(customer2);
+        user2.setBirthDate(cal.getTime());
+        user2.setEmail("name2@name.com");
+        user2.setIdCardNumber("idCard2");
+        user2.setSurname("Surname3");
+        user2.setPasswordHash("passwordHash2");
+        userDao.create(user2);
 
-        Customer customer3 = new Customer();
+        User user3 = new User();
         cal.set(2016, 9, 3);
-        customer3.setBirthDate(cal.getTime());
-        customer3.setEmail("name3@name.com");
-        customer3.setIdCardNumber("idCard3");
-        customer3.setSurname("Surname3");
-        customerDao.create(customer3);
+        user3.setBirthDate(cal.getTime());
+        user3.setEmail("name3@name.com");
+        user3.setIdCardNumber("idCard3");
+        user3.setSurname("Surname3");
+        user3.setPasswordHash("passwordHash3");
+        userDao.create(user3);
 
         Trip trip2 = new Trip();
         trip2.setName("Trip2");
@@ -195,7 +198,7 @@ public class ReservationDaoTest extends AbstractTestNGSpringContextTests {
         reservation2.setPaymentState(PaymentStateType.NotPaid);
         cal.set(2017, 10, 2);
         reservation2.setCreated(cal.getTime());
-        reservation2.setCustomer(customer2);
+        reservation2.setUser(user2);
         reservation2.setReservedTrip(trip2);
         reservationDao.create(reservation2);
 
@@ -203,7 +206,7 @@ public class ReservationDaoTest extends AbstractTestNGSpringContextTests {
         reservation3.setPaymentState(PaymentStateType.NotPaid);
         cal.set(2017, 10, 6);
         reservation3.setCreated(cal.getTime());
-        reservation3.setCustomer(customer3);
+        reservation3.setUser(user3);
         reservation3.setReservedTrip(trip3);
         reservationDao.create(reservation3);
 

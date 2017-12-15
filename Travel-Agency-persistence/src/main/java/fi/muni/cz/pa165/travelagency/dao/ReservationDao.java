@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import fi.muni.cz.pa165.travelagency.entity.Reservation;
-import fi.muni.cz.pa165.travelagency.entity.Customer;
+import fi.muni.cz.pa165.travelagency.entity.User;
 import fi.muni.cz.pa165.travelagency.entity.Trip;
 
 /**
@@ -36,12 +36,12 @@ public interface ReservationDao {
     List<Reservation> findAll();
     
     /**
-     * Get all reservations for specified customer.
+     * Get all reservations for specified user.
      * 
-     * @param   customer Customer to find reservations for.
-     * @return  List of Reservations for customer, null if there are no reservations.
+     * @param   user User to find reservations for.
+     * @return  List of Reservations for user, null if there are no reservations.
      */
-    List<Reservation> findByCustomer(Customer customer);
+    List<Reservation> findByUser(User user);
     
     /**
      * Get reservation by spicified id.
