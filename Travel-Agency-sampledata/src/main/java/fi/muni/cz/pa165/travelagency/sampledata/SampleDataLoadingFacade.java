@@ -1,5 +1,7 @@
 package fi.muni.cz.pa165.travelagency.sampledata;
 
+import java.text.ParseException;
+
 /**
  * Populates database with sample data.
  *
@@ -9,6 +11,8 @@ public interface SampleDataLoadingFacade {
     
     /**
      * Creates the sample data for the application.
+     * 
+     * @throws ParseException when date cannot be parsed.
      */
-    void loadData();
+    void loadData() throws ParseException;
 }
