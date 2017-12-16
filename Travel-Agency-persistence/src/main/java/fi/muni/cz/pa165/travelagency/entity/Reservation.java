@@ -13,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -50,7 +49,7 @@ public class Reservation implements Serializable {
     private Date created;
     
     @NotNull
-    @OneToOne(optional=false)
+    @ManyToOne(optional=false)
     private Trip reservedTrip;
         
     @ManyToMany
