@@ -1,4 +1,4 @@
-package fi.muni.cz.pa165.travelagency.rest;
+package fi.muni.cz.pa165.travelagency;
 
 import javax.servlet.Filter;
 import org.springframework.web.context.request.RequestContextListener;
@@ -7,7 +7,6 @@ import org.springframework.web.filter.ShallowEtagHeaderFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /**
- * 
  * @author Radoslav Micko <445611>
  */
 public class Initializer extends AbstractAnnotationConfigDispatcherServletInitializer {
