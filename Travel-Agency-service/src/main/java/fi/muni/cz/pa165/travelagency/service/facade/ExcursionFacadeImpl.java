@@ -35,13 +35,18 @@ public class ExcursionFacadeImpl implements ExcursionFacade{
     @Override
     public Long create(ExcursionDTO excursionDTO) {
         
+    if (excursionDTO == null) {
+        throw new IllegalArgumentException();
+    }
+    
     Excursion excursion = beanMappingService.mapTo(excursionDTO, Excursion.class);
-        if (excursion != null) {
-            throw new IllegalArgumentException();
-        }
 
-        excursionService.create(excursion);
-        return excursion.getId();
+    if (excursion == null) {
+        throw new IllegalArgumentException();
+    }
+
+    excursionService.create(excursion);
+    return excursion.getId();
 
     }
 
@@ -60,16 +65,19 @@ public class ExcursionFacadeImpl implements ExcursionFacade{
     public void deleteExcursion(ExcursionDTO excursionDTO) {
         Excursion excursion = beanMappingService.mapTo(excursionDTO, Excursion.class);
         
-        Set<TripDTO> removeFromTrips = excursionDTO.getTrips();
-        
-        for(TripDTO tripRemoveFrom : removeFromTrips){
-            Trip trip = beanMappingService.mapTo(tripRemoveFrom, Trip.class);
-            tripService.removeExcursion(trip, excursion);
-        }
-
-        if (excursion != null) {
+        if (excursion == null) {
             throw new IllegalArgumentException();
         }
+        
+        Set<TripDTO> removeFromTrips = excursionDTO.getTrips();
+        
+        if(!removeFromTrips.isEmpty()){
+            for(TripDTO tripRemoveFrom : removeFromTrips){
+                Trip trip = beanMappingService.mapTo(tripRemoveFrom, Trip.class);
+                tripService.removeExcursion(trip, excursion);
+            }
+        }
+        
 
         excursionService.deleteExcursion(excursion);
     }
@@ -78,7 +86,7 @@ public class ExcursionFacadeImpl implements ExcursionFacade{
     public void updateExcursion(ExcursionDTO excursionUpdate) {
         Excursion excursion = beanMappingService.mapTo(excursionUpdate, Excursion.class);
 
-        if (excursion != null) {
+        if (excursion == null) {
             throw new IllegalArgumentException();
         }
 
@@ -87,23 +95,20 @@ public class ExcursionFacadeImpl implements ExcursionFacade{
 
     @Override
     public List<ExcursionDTO> findByPriceLowerThanOrEqual(Integer price) {
-        List<ExcursionDTO> lowerOrEqual = beanMappingService.mapTo(excursionService.
+        return beanMappingService.mapTo(excursionService.
                 findByPriceLowerThanOrEqual(price), ExcursionDTO.class);
-        return lowerOrEqual;
     }
 
     @Override
     public List<ExcursionDTO> findByPriceHigherThanOrEqual(Integer price) {
-        List<ExcursionDTO> higherOrEqual = beanMappingService.mapTo(excursionService.
+        return beanMappingService.mapTo(excursionService.
                 findByPriceHigherThanOrEqual(price), ExcursionDTO.class);
-        return higherOrEqual;
     }
 
     @Override
     public List<ExcursionDTO> findByDuration(Integer duration) {
-        List<ExcursionDTO> equalDuration = beanMappingService.mapTo(excursionService.
+        return beanMappingService.mapTo(excursionService.
                 findByDuration(duration), ExcursionDTO.class);
-        return equalDuration;
     }
     
 }
