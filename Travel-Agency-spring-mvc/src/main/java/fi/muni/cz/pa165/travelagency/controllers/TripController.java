@@ -3,7 +3,6 @@ package fi.muni.cz.pa165.travelagency.controllers;
 import fi.muni.cz.pa165.travelagency.dto.ExcursionDTO;
 import fi.muni.cz.pa165.travelagency.dto.TripCreateDTO;
 import fi.muni.cz.pa165.travelagency.dto.TripDTO;
-import fi.muni.cz.pa165.travelagency.entity.Excursion;
 import fi.muni.cz.pa165.travelagency.facade.ExcursionFacade;
 import fi.muni.cz.pa165.travelagency.facade.TripFacade;
 import fi.muni.cz.pa165.travelagency.forms.TripCreateDTOValidator;
@@ -16,7 +15,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -30,7 +33,7 @@ import java.util.List;
 @RequestMapping("/trip")
 public class TripController {
 
-    final static Logger LOGGER = LoggerFactory.getLogger(TripController.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(TripController.class);
 
     @Autowired
     private TripFacade tripFacade;
@@ -59,7 +62,8 @@ public class TripController {
      * @return jsp page name
      */
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
-    public String delete(@PathVariable long id, Model model, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes) {
+    public String delete(@PathVariable long id, Model model, UriComponentsBuilder uriBuilder,
+                         RedirectAttributes redirectAttributes) {
         TripDTO trip = tripFacade.getTripWithId(id);
         tripFacade.deleteTrip(id);
         LOGGER.debug("delete({})", id);
@@ -93,17 +97,21 @@ public class TripController {
         return "trip/new";
     }
 
+    /**
+     * model excursions
+     * @return all excursions
+     */
     @ModelAttribute("excursions")
     public List<ExcursionDTO> excursions() {
         LOGGER.debug("excursions()");
         return excursionFacade.getAllExcursions();
     }
 
-    /**
-     * Spring Validator added to JSR-303 Validator for this @Controller only.
-     * It is useful  for custom validations that are not defined on the form bean by annotations.
-     * http://docs.spring.io/spring/docs/current/spring-framework-reference/html/validation.html#validation-mvc-configuring
-     */
+/**
+ * Spring Validator added to JSR-303 Validator for this @Controller only.
+ * It is useful  for custom validations that are not defined on the form bean by annotations.
+ * http://docs.spring.io/spring/docs/current/spring-framework-reference/html/validation.html#validation-mvc-configuring
+ */
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
         if (binder.getTarget() instanceof TripCreateDTO) {
@@ -111,6 +119,15 @@ public class TripController {
         }
     }
 
+    /**
+     * create method
+     * @param formBean form bean
+     * @param bindingResult binding result
+     * @param model model
+     * @param redirectAttributes redirect attributes
+     * @param uriBuilder uri builder
+     * @return redirect link
+     */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String create(@Valid @ModelAttribute("tripCreate") TripCreateDTO formBean, BindingResult bindingResult,
                          Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {

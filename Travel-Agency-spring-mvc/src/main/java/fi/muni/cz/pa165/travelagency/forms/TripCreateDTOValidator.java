@@ -6,6 +6,9 @@ import org.springframework.validation.Validator;
 
 import java.math.BigDecimal;
 
+/**
+ * @author Pavel Kotala
+ */
 public class TripCreateDTOValidator implements Validator {
     @Override
     public boolean supports(Class<?> clazz) {
@@ -15,13 +18,16 @@ public class TripCreateDTOValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         TripCreateDTO productCreateDTO = (TripCreateDTO) target;
-        if (productCreateDTO.getDateTo().compareTo(productCreateDTO.getDateFrom()) < 0)
+        if (productCreateDTO.getDateTo().compareTo(productCreateDTO.getDateFrom()) < 0) {
             errors.rejectValue("dateTo", "TripCreateDTOValidator.dateTo.before.dateFrom");
+        }
 
-        if (productCreateDTO.getAvailableSpots() < 0)
+        if (productCreateDTO.getAvailableSpots() < 0) {
             errors.rejectValue("availableSpots", "TripCreateDTOValidator.availableSpots.negative");
+        }
 
-        if (productCreateDTO.getPrice().compareTo(BigDecimal.ZERO) < 0)
+        if (productCreateDTO.getPrice().compareTo(BigDecimal.ZERO) < 0) {
             errors.rejectValue("price", "TripCreateDTOValidator.price.negative");
+        }
     }
 }
