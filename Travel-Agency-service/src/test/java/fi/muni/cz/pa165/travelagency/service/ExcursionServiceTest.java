@@ -13,8 +13,7 @@ import java.util.Calendar;
 
 
 import org.hibernate.service.spi.ServiceException;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.testng.annotations.BeforeClass;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import static org.mockito.Mockito.when;
@@ -25,6 +24,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import static org.mockito.Mockito.verify;
 import static org.testng.Assert.assertEquals;
+import org.testng.annotations.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.entry;
 
 /**
  * Excursion service Tests for the Travel Angecy project.
@@ -123,7 +125,7 @@ public class ExcursionServiceTest extends AbstractTransactionalTestNGSpringConte
         Integer price = 1500;
         when(excursionDao.findAll()).thenReturn(Arrays.asList(excursionCastle, excursionLake, excursionHill));
         assertEquals(excursionService.findByPriceLowerThanOrEqual(price).size(), 2);
-        excursionEquals(excursionService.findByPriceLowerThanOrEqual(price).get(0), excursionCastle);
+        assertThat(excursionService.findByPriceLowerThanOrEqual(price)).containsOnly(excursionCastle, excursionLake);
     }
     
     @Test
@@ -131,7 +133,7 @@ public class ExcursionServiceTest extends AbstractTransactionalTestNGSpringConte
         Integer price = 1500;
         when(excursionDao.findAll()).thenReturn(Arrays.asList(excursionCastle, excursionLake, excursionHill));
         assertEquals(excursionService.findByPriceHigherThanOrEqual(price).size(), 2);
-        excursionEquals(excursionService.findByPriceHigherThanOrEqual(price).get(0), excursionLake);
+        assertThat(excursionService.findByPriceHigherThanOrEqual(price)).containsOnly(excursionHill, excursionLake);
     }
     
     @Test
@@ -139,7 +141,7 @@ public class ExcursionServiceTest extends AbstractTransactionalTestNGSpringConte
         Integer duration = 5;
         when(excursionDao.findAll()).thenReturn(Arrays.asList(excursionCastle, excursionLake, excursionHill));
         assertEquals(excursionService.findByDuration(duration).size(), 2);
-        excursionEquals(excursionService.findByDuration(duration).get(1), excursionHill);
+        assertThat(excursionService.findByDuration(duration)).containsOnly(excursionHill, excursionLake);
     }
     
     private void excursionEquals(Excursion excursionOne, Excursion excursionTwo){

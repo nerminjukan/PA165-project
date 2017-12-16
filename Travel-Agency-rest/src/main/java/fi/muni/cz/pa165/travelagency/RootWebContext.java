@@ -1,12 +1,14 @@
-package fi.muni.cz.pa165.travelagency.rest;
+package fi.muni.cz.pa165.travelagency;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import fi.muni.cz.pa165.travelagency.sampledata.SampleDataConfiguration;
 import fi.muni.cz.pa165.travelagency.service.config.ServiceConfiguration;
-
-//import fi.muni.cz.pa165.travelagency.travelagencysampledata.SampleDataConfiguration;
+import java.text.SimpleDateFormat;
 
 import java.util.List;
+import java.util.Locale;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +26,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  */
 @EnableWebMvc
 @Configuration
-@Import({ServiceConfiguration.class/*, SampleDataConfiguration.class*/})
+@Import({ServiceConfiguration.class, SampleDataConfiguration.class})
 @ComponentScan(basePackages = {"controllers", "facade",
     "cz.muni.fi.pa165.travelagency.rest.controllers", 
     "cz.muni.fi.pa165.travelagency.travelagencyservice", 
@@ -42,8 +44,8 @@ public class RootWebContext extends WebMvcConfigurerAdapter {
     }
     
     /**
-     * asdasd
-     * @return asdasd
+     * Setting mapping JSON to HTTP message
+     * @return converted HTTP message
      */
     @Bean
     @Primary
@@ -51,7 +53,8 @@ public class RootWebContext extends WebMvcConfigurerAdapter {
         MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-       
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH));
         jsonConverter.setObjectMapper(objectMapper);
         return jsonConverter;
     }
