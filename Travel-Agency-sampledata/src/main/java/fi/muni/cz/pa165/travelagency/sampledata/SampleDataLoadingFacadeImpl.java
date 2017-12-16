@@ -121,7 +121,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade{
         janez.addReservation(janezLjubljana);
         Reservation markLjubljana = reservation(ljubljana, excursionSet, mark, date("02/03/2017"),
             PaymentStateType.Paid);
-        janez.addReservation(markLjubljana);
+        mark.addReservation(markLjubljana);
         Reservation helgaLjubljana = reservation(ljubljana, excursionSet, helga, date("08/03/2017"),
             PaymentStateType.NotPaid);
         helga.addReservation(helgaLjubljana);
