@@ -1,4 +1,4 @@
-package fi.muni.cz.pa165.travelagency.rest;
+package fi.muni.cz.pa165.travelagency;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
