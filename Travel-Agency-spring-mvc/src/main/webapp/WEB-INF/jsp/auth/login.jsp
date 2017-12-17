@@ -8,12 +8,13 @@
 <my:pagetemplate>
 <jsp:attribute name="body">
 
-    <div class="jumbotron">
-        <h1>Welcome to Travel Agency by Team 6!</h1>
-        <p class="lead">In this project you will experience some real feel travel agency stuff.</p>
-        <p><a class="btn btn-lg btn-success" href="${pageContext.request.contextPath}/trip/browse"
-              role="button">Lets browse some trips!</a></p>
-    </div>
+    <!--<div class="jumbotron">
+        <form method="POST" action="/pa165/auth/login">
+            Email: <input type="text" name="email"/><br/>
+            Password: <input type="password" name="password"/><br/>
+            <input type="submit"/>
+        </form>
+    </div>-->
 
 </jsp:attribute>
 </my:pagetemplate>

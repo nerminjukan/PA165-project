@@ -31,7 +31,7 @@ import javax.validation.Validator;
 @EnableWebMvc
 @Configuration
 @Import({SampleDataConfiguration.class})
-@ComponentScan(basePackages = "fi.muni.cz.pa165.travelagency.controllers")
+@ComponentScan(basePackages = "fi.muni.cz.pa165.travelagency.controllers.")
 public class MySpringMvcConfig extends WebMvcConfigurerAdapter {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(MySpringMvcConfig.class);
@@ -44,7 +44,7 @@ public class MySpringMvcConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         LOGGER.debug("mapping URL / to home view");
-        registry.addViewController("/").setViewName("home");
+        registry.addViewController("/").setViewName("/auth/login");
     }
 
 

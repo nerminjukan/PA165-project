@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>PA165-TravelAgency</artifactId>
@@ -7,19 +10,21 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>fi.muni.cz.PA165</groupId>
-    <artifactId>Travel-Agency-spring-mvc</artifactId>
-    <name>Travel Agency spring mvc</name>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>Travel-Agency-springmvc</artifactId>
+    <name>Travel Agency Web</name>
     <packaging>war</packaging>
 
-    <properties>
-        <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-    
+
+
+
     <dependencies>
         <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>Travel-Agency-sampledata</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
+<dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-api</artifactId>
             <version>${tomcat.version}</version>
@@ -41,22 +46,24 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
         </dependency>
+
+        <!-- validator for bean properties -->
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <type>jar</type>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>Travel-Agency-api</artifactId>
-            <version>${project.version}</version>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
         </dependency>
+
+        <!-- must provide logging implementation, this is a runnable project -->
+        <!-- see viz http://docs.spring.io/platform/docs/1.1.4.RELEASE/reference/htmlsingle/#getting-started-logging -->
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>Travel-Agency-sampledata</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-</dependencies>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
+        </dependency>  
+    </dependencies>
 
     <build>
         <!-- what to do when only "mvn" is run -->
@@ -81,6 +88,8 @@
                 </configuration>
             </plugin>
         </plugins>
-</build>
+
+    </build>
 
 </project>
+
