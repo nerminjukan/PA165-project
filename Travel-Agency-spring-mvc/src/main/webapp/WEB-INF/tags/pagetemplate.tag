@@ -14,7 +14,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><c:out value="${title}"/></title>
     <!-- bootstrap loaded from content delivery network -->
-    <link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"  crossorigin="anonymous">
     <jsp:invoke fragment="head"/>
@@ -30,21 +29,19 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="${pageContext.request.contextPath}"><f:message key="navigation.project"/></a>
+            <a class="navbar-brand" href="${pageContext.request.contextPath}/shopping">Travel Agency</a>
+            <c:if test="${not empty authUser}">
+                <a class="navbar-brand" href="${pageContext.request.contextPath}/shopping/reservations"> My reservations</a>
+            </c:if>
+            <c:if test="${authUser.isAdmin()}">
+                <a class="navbar-brand" href="${pageContext.request.contextPath}/admin/trip/list">Trips</a>
+                <a class="navbar-brand" href="${pageContext.request.contextPath}/admin/excursion/list">Excursions</a>
+                <a class="navbar-brand" href="${pageContext.request.contextPath}/admin/user/list">Users</a>
+                <a class="navbar-brand" href="${pageContext.request.contextPath}/admin/reservation/list">Reservations</a>
+            </c:if>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li><my:a href="/trip/browse"><f:message key="navigation.browse"/></my:a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><f:message key="navigation.admin"/><b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><my:a href="/reservation/list/all"><f:message key="navigation.admin.reservations"/></my:a></li>
-                        <li><my:a href="/customer/list"><f:message key="navigation.admin.customers"/></my:a></li>
-                        <li><my:a href="/trip/list"><f:message key="navigation.admin.trips"/></my:a></li>
-                        <li><my:a href="/excursion/list"><f:message key="navigation.admin.excursions"/></my:a></li>
-                    </ul>
-                </li>
-            </ul>
+
         </div><!--/.nav-collapse -->
     </div>
 </nav>
@@ -52,40 +49,51 @@
 <div class="container">
 
     <!-- page title -->
-    <c:if test="${not empty title}">
-        <div class="page-header">
-            <h1><c:out value="${title}"/></h1>
-        </div>
-    </c:if>
 
-    <!-- authenticated user info -->
-    <c:if test="${not empty authenticatedUser}">
-    <div class="row">
-        <div class="col-xs-6 col-sm-8 col-md-9 col-lg-10"></div>
-        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <c:out value="${authenticatedUser.givenName} ${authenticatedUser.surname}"/>
+    <div class="page-header row">
+        <div class="col-xs-6 col-sm-8 col-md-9 col-lg-10">
+            <c:if test="${not empty title}">
+                <h1><c:out value="${title}"/></h1>
+            </c:if>
+        </div>
+        <!-- authenticated user info -->
+        <c:if test="${not empty authUser}">
+            <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <c:out value="${authUser.name}"/> | <a href="${pageContext.request.contextPath}/auth/logout">logout</a>
+                    </div>
                 </div>
             </div>
-        </div>
+        </c:if>
     </div>
-    </c:if>
+
+
 
     <!-- alerts -->
     <c:if test="${not empty alert_danger}">
-        <div class="alert alert-danger" role="alert">
+        <div class="alert alert-danger fade in" role="alert">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
             <c:out value="${alert_danger}"/></div>
     </c:if>
     <c:if test="${not empty alert_info}">
-        <div class="alert alert-info" role="alert"><c:out value="${alert_info}"/></div>
+        <div class="alert alert-info fade in" role="alert">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <c:out value="${alert_info}"/>
+        </div>
     </c:if>
     <c:if test="${not empty alert_success}">
-        <div class="alert alert-success" role="alert"><c:out value="${alert_success}"/></div>
+        <div class="alert alert-success fade in" role="alert">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <c:out value="${alert_success}"/>
+        </div>
     </c:if>
     <c:if test="${not empty alert_warning}">
-        <div class="alert alert-warning" role="alert"><c:out value="${alert_warning}"/></div>
+        <div class="alert alert-warning fade in" role="alert">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <c:out value="${alert_warning}"/>
+        </div>
     </c:if>
 
     <!-- page body -->
@@ -93,7 +101,7 @@
 
     <!-- footer -->
     <footer class="footer">
-        <p>&copy;&nbsp;<%=java.time.Year.now().toString()%>&nbsp;Masaryk University</p>
+
     </footer>
 </div>
 <!-- javascripts placed at the end of the document so the pages load faster -->
