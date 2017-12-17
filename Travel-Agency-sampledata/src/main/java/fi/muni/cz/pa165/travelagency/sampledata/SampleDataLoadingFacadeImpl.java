@@ -205,7 +205,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade{
     private Date date(String date) throws ParseException{
         Date parsedDate = new Date();
         
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         parsedDate = sdf.parse(date);
         
         return parsedDate;

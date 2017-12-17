@@ -24,7 +24,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Pavel Kotala
@@ -145,6 +147,14 @@ public class TripController {
         }
         //create trip
         Long id = tripFacade.createTrip(formBean);
+
+        List<ExcursionDTO> suitable = tripFacade.getAllSuitableExcursions(id);
+        Set<Long> excs = new HashSet<>();
+        for(ExcursionDTO exc : suitable) {
+            excs.add(exc.getId());
+        }
+        tripFacade.addAllExcursions(id, excs);
+
         //report success
         redirectAttributes.addFlashAttribute("alert_success", "Trip " + id + " was created");
         return "redirect:" + uriBuilder.path("/trip/view/{id}").buildAndExpand(id).encode().toUriString();
