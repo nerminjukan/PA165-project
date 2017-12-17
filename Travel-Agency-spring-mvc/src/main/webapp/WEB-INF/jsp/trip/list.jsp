@@ -30,7 +30,7 @@
         <tbody>
         <c:forEach items="${trips}" var="trip">
             <tr>
-                <td>${trip.id}</td>
+                <td><c:out value="${trip.id}"/></td>
                 <td><c:out value="${trip.name}"/></td>
                 <td><f:formatDate value="${trip.dateFrom}" pattern="yyyy-MM-dd"/></td>
                 <td><f:formatDate value="${trip.dateTo}" pattern="yyyy-MM-dd"/></td>
