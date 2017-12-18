@@ -2,10 +2,8 @@ package fi.muni.cz.pa165.travelagency.controllers;
 
 import fi.muni.cz.pa165.travelagency.dto.ExcursionDTO;
 import fi.muni.cz.pa165.travelagency.dto.UserDTO;
-import fi.muni.cz.pa165.travelagency.enums.UserRoleType;
 import fi.muni.cz.pa165.travelagency.facade.ExcursionFacade;
 import fi.muni.cz.pa165.travelagency.facade.TripFacade;
-import fi.muni.cz.pa165.travelagency.forms.ExcursionDTOValidator;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.slf4j.Logger;
@@ -16,8 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,7 +39,7 @@ public class ExcursionController {
     @Autowired
     private TripFacade tripFacade;
     
-    private final String DEFAULT_REDIRECT = "redirect:/excursion/list";
+    private final String default_redirect = "redirect:/excursion/list";
     
     
     /**
@@ -72,18 +68,19 @@ public class ExcursionController {
         
         if (excursionFacade.getByID(id) == null) {
             redirectAttributes.addFlashAttribute("alert_danger", "Excursion no. " + id + " does not exist");
-            return DEFAULT_REDIRECT;
+            return default_redirect;
         }
         
         try {
             excursionFacade.deleteExcursion(excursionFacade.getByID(id));
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("alert_danger", "Excursion no. " + id + " could not be deleted");
-            return DEFAULT_REDIRECT;
+            return default_redirect;
         }
         LOGGER.debug("delete({})", id);
         redirectAttributes.addFlashAttribute("alert_success", "Excursion to \"" +
-                excursionFacade.getByID(id).getDestination() + " - " + excursionFacade.getByID(id).getDescription()+ "\" was deleted.");
+                excursionFacade.getByID(id).getDestination() + " - " +
+                excursionFacade.getByID(id).getDescription() + "\" was deleted.");
         return "redirect:" + uriBuilder.path("/excursion/list").toUriString();
     }
     
@@ -100,7 +97,7 @@ public class ExcursionController {
         
         if (excursionFacade.getByID(id) == null) {
             redirectAttributes.addFlashAttribute("alert_danger", "Excursion no. " + id + " doesn't exist");
-            return DEFAULT_REDIRECT;
+            return default_redirect;
         }
         
         model.addAttribute("excursion", excursionFacade.getByID(id));
@@ -123,7 +120,7 @@ public class ExcursionController {
         
         /*if (authUser.getUserRoleType() != UserRoleType.ADMINISTRATOR) {
             redAttr.addFlashAttribute("alert_danger", "You don't have permission to create new excursion");
-            return DEFAULT_REDIRECT;
+            return default_redirect;
         }*/
         
         model.addAttribute("excursionCreate", new ExcursionDTO());
@@ -134,7 +131,12 @@ public class ExcursionController {
  * Spring Validator added to JSR-303 Validator for this @Controller only.
  * It is useful  for custom validations that are not defined on the form bean by annotations.
  * http://docs.spring.io/spring/docs/current/spring-framework-reference/html/validation.html#validation-mvc-configuring
-     * @param binder
+     * @param formBean
+     * @param bindingResult
+     * @param model
+     * @param redirectAttributes
+     * @param uriBuilder
+     * @return 
  */
     /*@InitBinder
     protected void initBinder(WebDataBinder binder) {
@@ -159,6 +161,9 @@ public class ExcursionController {
             return "excursion/new";
         }
         //create excursion
+        
+        
+        
         Long id = excursionFacade.create(formBean);
 
         //report success
