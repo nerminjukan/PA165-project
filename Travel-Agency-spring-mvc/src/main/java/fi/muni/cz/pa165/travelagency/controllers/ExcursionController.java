@@ -49,11 +49,23 @@ public class ExcursionController {
      * Shows a list of excursions with the ability to add, delete or edit.
      *
      * @param model data to display
+     * @param request http request
+     * @param redirectAttributes redirection attributes
      * @return JSP page name
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String listAll(Model model) {
-        model.addAttribute("excursions", excursionFacade.getAllExcursions());
+    public String listAll(Model model, HttpServletRequest request,
+            RedirectAttributes redirectAttributes) {
+        UserDTO authUser = (UserDTO) request.getSession().getAttribute("authenticatedUser");
+        if (authUser != null) {
+            model.addAttribute("excursions", excursionFacade.getAllExcursions());
+        } else {
+            redirectAttributes.addFlashAttribute("alert_danger",
+                        "Unanthorized.");
+            return "redirect:/auth/login";
+        }
+        
+        
         return "excursion/list";
     }
     
