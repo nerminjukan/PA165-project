@@ -96,7 +96,7 @@ public class UserController {
         if (!isAuthenticated(req, null, false)) {
             return AUTH_PAGE_URL;
         }
-
+        
         if (userUpdated == null) {
             redirectAttributes.addFlashAttribute("alert_danger", "Cannot update not existing user.");
             return USER_EDIT_PAGE_URL + id;
@@ -158,6 +158,15 @@ public class UserController {
         if (!isAuthenticated(req, null, false)) {
             return AUTH_PAGE_URL;
         }
+        
+        UserDTO authUser = (UserDTO) req.getSession().getAttribute("authenticatedUser");
+        if (!authUser.getIsAdmin() && !authUser.getId().equals(id)) {
+            LOGGER.error("GET request: user/view");
+            redirectAttributes.addFlashAttribute("alert_danger",
+                    "You do not have administrator permission for editing other user.");
+            return "redirect:/user/view/" + authUser.getId();
+        }
+        
 
         UserDTO userDTO = userFacade.findById(id);
         model.addAttribute("user", userDTO);
