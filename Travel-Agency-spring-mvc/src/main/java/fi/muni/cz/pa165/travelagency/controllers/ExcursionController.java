@@ -134,12 +134,7 @@ public class ExcursionController {
  * Spring Validator added to JSR-303 Validator for this @Controller only.
  * It is useful  for custom validations that are not defined on the form bean by annotations.
  * http://docs.spring.io/spring/docs/current/spring-framework-reference/html/validation.html#validation-mvc-configuring
-     * @param formBean
-     * @param bindingResult
-     * @param model
-     * @param redirectAttributes
-     * @param uriBuilder
-     * @return 
+     * @param binder binder
  */
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
@@ -151,15 +146,14 @@ public class ExcursionController {
     /**
      * Creates a new Excursion [EDIT THIS].
      *
-     * @param formBean
-     * @param bindingResult
-     * @param model
-     * @param redirectAttributes
-     * @param uriBuilder
-     * @return
+     * @param formBean ExcursionDTO
+     * @param bindingResult results of bind
+     * @param model model to transfer
+     * @param redirectAttributes redirect attributes
+     * @param uriBuilder uri builder
+     * @return uri to redirect to
      */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    
     public String create(@Valid @ModelAttribute("excursionCreate") ExcursionDTO formBean, BindingResult bindingResult,
                          Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
         LOGGER.debug("create(excursionCreate={})", formBean);
