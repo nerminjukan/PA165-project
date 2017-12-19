@@ -62,6 +62,7 @@ public class UserController {
             LOGGER.error("GET request: user/view");
             redirectAttributes.addFlashAttribute("alert_danger", "Cannot display not existing user.");
             return "redirect:/auth/logout";
+
         }
 
         UserDTO authUser = (UserDTO) req.getSession().getAttribute("authenticatedUser");
@@ -69,7 +70,7 @@ public class UserController {
             LOGGER.error("GET request: user/view");
             redirectAttributes.addFlashAttribute("alert_danger",
                     "You do not have administrator permission for editing other user.");
-            return "redirect:/user/view/" + id;
+            return "redirect:/user/view/" + authUser.getId();
         }
 
 
@@ -170,7 +171,7 @@ public class UserController {
     }
 
     /**
-     * Gets list of users
+     * Gets list of users, only admin can view all users
      * @param model model
      * @param req request
      * @param redirectAttributes redirect attributes
@@ -181,7 +182,7 @@ public class UserController {
                        HttpServletRequest req,
                        RedirectAttributes redirectAttributes) {
         if (!isAuthenticated(req, redirectAttributes, true)) {
-
+            redirectAttributes.addFlashAttribute("alert_danger", "Admin role required");
             return AUTH_PAGE_URL;
         }
 
