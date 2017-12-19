@@ -24,7 +24,6 @@
                 <th><fmt:message key="name"/></th>
                 <th><fmt:message key="email"/></th>
                 <th><fmt:message key="user.list.detail"/></th>
-                <th><fmt:message key="edit"/></th>
                 <th><fmt:message key="user.list.remove"/></th>
             </tr>
             </thead>
