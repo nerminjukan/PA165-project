@@ -365,7 +365,6 @@ public class ReservationController {
             ReservationDTO reservationDTO = reservationFacade.findReservationById(id);
            List<Long> exc = new ArrayList<>();
             
-            
             reservationDTO.setExcursionsReserved(new HashSet<>());
 
             try {

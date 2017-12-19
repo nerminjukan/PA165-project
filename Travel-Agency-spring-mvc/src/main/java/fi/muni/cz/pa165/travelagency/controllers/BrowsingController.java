@@ -101,8 +101,8 @@ public class BrowsingController {
         model.addAttribute("authenticatedUser", authUser);
         LOGGER.debug("view({})", resId);
         model.addAttribute("trip", reservationDTO.getTrip());
-        model.addAttribute("reservation", reservationFacade.findReservationById(resId));
-        return "redirect:" + uriBuilder.path("/reservation/detail/{id}").
+        model.addAttribute("reservation", reservationDTO);
+        return "redirect:" + uriBuilder.path("/reservation/detail/{resId}").
                 buildAndExpand(resId).encode().toUriString();
     }
 
