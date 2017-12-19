@@ -34,6 +34,7 @@
          <div id="navbar" class="collapse navbar-collapse">
              <ul class="nav navbar-nav">
                  <li><my:a href="/browsing/list"><f:message key="browse"/></my:a></li>
+                 <c:if test="${not empty authenticatedUser}">
                  <li class="dropdown">
                      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><f:message key="administration"/><b class="caret"></b></a>
                      <ul class="dropdown-menu">
@@ -55,6 +56,7 @@
                          </c:if>
                      </ul>
                  </li>
+                 </c:if>
              </ul>
          </div><!--/.nav-collapse -->
      </div>
