@@ -39,15 +39,32 @@
                         <td><label for="email" ><fmt:message key="email"/></label></td>
                         <td><form:input id="email" name="email" path="email" type="email" value="${user.email}"/></td>
                     </tr>
-                    <tr>
-                        <td>
-                            <a href="${pageContext.request.contextPath}/reservation/list/${user.id}" class="btn btn-primary"><fmt:message key="reservations"/></a>
-                        </td>
-                    </tr>
-
                 </table>
                 <button class="btn btn-lg btn-primary" type="submit" ><fmt:message key="user.edit.save"/></button>
             </form:form>
+            <div class="row">
+                <h2><fmt:message key="reservations" /></h2>
+                <div class="col-md-6 col-lg-9">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th><fmt:message key="id" /></th>
+                            <th><fmt:message key="trip.name" /></th>
+                            <th><fmt:message key="user.list.detail"/></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="reservation" items="${user.reservations}">
+                            <tr>
+                                <td><c:out value="${reservation.id}" /></td>
+                                <td><c:out value="${reservation.trip.name}" /></td>
+                                <td><a href="${pageContext.request.contextPath}/reservation/detail/${reservation.id}"><fmt:message key="view"/></a></td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </jsp:attribute>
     </my:pagetemplate>
 </c:if>

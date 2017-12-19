@@ -23,7 +23,6 @@
                 <th><fmt:message key="surname"/></th>
                 <th><fmt:message key="name"/></th>
                 <th><fmt:message key="email"/></th>
-                <th><fmt:message key="reservations"/></th>
                 <th><fmt:message key="user.list.detail"/></th>
                 <th><fmt:message key="edit"/></th>
                 <th><fmt:message key="user.list.remove"/></th>
@@ -36,9 +35,6 @@
                         <td><c:out value="${user.surname}" /></td>
                         <td><c:out value="${user.name}" /></td>
                         <td><c:out value="${user.email}" /></td>
-                        <td>
-                            <a href="${pageContext.request.contextPath}/reservation/list/${user.id}" class="btn btn-primary">Reservations</a>
-                        </td>>
                         <td>
                             <a href="${pageContext.request.contextPath}/user/view/${user.id}" class="btn btn-primary">View</a>
                         </td>

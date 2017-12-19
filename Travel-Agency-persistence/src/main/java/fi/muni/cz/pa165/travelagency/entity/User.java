@@ -15,7 +15,6 @@ import javax.validation.constraints.NotNull;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Date;
-import java.util.Collections;
 
 /**
  * Created by martin on 22.10.2017.
@@ -210,14 +209,14 @@ public class User implements Serializable {
      * @return Reservations
      */
     public Set<Reservation> getReservations() {
-        return Collections.unmodifiableSet(reservations);
+        return reservations;
     }
 
     /**
      * Basic setter
      * @param reservations reservations
      */
-    public void setReservation(Set<Reservation> reservations) {
+    public void setReservations(Set<Reservation> reservations) {
         this.reservations = reservations;
     }
 
