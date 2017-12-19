@@ -58,6 +58,11 @@ public class UserDTO {
     private Boolean isAdmin;
 
     /**
+     * Representing passwordHash
+     */
+    private String passwordHash;
+
+    /**
      * Non parametric constructor
      */
     public UserDTO() {
@@ -70,6 +75,14 @@ public class UserDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
 
     public Boolean getIsAdmin() {
