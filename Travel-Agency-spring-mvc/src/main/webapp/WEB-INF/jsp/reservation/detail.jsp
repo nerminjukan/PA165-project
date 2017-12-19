@@ -13,7 +13,7 @@
             <c:if test="${authenticatedUser.isAdmin}">
             <tr>
                 <td><f:message key="reservation.detail.customer"/></td>
-                <td><a href="${pageContext.request.contextPath}/user/detail/${reservation.user.id}">
+                <td><a href="${pageContext.request.contextPath}/user/view/${reservation.user.id}">
                             <c:out value="${reservation.user.name} ${reservation.user.surname}"/>
                 </a>
                 </td>
@@ -21,7 +21,7 @@
             </c:if>
             <tr>
                 <td><f:message key="reservation.detail.trip"/></td>
-                <td><a href="${pageContext.request.contextPath}/trip/detail/${reservation.trip.id}">
+                <td><a href="${pageContext.request.contextPath}/trip/view/${reservation.trip.id}">
                             <c:out value="${reservation.trip.name}"/>
                 </a></td>
             </tr>
@@ -33,18 +33,18 @@
                 <td><f:message key="reservation.detail.state"/></td>
                 <td><c:out value="${reservation.paymentState}"/></td>
             </tr>
-            <c:if test="${empty reservation.excursions}">
+            <c:if test="${empty reservation.excursionsReserved}">
                 <tr>
                     <td><f:message key="reservation.detail.excursions"/></td>
                     <td><f:message key="reservation.detail.noexcursions"/></td>
                 </tr>
             </c:if>
-                <c:if test="${not empty reservation.excursions}">
+                <c:if test="${not empty reservation.excursionsReserved}">
                 <tr>
                     <td><f:message key="reservation.detail.excursions"/></td>
                     <td>    
-                    <c:forEach items="${reservation.excursions}" var="excursion">
-                            <a href="${pageContext.request.contextPath}/excursion/detail/${excursion.id}">
+                    <c:forEach items="${reservation.excursionsReserved}" var="excursion">
+                            <a href="${pageContext.request.contextPath}/excursion/view/${excursion.id}">
                                 ${excursion.destination}
                             </a> <c:out value="${excursion.price} "></c:out><strong><f:message key="reservation.list.currency"/></strong><br>
                             </c:forEach>
