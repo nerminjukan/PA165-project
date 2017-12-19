@@ -39,9 +39,6 @@
                             <a href="${pageContext.request.contextPath}/user/view/${user.id}" class="btn btn-primary">View</a>
                         </td>
                         <td>
-                            <a href="${pageContext.request.contextPath}/user/edit/${user.id}" class="btn btn-primary">Edit</a>
-                        </td>
-                        <td>
                             <form method="POST" action="${pageContext.request.contextPath}/user/remove/${user.id}">
                                 <button type="submit" class="btn btn-primary"><fmt:message key="user.list.remove"/></button>
                             </form>
