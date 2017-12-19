@@ -12,6 +12,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Date;
@@ -266,7 +267,7 @@ public class User implements Serializable {
 
         User user = (User) o;
 
-        return this.idCardNumber.equals(user.getIdCardNumber());
+        return Objects.equals(this.idCardNumber, user.getIdCardNumber());
     }
 
     /**
@@ -275,6 +276,6 @@ public class User implements Serializable {
      */
     @Override
     public int hashCode() {
-        return 31 * idCardNumber.hashCode();
+        return Objects.hash(this.idCardNumber);
     }
 }

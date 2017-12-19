@@ -3,6 +3,7 @@ package fi.muni.cz.pa165.travelagency.dto;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -148,8 +149,7 @@ public class UserDTO {
 
         UserDTO that = (UserDTO) o;
 
-        return this.idCardNumber != null ?
-                this.idCardNumber.equals(that.getIdCardNumber()) : that.getIdCardNumber() == null;
+        return Objects.equals(this.idCardNumber, that.getIdCardNumber());
     }
 
     /**
@@ -158,6 +158,6 @@ public class UserDTO {
      */
     @Override
     public int hashCode() {
-        return this.idCardNumber != null ? this.idCardNumber.hashCode() : 0;
+        return Objects.hash(this.idCardNumber);
     }
 }
