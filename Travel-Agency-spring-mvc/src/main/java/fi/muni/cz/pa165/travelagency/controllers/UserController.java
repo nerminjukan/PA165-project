@@ -7,12 +7,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 /**
  * Admin controller
@@ -22,11 +24,102 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/user")
 public class UserController {
 
+    private static final String USER_EDIT_PAGE_URL = "redirect:/user/edit/";
     private static final String AUTH_PAGE_URL = "redirect:/auth/login";
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationController.class);
 
     @Autowired
     private UserFacade userFacade;
+
+    /**
+     * Get method for user edit page
+     * @param id id
+     * @param redirectAttributes redirect attributes
+     * @param req request
+     * @param model model
+     * @return user edit page
+     */
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String editView(@PathVariable Long id,
+                           RedirectAttributes redirectAttributes,
+                           HttpServletRequest req,
+                           Model model) {
+        if (!isAuthenticated(req, null, false)) {
+            return AUTH_PAGE_URL;
+        }
+
+        UserDTO userDTO = userFacade.findById(id);
+        if (userDTO == null) {
+            LOGGER.warn("GET user/view");
+            redirectAttributes.addFlashAttribute("alert_danger", "Cannot display not existing user.");
+        }
+
+        LOGGER.info("GET request: user/edit/", id);
+        model.addAttribute("user", userDTO);
+        model.addAttribute("userEdit", new UserDTO());
+        return "user/edit";
+    }
+
+    /**
+     * Saves data to database
+     * @param userUpdated user
+     * @param id id
+     * @param req req
+     * @param redirectAttributes redirect attributes
+     * @return next page
+     */
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
+    public String editUpdate(@Valid @ModelAttribute("userEdit") UserDTO userUpdated,
+                             @PathVariable Long id,
+                             HttpServletRequest req,
+                             RedirectAttributes redirectAttributes) {
+        if (!isAuthenticated(req, null, false)) {
+            return AUTH_PAGE_URL;
+        }
+
+        if (userUpdated == null) {
+            redirectAttributes.addFlashAttribute("alert_danger", "Cannot update not existing user.");
+            return USER_EDIT_PAGE_URL + id;
+        }
+
+        UserDTO userDTO = userFacade.findById(id);
+        if (userDTO == null) {
+            redirectAttributes.addFlashAttribute("alert_danger", "Cannot update not existing user.");
+            return USER_EDIT_PAGE_URL + id;
+        }
+
+        if (isEmpty(userUpdated.getName())) {
+            redirectAttributes.addFlashAttribute("alert_danger", "Cannot update user with empty surname.");
+            return USER_EDIT_PAGE_URL + id;
+        }
+
+        if (isEmpty(userUpdated.getIdCardNumber())) {
+            redirectAttributes.addFlashAttribute("alert_danger", "Cannot update user with empty idCardNumber.");
+            return USER_EDIT_PAGE_URL + id;
+        }
+
+        if (isEmpty(userUpdated.getEmail())) {
+            redirectAttributes.addFlashAttribute("alert_danger", "Cannot update user with empty email.");
+            return USER_EDIT_PAGE_URL + id;
+        }
+
+        try {
+            userDTO.setName(userUpdated.getName());
+            userDTO.setSurname(userUpdated.getSurname());
+            userDTO.setEmail(userUpdated.getEmail());
+            userDTO.setIdCardNumber(userUpdated.getIdCardNumber());
+            userDTO.setPhoneNumber(userUpdated.getPhoneNumber());
+
+            userFacade.updateUser(userDTO);
+        } catch (Exception e) {
+            LOGGER.error("POST request: user/edit/{}", id, e);
+            redirectAttributes.addFlashAttribute("alert_danger", "Error occurred during updating");
+            return USER_EDIT_PAGE_URL + id;
+        }
+
+        LOGGER.info("POST request: user/edit/{}", id);
+        return "redirect:/user/view/" + id;
+    }
 
     /**
      * Displays info about user
