@@ -68,7 +68,7 @@ public class Excursion implements Serializable {
      */
     @NotNull
     @Temporal(TemporalType.DATE)
-    private java.util.Date excursionDate;
+    private Date excursionDate;
     
     /*
      * The duration of the Excursion.

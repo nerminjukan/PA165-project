@@ -160,7 +160,7 @@ public class ExcursionController {
         //in case of validation error forward back to the the form
         if (bindingResult.hasErrors()) {
             for (ObjectError ge : bindingResult.getGlobalErrors()) {
-                LOGGER.trace("ObjectError: {}", ge);
+                LOGGER.info("ObjectError: {}", ge.toString());
             }
             for (FieldError fe : bindingResult.getFieldErrors()) {
                 model.addAttribute(fe.getField() + "_error", true);
