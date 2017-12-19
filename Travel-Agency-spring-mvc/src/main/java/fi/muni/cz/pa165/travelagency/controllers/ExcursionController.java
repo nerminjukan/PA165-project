@@ -1,6 +1,7 @@
 package fi.muni.cz.pa165.travelagency.controllers;
 
 import fi.muni.cz.pa165.travelagency.dto.ExcursionDTO;
+import fi.muni.cz.pa165.travelagency.dto.TripDTO;
 import fi.muni.cz.pa165.travelagency.dto.UserDTO;
 import fi.muni.cz.pa165.travelagency.facade.ExcursionFacade;
 import fi.muni.cz.pa165.travelagency.facade.TripFacade;
@@ -23,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.List;
 
 /**
  * Controller for Excursion.
@@ -56,7 +59,7 @@ public class ExcursionController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listAll(Model model, HttpServletRequest request,
             RedirectAttributes redirectAttributes) {
-        
+
         UserDTO authUser = (UserDTO) request.getSession().getAttribute("authenticatedUser");
         model.addAttribute("authenticatedUser", (UserDTO) request.getSession().getAttribute("authenticatedUser"));
         if (authUser != null) {
@@ -88,9 +91,15 @@ public class ExcursionController {
                 redirectAttributes.addFlashAttribute("alert_danger", "Excursion no. " + id + " does not exist");
                 return defaultRedirect;
             }
-            
+
             try {
-                excursionFacade.deleteExcursion(excursionFacade.getByID(id));
+                ExcursionDTO excursionDTO = excursionFacade.getByID(id);
+                excursionFacade.deleteExcursion(excursionDTO);
+
+                List<TripDTO> trips = tripFacade.getTripsByDestination(excursionDTO.getDestination());
+                for(TripDTO trip : trips) {
+                    tripFacade.refreshExcursions(trip.getId());
+                }
             } catch (Exception e) {
                 redirectAttributes.addFlashAttribute("alert_danger", "Excursion no. " + id + " could not be deleted");
                 return defaultRedirect;
@@ -115,7 +124,7 @@ public class ExcursionController {
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
     public String view(@PathVariable long id, Model model, RedirectAttributes redirectAttributes,
             HttpServletRequest request) {
-        
+
         LOGGER.debug("view({})", id);
         
         UserDTO authUser = (UserDTO) request.getSession().getAttribute("authenticatedUser");
@@ -153,7 +162,7 @@ public class ExcursionController {
         } else{
             redAttr.addFlashAttribute("alert_danger", "You don't have permission to create new excursion");
             return defaultRedirect;
-        }        
+        }
     }
     
     /**
@@ -186,9 +195,9 @@ public class ExcursionController {
                          BindingResult bindingResult, HttpServletRequest request,
                          Model model, RedirectAttributes redAttr,
                          UriComponentsBuilder uriBuilder) {
-        
+
         LOGGER.debug("create(excursion={})", formBean);
-        
+
         UserDTO authUser = (UserDTO) request.getSession().getAttribute("authenticatedUser");
         model.addAttribute("authenticatedUser", (UserDTO) request.getSession().getAttribute("authenticatedUser"));
         if (authUser != null) {
@@ -201,12 +210,17 @@ public class ExcursionController {
                     model.addAttribute(fe.getField() + "_error", true);
                     LOGGER.trace("FieldError: {}", fe);
                 }
-                return "excursion/new";
+                return newExcursion(model, request, redAttr);
             }
-            
+
             //create excursion
             Long id = excursionFacade.create(formBean);
-    
+
+            List<TripDTO> trips = tripFacade.getTripsByDestination(formBean.getDestination());
+            for(TripDTO trip : trips) {
+                tripFacade.refreshExcursions(trip.getId());
+            }
+
             //report success
             redAttr.addFlashAttribute("alert_success", "Excursion " + id + " was created");
             return "redirect:" + uriBuilder.path("/excursion/view/{id}").buildAndExpand(id).encode().toUriString();
@@ -215,7 +229,7 @@ public class ExcursionController {
             return defaultRedirect;
         }
     }
-    
+
     /**
      * edit method
      * @param request request
@@ -243,7 +257,7 @@ public class ExcursionController {
         }
 
         LOGGER.debug("edit(excursion={})", formBean);
-        
+
         //in case of validation error forward back to the the form
         if (bindingResult.hasErrors()) {
             for (ObjectError ge : bindingResult.getGlobalErrors()) {
@@ -253,11 +267,17 @@ public class ExcursionController {
                 model.addAttribute(fe.getField() + "_error", true);
                 LOGGER.trace("FieldError: {}", fe);
             }
-            return "redirect:{id}";
+            return view(id, model, redirectAttributes, request);
         }
         //update excursion
         formBean.setId(id);
         excursionFacade.updateExcursion(formBean);
+
+        List<TripDTO> trips = tripFacade.getTripsByDestination(formBean.getDestination());
+        for(TripDTO trip : trips) {
+            tripFacade.refreshExcursions(trip.getId());
+        }
+
         model.addAttribute("authenticatedUser", authUser);
         //report success
         redirectAttributes.addFlashAttribute("alert_success", "Excursion " + id + " was edited.");
