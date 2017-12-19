@@ -42,7 +42,7 @@ public class ExcursionController {
     @Autowired
     private TripFacade tripFacade;
     
-    private final String default_redirect = "redirect:/excursion/list";
+    private final String defaultRedirect = "redirect:/excursion/list";
     
     
     /**
@@ -71,14 +71,14 @@ public class ExcursionController {
         
         if (excursionFacade.getByID(id) == null) {
             redirectAttributes.addFlashAttribute("alert_danger", "Excursion no. " + id + " does not exist");
-            return default_redirect;
+            return defaultRedirect;
         }
         
         try {
             excursionFacade.deleteExcursion(excursionFacade.getByID(id));
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("alert_danger", "Excursion no. " + id + " could not be deleted");
-            return default_redirect;
+            return defaultRedirect;
         }
         LOGGER.debug("delete({})", id);
         redirectAttributes.addFlashAttribute("alert_success", "Excursion to \"" +
@@ -100,7 +100,7 @@ public class ExcursionController {
         
         if (excursionFacade.getByID(id) == null) {
             redirectAttributes.addFlashAttribute("alert_danger", "Excursion no. " + id + " doesn't exist");
-            return default_redirect;
+            return defaultRedirect;
         }
         
         model.addAttribute("excursion", excursionFacade.getByID(id));
@@ -123,7 +123,7 @@ public class ExcursionController {
         
         /*if (authUser.getUserRoleType() != UserRoleType.ADMINISTRATOR) {
             redAttr.addFlashAttribute("alert_danger", "You don't have permission to create new excursion");
-            return default_redirect;
+            return defaultRedirect;
         }*/
         
         model.addAttribute("excursionCreate", new ExcursionDTO());
@@ -148,6 +148,16 @@ public class ExcursionController {
         }
     }
     
+    /**
+     * Creates a new Excursion [EDIT THIS].
+     *
+     * @param formBean
+     * @param bindingResult
+     * @param model
+     * @param redirectAttributes
+     * @param uriBuilder
+     * @return
+     */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     
     public String create(@Valid @ModelAttribute("excursionCreate") ExcursionDTO formBean, BindingResult bindingResult,
