@@ -369,7 +369,7 @@ public class ReservationController {
                 exc.add(Long.valueOf(s).longValue());
             }
             reservationDTO.setExcursionsReserved(new HashSet<>());
-            
+
             try {
                 reservationFacade.updateReservation(reservationDTO);
                 if (list == null || list.length == 0) {
