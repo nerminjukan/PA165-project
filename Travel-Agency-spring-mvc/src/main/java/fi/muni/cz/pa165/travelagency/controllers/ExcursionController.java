@@ -93,10 +93,8 @@ public class ExcursionController {
             return defaultRedirect;
         }
         LOGGER.debug("delete({})", id);
-        redirectAttributes.addFlashAttribute("alert_success", "Excursion to \"" +
-                excursionFacade.getByID(id).getDestination() + " - " +
-                excursionFacade.getByID(id).getDescription() + "\" was deleted.");
-        return "redirect:" + uriBuilder.path("/excursion/list").toUriString();
+        redirectAttributes.addFlashAttribute("alert_success", "Excursion to with id=" + id + " was deleted.");
+        return "redirect:/excursion/list";
     }
     
     /**

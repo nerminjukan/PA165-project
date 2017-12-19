@@ -57,7 +57,7 @@
                     <td><c:out value="${excursion.duration}"/></td>
                     <td><c:out value="${excursion.destination}"/></td>
                     <td><c:out value="${excursion.price}"/></td>
-                    <td><c:if test="${reservation.excursions.contains(excursion)}">
+                    <td><c:if test="${reservation.excursionsReserved.contains(excursion)}">
                         <f:message key="yes"/>
                     </c:if></td>
                     <td>

@@ -49,12 +49,12 @@
                     <td>${reservation.user.getName()}</td>
                 </c:if>    
                 <td><f:formatDate value="${reservation.created}" pattern="yyyy-MM-dd"/></td>
-                <td><a href="${pageContext.request.contextPath}/trip/detail/${reservation.trip.id}">${reservation.trip.name}</a>
+                <td><a href="${pageContext.request.contextPath}/trip/view/${reservation.trip.id}">${reservation.trip.name}</a>
                     
                 </td>  
                 <td>
-                <c:forEach items="${reservation.excursions}" var="ex">
-                    <a href="${pageContext.request.contextPath}/excursion/detail/${ex.id}">
+                <c:forEach items="${reservation.excursionsReserved}" var="ex">
+                    <a href="${pageContext.request.contextPath}/excursion/view/${ex.id}">
                         ${ex.destination}<br>
                     </a>
                 </c:forEach>
