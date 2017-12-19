@@ -6,7 +6,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<my:pagetemplate title="Reservation's details">
+<my:pagetemplate>
+    <jsp:attribute name="title"><f:message key="reservation.detail.title"/></jsp:attribute>
     <jsp:attribute name="body">
         <table class="table">
             <c:if test="${authenticatedUser.isAdmin}">

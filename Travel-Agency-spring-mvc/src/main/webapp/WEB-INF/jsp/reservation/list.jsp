@@ -5,7 +5,8 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<my:pagetemplate title="Reservations">
+<my:pagetemplate>
+<jsp:attribute name="title"><f:message key="reservation.list.title"/></jsp:attribute>
 <jsp:attribute name="body">
     <c:if test="${authenticatedUser.isAdmin}">
     <div class="row">
