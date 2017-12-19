@@ -29,7 +29,6 @@
                                 <th><fmt:message key="idCard"/></th>
                                 <th><fmt:message key="emailSimple"/></th>
                                 <th><fmt:message key="user.view.birthDate"/></th>
-                                <th><fmt:message key="edit"/></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -54,9 +53,6 @@
                                 </td>
                                 <td>
                                     <fmt:formatDate value="${user.birthDate}" pattern="dd.MM.yyyy" />
-                                </td>
-                                <td>
-                                    <a href="${pageContext.request.contextPath}/user/edit/${user.id}" class="btn btn-primary">Edit</a>
                                 </td>
                             </tr>
                         </tbody>
