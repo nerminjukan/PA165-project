@@ -27,10 +27,8 @@
                                 <th><fmt:message key="surname"/></th>
                                 <th><fmt:message key="user.view.phoneNumber"/></th>
                                 <th><fmt:message key="idCard"/></th>
-                                <th><th><fmt:message key="emailSimple"/></th></th>
+                                <th><fmt:message key="emailSimple"/></th>
                                 <th><fmt:message key="user.view.birthDate"/></th>
-                                <th><fmt:message key="reservations"/></th>
-                                <th><fmt:message key="edit"/></th>>
                             </tr>
                         </thead>
                         <tbody>
@@ -56,15 +54,33 @@
                                 <td>
                                     <fmt:formatDate value="${user.birthDate}" pattern="dd.MM.yyyy" />
                                 </td>
-                                <td>
-                                    <a href="${pageContext.request.contextPath}/reservation/list/${user.id}" class="btn btn-primary">Reservations</a>
-                                </td>
-                                <td>
-                                    <a href="${pageContext.request.contextPath}/user/edit/${user.id}" class="btn btn-primary">Edit</a>
-                                </td>
                             </tr>
                         </tbody>
-                    </table>>
+                    </table>
+                </div>
+                </div>
+
+            <div class="row">
+                <h2><fmt:message key="reservations" /></h2>
+                <div class="col-md-6 col-lg-9">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th><fmt:message key="id" /></th>
+                                <th><fmt:message key="trip.name" /></th>
+                                <th><fmt:message key="user.list.detail"/></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="reservation" items="${user.reservations}">
+                            <tr>
+                                <td><c:out value="${reservation.id}" /></td>
+                                <td><c:out value="${reservation.trip.name}" /></td>
+                                <td><a href="${pageContext.request.contextPath}/reservation/detail/${reservation.id}"><fmt:message key="view"/></a></td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </jsp:attribute>

@@ -71,8 +71,9 @@
             </tbody>
         </table>
 
-    <form method="post" action="${pageContext.request.contextPath}/trip/resetExcursions/${trip.id}">
-        <button type="submit" class="btn btn-primary"><f:message key="trip.reset.excursions"/></button>
-    </form>
+    <form:form method="post" action="${pageContext.request.contextPath}/browsing/save"
+               modelAttribute="reservation" cssClass="form-horizontal">
+        <button class="btn btn-primary" type="submit"><f:message key="trip.create"/></button>
+    </form:form>
 </jsp:attribute>
 </my:pagetemplate>
