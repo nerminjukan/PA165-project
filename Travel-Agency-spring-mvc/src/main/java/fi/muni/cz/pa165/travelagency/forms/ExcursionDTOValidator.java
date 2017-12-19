@@ -27,7 +27,7 @@ public class ExcursionDTOValidator implements Validator{
         ExcursionDTO excursionDTO = (ExcursionDTO) o;
         
         if (excursionDTO.getDuration().compareTo(1) < -1) {
-            errors.rejectValue("duration", "ExcursionDTOValidator.duration.before.dateFrom");
+            errors.rejectValue("duration", "ExcursionDTOValidator.duration.too.short");
         }
 
         if (excursionDTO.getPrice().compareTo(BigDecimal.ZERO) < 0) {

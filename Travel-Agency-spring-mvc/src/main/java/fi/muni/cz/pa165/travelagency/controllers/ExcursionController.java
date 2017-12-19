@@ -4,6 +4,7 @@ import fi.muni.cz.pa165.travelagency.dto.ExcursionDTO;
 import fi.muni.cz.pa165.travelagency.dto.UserDTO;
 import fi.muni.cz.pa165.travelagency.facade.ExcursionFacade;
 import fi.muni.cz.pa165.travelagency.facade.TripFacade;
+import fi.muni.cz.pa165.travelagency.forms.ExcursionDTOValidator;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.slf4j.Logger;
@@ -14,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -138,14 +141,15 @@ public class ExcursionController {
      * @param uriBuilder
      * @return 
  */
-    /*@InitBinder
+    @InitBinder
     protected void initBinder(WebDataBinder binder) {
         if (binder.getTarget() instanceof ExcursionDTO) {
             binder.addValidators(new ExcursionDTOValidator());
         }
-    }*/
+    }
     
     @RequestMapping(value = "/create", method = RequestMethod.POST)
+    
     public String create(@Valid @ModelAttribute("excursionCreate") ExcursionDTO formBean, BindingResult bindingResult,
                          Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
         LOGGER.debug("create(excursionCreate={})", formBean);
