@@ -14,11 +14,6 @@
 <my:pagetemplate>
 <jsp:attribute name="title"><f:message key="excursion.admin"/></jsp:attribute>
 <jsp:attribute name="body">
-    <c:if test="${authenticatedUser.isAdmin}">
-    <form method="post" action="${pageContext.request.contextPath}/excursion/delete/${excursion.id}">
-        <button type="submit" class="btn btn-primary"><f:message key="delete"/></button>
-    </form>
-    </c:if>
 
     <form:form method="post" action="${pageContext.request.contextPath}/excursion/edit/${excursion.id}"
                    modelAttribute="excursion" cssClass="form-horizontal">
@@ -62,8 +57,14 @@
 <c:if test="${authenticatedUser.isAdmin}">
             <button class="btn btn-primary" type="submit"><f:message key="excursion.edit"/></button>
 </c:if>
+            <c:if test="${authenticatedUser.isAdmin}">
+    <form method="post" action="${pageContext.request.contextPath}/excursion/delete/${excursion.id}">
+        <button type="submit" class="btn btn-danger"><f:message key="delete"/></button>
+    </form>
+    </c:if>
     </form:form>
-
+    <hr>
+    <h2><f:message key="excursion.view.Trips"/></h2>
     <table class="table">
             <thead>
             <tr>

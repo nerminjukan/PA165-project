@@ -72,7 +72,7 @@ public class UserController {
                     "You do not have administrator permission for editing other user.");
             return "redirect:/user/view/" + authUser.getId();
         }
-
+        model.addAttribute("authenticatedUser", (UserDTO) req.getSession().getAttribute("authenticatedUser"));
 
         LOGGER.info("GET request: user/edit/", id);
         model.addAttribute("user", userDTO);

@@ -43,7 +43,7 @@
                 </td>
                 <td>
                     <form method="post" action="${pageContext.request.contextPath}/trip/delete/${trip.id}">
-                        <button type="submit" class="btn btn-primary"><f:message key="delete"/></button>
+                        <button type="submit" class="btn btn-danger"><f:message key="delete"/></button>
                     </form>
                 </td>
             </tr>

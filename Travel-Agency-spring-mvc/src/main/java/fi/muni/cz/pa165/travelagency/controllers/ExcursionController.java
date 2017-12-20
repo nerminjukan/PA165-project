@@ -101,7 +101,8 @@ public class ExcursionController {
                     tripFacade.refreshExcursions(trip.getId());
                 }
             } catch (Exception e) {
-                redirectAttributes.addFlashAttribute("alert_danger", "Excursion no. " + id + " could not be deleted");
+                redirectAttributes.addFlashAttribute("alert_danger", "Excursion no. " + 
+                        id + " is reserved, could not be deleted");
                 return defaultRedirect;
             }
             LOGGER.debug("delete({})", id);

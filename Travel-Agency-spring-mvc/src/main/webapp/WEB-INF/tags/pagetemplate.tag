@@ -33,8 +33,11 @@
          </div>
          <div id="navbar" class="collapse navbar-collapse">
              <ul class="nav navbar-nav">
-                 <li><my:a href="/browsing/list"><f:message key="browse"/></my:a></li>
+                 <c:if test="${empty authenticatedUser}">
+                 <li><my:a href="/auth/login"><f:message key="auth.login"/><span class="glyphicon glyphicon-log-in"></span></my:a></li>
+                 </c:if>
                  <c:if test="${not empty authenticatedUser}">
+                 <li><my:a href="/browsing/list"><f:message key="browse"/></my:a></li>
                  <li class="dropdown">
                      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><f:message key="administration"/><b class="caret"></b></a>
                      <ul class="dropdown-menu">
@@ -45,7 +48,7 @@
                         <c:if test="${!authenticatedUser.isAdmin}">
                         <li>
                             <a href="${pageContext.request.contextPath}/user/view/${authenticatedUser.id}">
-                            <f:message key="users"/>
+                            <f:message key="user.user"/>
                             </a>
                         </li>
                         </c:if> 
@@ -77,7 +80,7 @@
             <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <c:out value="${authenticatedUser.name}"/> | <a href="${pageContext.request.contextPath}/auth/logout">logout</a>
+                        <c:out value="${authenticatedUser.name}"/> | <a href="${pageContext.request.contextPath}/auth/logout"><f:message key="auth.logout"/><span class="glyphicon glyphicon-log-in"></span></a>
                     </div>
                 </div>
             </div>
@@ -117,7 +120,7 @@
 
     <!-- footer -->
     <footer class="footer">
-
+        
     </footer>
 </div>
 <!-- javascripts placed at the end of the document so the pages load faster -->

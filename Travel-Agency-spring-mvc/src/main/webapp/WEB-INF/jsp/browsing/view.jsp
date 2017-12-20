@@ -97,6 +97,6 @@
         </tbody>
     </table>
 
-    <my:a href="/browsing/create/${trip.id}" class="btn btn-primary"><f:message key="buy"/></my:a>
+    <my:a href="/browsing/create/${trip.id}" class="btn btn-success"><f:message key="buy"/></my:a>
 </jsp:attribute>
 </my:pagetemplate>
