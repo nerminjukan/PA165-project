@@ -231,6 +231,7 @@ public class UserController {
 
         LOGGER.info("POST request: user/remove/", id);
         userFacade.removeUser(userDTO);
+        redirectAttributes.addFlashAttribute("alert_success", "User " + id + " was removed.");
         return "redirect:/user/list";
     }
 

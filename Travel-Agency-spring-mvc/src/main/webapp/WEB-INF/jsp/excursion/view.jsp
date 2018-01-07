@@ -86,7 +86,7 @@
                     <td><f:formatDate value="${trip.dateTo}" pattern="yyyy-MM-dd"/></td>
                     <td><c:out value="${trip.destination}"/></td>
                     <td><c:out value="${trip.availableSpots}"/></td>
-                    <td><c:out value="${trip.price}"/></td>
+                    <td><c:out value="${trip.price}"/> <f:message key="reservation.list.currency"/></td>
                     <td>
                         <my:a href="/trip/view/${trip.id}" class="btn btn-primary"><f:message key="view"/></my:a>
                     </td>

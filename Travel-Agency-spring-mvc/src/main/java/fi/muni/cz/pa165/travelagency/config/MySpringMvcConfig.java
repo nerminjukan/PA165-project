@@ -79,6 +79,7 @@ public class MySpringMvcConfig extends WebMvcConfigurerAdapter {
         LOGGER.debug("registering ResourceBundle 'Texts' for messages");
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
         messageSource.setBasename(TEXTS);
+        messageSource.setDefaultEncoding("UTF-8");
         return messageSource;
     }
 

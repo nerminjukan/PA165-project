@@ -26,7 +26,29 @@
 
         <button class="btn btn-lg btn-primary" type="submit" ><fmt:message key="login.button"/></button>
     </form>
-
+<br>
+<br>
+<hr>
+<b>For evaluation:</b>
+<table class="table">
+<thead>
+    <tr>
+        <th></th>
+        <th>E-mail:</th>
+        <th>Password</th>
+    </tr>
+    </thead>
+    <tr>
+    <td>USER:</td>
+    <td>mark@user.com</td>
+    <td>001001001</td>
+    </tr>
+    <tr>
+    <td>ADMIN:</td>
+    <td>eva@user.com</td>   
+    <td>100100100</td>
+    </tr>
+</table>
 
 </jsp:attribute>
 </my:pagetemplate>

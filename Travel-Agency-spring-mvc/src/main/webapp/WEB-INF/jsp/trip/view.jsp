@@ -83,7 +83,7 @@
                     <td><f:formatDate value="${excursion.excursionDate}" pattern="yyyy-MM-dd"/></td>
                     <td><c:out value="${excursion.duration}"/></td>
                     <td><c:out value="${excursion.destination}"/></td>
-                    <td><c:out value="${excursion.price}"/></td>
+                    <td><c:out value="${excursion.price}"/> <f:message key="reservation.list.currency"/></td>
                     <td>
                         <my:a href="/excursion/view/${excursion.id}" class="btn btn-primary"><f:message key="view"/></my:a>
                     </td>

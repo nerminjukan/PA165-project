@@ -59,7 +59,7 @@
                     </a>
                 </c:forEach>
                 </td>
-                <td>${reservation.totalPrice}</td>
+                <td><c:out value="${reservation.totalPrice} "/><f:message key="reservation.list.currency"/></td>
                 <td>${reservation.paymentState}</td>
                 <td>
                     <a href="${pageContext.request.contextPath}/reservation/detail/${reservation.id}" class="btn btn-primary"><f:message key="reservation.list.detail.button"/></a>
