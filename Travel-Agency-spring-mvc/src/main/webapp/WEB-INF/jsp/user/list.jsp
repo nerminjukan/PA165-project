@@ -40,7 +40,7 @@
                         </td>
                         <td>
                             <form method="POST" action="${pageContext.request.contextPath}/user/remove/${user.id}">
-                                <button type="submit" class="btn btn-primary"><fmt:message key="user.list.remove"/></button>
+                                <button type="submit" class="btn btn-danger"><fmt:message key="user.list.remove"/></button>
                             </form>
                         </td>
                         <td>

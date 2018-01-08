@@ -5,6 +5,7 @@ import fi.muni.cz.pa165.travelagency.dto.ExcursionDTO;
 import fi.muni.cz.pa165.travelagency.dto.ReservationDTO;
 import fi.muni.cz.pa165.travelagency.dto.TripDTO;
 import fi.muni.cz.pa165.travelagency.dto.UserDTO;
+import fi.muni.cz.pa165.travelagency.enums.PaymentStateType;
 
 import fi.muni.cz.pa165.travelagency.exceptions.TravelAgencyServiceException;
 import fi.muni.cz.pa165.travelagency.facade.ExcursionFacade;
@@ -77,8 +78,12 @@ public class ReservationController {
                     case "notpaid" :
                         reservations = reservationFacade.findAllNotPaid();
                         break;
+                    case "all" :
+                        reservations = reservationFacade.findAllReservations();
+                        break;
                     default:
-                       reservations = reservationFacade.findAllReservations();
+                       Long id = Long.parseLong(sorted);
+                       reservations = reservationFacade.findReservationByUser(id);
                        break;
                 }
                         
@@ -129,7 +134,7 @@ public class ReservationController {
                 !authUser.getId().equals(reservationDTO.getUser().getId())) {
                     redirectAttributes.addFlashAttribute("alert_danger", 
                 "You don't have permission to show other people's reservation");
-                    return "redirect:/reservation/list";
+                    return "redirect:/reservation/list/all";
                 }
             } catch (TravelAgencyServiceException ex) {
                 LOGGER.error("request: GET reservation/detail/{}; user id={}", id, authUser.getId(), ex);
@@ -180,7 +185,7 @@ public class ReservationController {
                     !authUser.getId().equals(reservationDTO.getUser().getId())) {
                         redirectAttributes.addFlashAttribute("alert_danger", 
                     "You don't have permission to delete other people's reservation");
-                        return "redirect:/reservation/list";
+                        return "redirect:/reservation/list/all";
                 }
                 reservationFacade.removeReservation(reservationDTO.getId());
             } catch (TravelAgencyServiceException ex) {
@@ -233,7 +238,12 @@ public class ReservationController {
                     !authUser.getId().equals(reservationDTO.getUser().getId())) {
                     redirectAttributes.addFlashAttribute("alert_danger", 
                     "You don't have permission to paid other people's reservation");
-                    return "redirect:/reservation/list";
+                    return "redirect:/reservation/list/all";
+                }
+                if (reservationDTO.getPaymentState() == PaymentStateType.Paid) {
+                    redirectAttributes.addFlashAttribute("alert_danger", 
+                    "ALREADY PAID");
+                    return "redirect:/reservation/list/all";
                 }
                 reservationFacade.setReservationPaid(reservationDTO.getId());
             } catch (TravelAgencyServiceException ex) {
@@ -287,7 +297,12 @@ public class ReservationController {
                     !authUser.getId().equals(reservationDTO.getUser().getId())) {
                     redirectAttributes.addFlashAttribute("alert_danger", 
                         "You don't have permission to paid other people's reservation");
-                    return "redirect:/reservation/list";
+                    return "redirect:/reservation/list/all";
+                }
+                if (reservationDTO.getPaymentState() == PaymentStateType.NotPaid) {
+                    redirectAttributes.addFlashAttribute("alert_danger", 
+                    "ALREADY NOTPAID");
+                    return "redirect:/reservation/list/all";
                 }
                 reservationFacade.setReservationNotPaid(reservationDTO.getId());
             } catch (TravelAgencyServiceException ex) {
@@ -361,12 +376,26 @@ public class ReservationController {
             ReservationDTO reservationDTO = reservationFacade.findReservationById(id);
            List<Long> exc = new ArrayList<>();
             
+<<<<<<< HEAD
             for (String s : list ) {
                 exc.add(Long.valueOf(s).longValue());
             }
             reservationDTO.setExcursionsReserved(new HashSet<>());
+=======
+            reservationDTO.setExcursionsReserved(new HashSet<>());
+
+>>>>>>> c36177bb1e9a29bee3ab03e549f13f8d0064830b
             try {
                 reservationFacade.updateReservation(reservationDTO);
+                if (list == null || list.length == 0) {
+                    model.addAttribute("authenticatedUser", authUser);
+                    redirectAttributes.addFlashAttribute(
+                        "alert_success", "Reservation with id=" + id + " was updated.");
+                    return "redirect:/reservation/list/all";
+                }
+                for (String s : list ) {
+                    exc.add(Long.valueOf(s).longValue());
+                }
                 reservationFacade.addExcrusionsToReservation(id, exc);
             } catch (TravelAgencyServiceException ex) {
                 LOGGER.warn("GET update /update/{} failed.", id);

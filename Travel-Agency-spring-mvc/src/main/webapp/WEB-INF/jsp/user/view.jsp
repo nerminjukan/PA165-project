@@ -65,7 +65,7 @@
                 </div>
 
             <div class="row">
-                <h2><fmt:message key="reservations" /></h2>
+                <h2><fmt:message key="reservations" />&nbsp;<a href="${pageContext.request.contextPath}/reservation/list/${user.id}" class="btn btn-primary"><fmt:message key="show"/></a></h2>
                 <div class="col-md-6 col-lg-9">
                     <table class="table">
                         <thead>

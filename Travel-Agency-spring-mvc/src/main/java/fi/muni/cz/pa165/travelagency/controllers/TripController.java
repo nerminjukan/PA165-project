@@ -27,9 +27,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Pavel Kotala
@@ -119,7 +117,7 @@ public class TripController {
                        RedirectAttributes redirectAttributes) {
 
         UserDTO authUser = (UserDTO) request.getSession().getAttribute("authenticatedUser");
-        if (authUser == null || !authUser.getIsAdmin()) {
+        if (authUser == null) {
             LOGGER.warn("Failed. Unauthorized");
             redirectAttributes.addFlashAttribute("alert_danger",
                     "Unauthorized.");
@@ -210,17 +208,12 @@ public class TripController {
                 model.addAttribute(fe.getField() + "_error", true);
                 LOGGER.trace("FieldError: {}", fe);
             }
-            return "trip/new";
+            return newTrip(model, request, redirectAttributes);
         }
         //create trip
         Long id = tripFacade.createTrip(formBean);
+        tripFacade.refreshExcursions(id);
 
-        List<ExcursionDTO> suitable = tripFacade.getAllSuitableExcursions(id);
-        Set<Long> excs = new HashSet<>();
-        for(ExcursionDTO exc : suitable) {
-            excs.add(exc.getId());
-        }
-        tripFacade.addAllExcursions(id, excs);
         model.addAttribute("authenticatedUser", authUser);
         //report success
         redirectAttributes.addFlashAttribute("alert_success", "Trip " + id + " was created");
@@ -261,48 +254,15 @@ public class TripController {
                 model.addAttribute(fe.getField() + "_error", true);
                 LOGGER.trace("FieldError: {}", fe);
             }
-            return "trip/view/{id}";
+            return view(id, model, request, redirectAttributes);
         }
         //update trip
         formBean.setId(id);
         tripFacade.updateTrip(formBean);
+        tripFacade.refreshExcursions(id);
         model.addAttribute("authenticatedUser", authUser);
         //report success
         redirectAttributes.addFlashAttribute("alert_success", "Trip " + id + " was edited");
-        return "redirect:" + uriBuilder.path("/trip/view/{id}").buildAndExpand(id).encode().toUriString();
-    }
-
-    /**
-     * reset excursions method
-     * @param request request
-     * @param id id
-     * @param formBean form bean
-     * @param bindingResult binding result
-     * @param model model
-     * @param redirectAttributes redirect attributes
-     * @param uriBuilder uri builder
-     * @return redirect link
-     */
-    @RequestMapping(value = "/resetExcursions/{id}", method = RequestMethod.POST)
-    public String resetExcursions(@PathVariable long id, @Valid @ModelAttribute("trip") TripDTO formBean,
-                                  BindingResult bindingResult, HttpServletRequest request,
-                                  Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
-
-        UserDTO authUser = (UserDTO) request.getSession().getAttribute("authenticatedUser");
-        if (authUser == null || !authUser.getIsAdmin()) {
-            LOGGER.warn("Failed. Unauthorized");
-            redirectAttributes.addFlashAttribute("alert_danger",
-                    "Unauthorized.");
-            return "redirect:/auth/login";
-        }
-
-        List<ExcursionDTO> suitable = tripFacade.getAllSuitableExcursions(id);
-        Set<Long> excs = new HashSet<>();
-        for(ExcursionDTO exc : suitable) {
-            excs.add(exc.getId());
-        }
-        tripFacade.addAllExcursions(id, excs);
-        model.addAttribute("authenticatedUser", authUser);
         return "redirect:" + uriBuilder.path("/trip/view/{id}").buildAndExpand(id).encode().toUriString();
     }
 }

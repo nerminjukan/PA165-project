@@ -15,11 +15,6 @@
 <jsp:attribute name="title"><f:message key="excursion.admin"/></jsp:attribute>
 <jsp:attribute name="body">
 
-    <form method="post" action="${pageContext.request.contextPath}/excursion/delete/${excursion.id}">
-        <button type="submit" class="btn btn-primary"><f:message key="delete"/></button>
-    </form>
-
-
     <form:form method="post" action="${pageContext.request.contextPath}/excursion/edit/${excursion.id}"
                    modelAttribute="excursion" cssClass="form-horizontal">
             <div class="form-group ${destination_error?'has-error':''}">
@@ -47,6 +42,7 @@
                 <form:label path="excursionDate" cssClass="col-sm-2 control-label"><f:message key="excursion.excursionDate"/></form:label>
                 <div class="col-sm-10">
                     <form:input path="excursionDate" cssClass="form-control"/>
+                    <form:label path="excursionDate" cssClass="help-block"><f:message key="date.format"/></form:label>
                     <form:errors path="excursionDate" cssClass="help-block"/>
                 </div>
             </div>
@@ -58,10 +54,17 @@
                 </div>
             </div>
 
-
+<c:if test="${authenticatedUser.isAdmin}">
             <button class="btn btn-primary" type="submit"><f:message key="excursion.edit"/></button>
-        </form:form>
-
+</c:if>
+            <c:if test="${authenticatedUser.isAdmin}">
+    <form method="post" action="${pageContext.request.contextPath}/excursion/delete/${excursion.id}">
+        <button type="submit" class="btn btn-danger"><f:message key="delete"/></button>
+    </form>
+    </c:if>
+    </form:form>
+    <hr>
+    <h2><f:message key="excursion.view.Trips"/></h2>
     <table class="table">
             <thead>
             <tr>
@@ -83,7 +86,7 @@
                     <td><f:formatDate value="${trip.dateTo}" pattern="yyyy-MM-dd"/></td>
                     <td><c:out value="${trip.destination}"/></td>
                     <td><c:out value="${trip.availableSpots}"/></td>
-                    <td><c:out value="${trip.price}"/></td>
+                    <td><c:out value="${trip.price}"/> <f:message key="reservation.list.currency"/></td>
                     <td>
                         <my:a href="/trip/view/${trip.id}" class="btn btn-primary"><f:message key="view"/></my:a>
                     </td>
@@ -92,8 +95,8 @@
             </tbody>
         </table>
 
-    <form method="post" action="${pageContext.request.contextPath}/excursion/resetTrips/${excursion.id}">
-        <button type="submit" class="btn btn-primary"><f:message key="excursion.reset.trips"/></button>
-    </form>
+    <!--<form method="post" action="${pageContext.request.contextPath}/excursion/resetTrips/${excursion.id}">-->
+        <!--<button type="submit" class="btn btn-primary"><f:message key="excursion.reset.trips"/></button>-->
+    <!--</form>-->
 </jsp:attribute>
 </my:pagetemplate>

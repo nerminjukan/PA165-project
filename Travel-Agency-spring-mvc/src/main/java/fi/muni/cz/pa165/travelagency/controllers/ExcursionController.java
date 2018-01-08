@@ -1,6 +1,7 @@
 package fi.muni.cz.pa165.travelagency.controllers;
 
 import fi.muni.cz.pa165.travelagency.dto.ExcursionDTO;
+import fi.muni.cz.pa165.travelagency.dto.TripDTO;
 import fi.muni.cz.pa165.travelagency.dto.UserDTO;
 import fi.muni.cz.pa165.travelagency.facade.ExcursionFacade;
 import fi.muni.cz.pa165.travelagency.facade.TripFacade;
@@ -23,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.List;
 
 /**
  * Controller for Excursion.
@@ -56,8 +59,13 @@ public class ExcursionController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listAll(Model model, HttpServletRequest request,
             RedirectAttributes redirectAttributes) {
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> c36177bb1e9a29bee3ab03e549f13f8d0064830b
         UserDTO authUser = (UserDTO) request.getSession().getAttribute("authenticatedUser");
+        model.addAttribute("authenticatedUser", (UserDTO) request.getSession().getAttribute("authenticatedUser"));
         if (authUser != null) {
             model.addAttribute("excursions", excursionFacade.getAllExcursions());
             return "excursion/list";
@@ -79,19 +87,40 @@ public class ExcursionController {
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     public String delete(@PathVariable long id, Model model, UriComponentsBuilder uriBuilder,
                          RedirectAttributes redirectAttributes, HttpServletRequest request) {
+<<<<<<< HEAD
         
         UserDTO authUser = (UserDTO) request.getSession().getAttribute("authenticatedUser");
         
+=======
+        
+        UserDTO authUser = (UserDTO) request.getSession().getAttribute("authenticatedUser");
+        model.addAttribute("authenticatedUser", (UserDTO) request.getSession().getAttribute("authenticatedUser"));
+>>>>>>> c36177bb1e9a29bee3ab03e549f13f8d0064830b
         if (authUser != null) {
             if (excursionFacade.getByID(id) == null) {
                 redirectAttributes.addFlashAttribute("alert_danger", "Excursion no. " + id + " does not exist");
                 return defaultRedirect;
             }
+<<<<<<< HEAD
             
             try {
                 excursionFacade.deleteExcursion(excursionFacade.getByID(id));
             } catch (Exception e) {
                 redirectAttributes.addFlashAttribute("alert_danger", "Excursion no. " + id + " could not be deleted");
+=======
+
+            try {
+                ExcursionDTO excursionDTO = excursionFacade.getByID(id);
+                excursionFacade.deleteExcursion(excursionDTO);
+
+                List<TripDTO> trips = tripFacade.getTripsByDestination(excursionDTO.getDestination());
+                for(TripDTO trip : trips) {
+                    tripFacade.refreshExcursions(trip.getId());
+                }
+            } catch (Exception e) {
+                redirectAttributes.addFlashAttribute("alert_danger", "Excursion no. " + 
+                        id + " is reserved, could not be deleted");
+>>>>>>> c36177bb1e9a29bee3ab03e549f13f8d0064830b
                 return defaultRedirect;
             }
             LOGGER.debug("delete({})", id);
@@ -114,11 +143,19 @@ public class ExcursionController {
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
     public String view(@PathVariable long id, Model model, RedirectAttributes redirectAttributes,
             HttpServletRequest request) {
+<<<<<<< HEAD
         
         LOGGER.debug("view({})", id);
         
         UserDTO authUser = (UserDTO) request.getSession().getAttribute("authenticatedUser");
         
+=======
+
+        LOGGER.debug("view({})", id);
+        
+        UserDTO authUser = (UserDTO) request.getSession().getAttribute("authenticatedUser");
+        model.addAttribute("authenticatedUser", (UserDTO) request.getSession().getAttribute("authenticatedUser"));
+>>>>>>> c36177bb1e9a29bee3ab03e549f13f8d0064830b
         if (authUser != null) {
             if (excursionFacade.getByID(id) == null) {
                 redirectAttributes.addFlashAttribute("alert_danger", "Excursion no. " + id + " doesn't exist");
@@ -145,14 +182,22 @@ public class ExcursionController {
         LOGGER.debug("new()");
         
         UserDTO authUser = (UserDTO) request.getSession().getAttribute("authenticatedUser");
+<<<<<<< HEAD
         
+=======
+        model.addAttribute("authenticatedUser", (UserDTO) request.getSession().getAttribute("authenticatedUser"));
+>>>>>>> c36177bb1e9a29bee3ab03e549f13f8d0064830b
         if (authUser != null) {
             model.addAttribute("excursion", new ExcursionDTO());
             return "excursion/new";
         } else{
             redAttr.addFlashAttribute("alert_danger", "You don't have permission to create new excursion");
             return defaultRedirect;
+<<<<<<< HEAD
         }        
+=======
+        }
+>>>>>>> c36177bb1e9a29bee3ab03e549f13f8d0064830b
     }
     
     /**
@@ -185,11 +230,19 @@ public class ExcursionController {
                          BindingResult bindingResult, HttpServletRequest request,
                          Model model, RedirectAttributes redAttr,
                          UriComponentsBuilder uriBuilder) {
+<<<<<<< HEAD
         
         LOGGER.debug("create(excursion={})", formBean);
         
         UserDTO authUser = (UserDTO) request.getSession().getAttribute("authenticatedUser");
         
+=======
+
+        LOGGER.debug("create(excursion={})", formBean);
+
+        UserDTO authUser = (UserDTO) request.getSession().getAttribute("authenticatedUser");
+        model.addAttribute("authenticatedUser", (UserDTO) request.getSession().getAttribute("authenticatedUser"));
+>>>>>>> c36177bb1e9a29bee3ab03e549f13f8d0064830b
         if (authUser != null) {
             //in case of validation error forward back to the the form
             if (bindingResult.hasErrors()) {
@@ -200,12 +253,26 @@ public class ExcursionController {
                     model.addAttribute(fe.getField() + "_error", true);
                     LOGGER.trace("FieldError: {}", fe);
                 }
+<<<<<<< HEAD
                 return "excursion/new";
             }
             
             //create excursion
             Long id = excursionFacade.create(formBean);
     
+=======
+                return newExcursion(model, request, redAttr);
+            }
+
+            //create excursion
+            Long id = excursionFacade.create(formBean);
+
+            List<TripDTO> trips = tripFacade.getTripsByDestination(formBean.getDestination());
+            for(TripDTO trip : trips) {
+                tripFacade.refreshExcursions(trip.getId());
+            }
+
+>>>>>>> c36177bb1e9a29bee3ab03e549f13f8d0064830b
             //report success
             redAttr.addFlashAttribute("alert_success", "Excursion " + id + " was created");
             return "redirect:" + uriBuilder.path("/excursion/view/{id}").buildAndExpand(id).encode().toUriString();
@@ -214,7 +281,11 @@ public class ExcursionController {
             return defaultRedirect;
         }
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> c36177bb1e9a29bee3ab03e549f13f8d0064830b
     /**
      * edit method
      * @param request request
@@ -233,6 +304,10 @@ public class ExcursionController {
                         UriComponentsBuilder uriBuilder) {
 
         UserDTO authUser = (UserDTO) request.getSession().getAttribute("authenticatedUser");
+<<<<<<< HEAD
+=======
+        model.addAttribute("authenticatedUser", (UserDTO) request.getSession().getAttribute("authenticatedUser"));
+>>>>>>> c36177bb1e9a29bee3ab03e549f13f8d0064830b
         if (authUser == null || !authUser.getIsAdmin()) {
             LOGGER.warn("Failed. Unauthorized");
             redirectAttributes.addFlashAttribute("alert_danger",
@@ -241,7 +316,11 @@ public class ExcursionController {
         }
 
         LOGGER.debug("edit(excursion={})", formBean);
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> c36177bb1e9a29bee3ab03e549f13f8d0064830b
         //in case of validation error forward back to the the form
         if (bindingResult.hasErrors()) {
             for (ObjectError ge : bindingResult.getGlobalErrors()) {
@@ -251,11 +330,25 @@ public class ExcursionController {
                 model.addAttribute(fe.getField() + "_error", true);
                 LOGGER.trace("FieldError: {}", fe);
             }
+<<<<<<< HEAD
             return "excursion/view/{id}";
         }
         //update excursion
         formBean.setId(id);
         excursionFacade.updateExcursion(formBean);
+=======
+            return view(id, model, redirectAttributes, request);
+        }
+        //update excursion
+        formBean.setId(id);
+        excursionFacade.updateExcursion(formBean);
+
+        List<TripDTO> trips = tripFacade.getTripsByDestination(formBean.getDestination());
+        for(TripDTO trip : trips) {
+            tripFacade.refreshExcursions(trip.getId());
+        }
+
+>>>>>>> c36177bb1e9a29bee3ab03e549f13f8d0064830b
         model.addAttribute("authenticatedUser", authUser);
         //report success
         redirectAttributes.addFlashAttribute("alert_success", "Excursion " + id + " was edited.");

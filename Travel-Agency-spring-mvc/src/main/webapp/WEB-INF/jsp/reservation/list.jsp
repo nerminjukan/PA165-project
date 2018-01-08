@@ -55,11 +55,15 @@
                 <td>
                 <c:forEach items="${reservation.excursionsReserved}" var="ex">
                     <a href="${pageContext.request.contextPath}/excursion/view/${ex.id}">
+<<<<<<< HEAD
                         ${ex.destination}<br>
+=======
+                        ${ex.description}<br>
+>>>>>>> c36177bb1e9a29bee3ab03e549f13f8d0064830b
                     </a>
                 </c:forEach>
                 </td>
-                <td>${reservation.totalPrice}</td>
+                <td><c:out value="${reservation.totalPrice} "/><f:message key="reservation.list.currency"/></td>
                 <td>${reservation.paymentState}</td>
                 <td>
                     <a href="${pageContext.request.contextPath}/reservation/detail/${reservation.id}" class="btn btn-primary"><f:message key="reservation.list.detail.button"/></a>
@@ -72,9 +76,11 @@
                     <a href="${pageContext.request.contextPath}/reservation/notpaid/${reservation.id}" class="btn btn-success"><f:message key="reservation.list.set.notpaid"/></a>
                 </td>
                 </c:if>
+                <c:if test="${authenticatedUser.isAdmin}">
                 <td>
                     <a href="${pageContext.request.contextPath}/reservation/delete/${reservation.id}" class="btn btn-danger"><f:message key="reservation.list.delete.button"/></a>
                 </td> 
+                </c:if>
             </tr>
         </c:forEach>
         </tbody>

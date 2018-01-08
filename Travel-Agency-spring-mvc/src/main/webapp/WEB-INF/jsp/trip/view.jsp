@@ -8,12 +8,6 @@
 <my:pagetemplate>
 <jsp:attribute name="title"><f:message key="trip.administration"/></jsp:attribute>
 <jsp:attribute name="body">
-
-    <form method="post" action="${pageContext.request.contextPath}/trip/delete/${trip.id}">
-        <button type="submit" class="btn btn-primary"><f:message key="delete"/></button>
-    </form>
-
-
     <form:form method="post" action="${pageContext.request.contextPath}/trip/edit/${trip.id}"
                    modelAttribute="trip" cssClass="form-horizontal">
             <div class="form-group ${name_error?'has-error':''}">
@@ -27,6 +21,7 @@
                 <form:label path="dateFrom" cssClass="col-sm-2 control-label"><f:message key="trip.from"/></form:label>
                 <div class="col-sm-10">
                     <form:input path="dateFrom" cssClass="form-control"/>
+                    <form:label path="dateFrom" cssClass="help-block"><f:message key="date.format"/></form:label>
                     <form:errors path="dateFrom" cssClass="help-block"/>
                 </div>
             </div>
@@ -34,6 +29,7 @@
                 <form:label path="dateTo" cssClass="col-sm-2 control-label"><f:message key="trip.to"/></form:label>
                 <div class="col-sm-10">
                     <form:input path="dateTo" cssClass="form-control"/>
+                    <form:label path="dateTo" cssClass="help-block"><f:message key="date.format"/></form:label>
                     <form:errors path="dateTo" cssClass="help-block"/>
                 </div>
             </div>
@@ -59,10 +55,17 @@
                 </div>
             </div>
 
-
+    <c:if test="${authenticatedUser.isAdmin}">
             <button class="btn btn-primary" type="submit"><f:message key="trip.edit"/></button>
+    </c:if>
+    <c:if test="${authenticatedUser.isAdmin}">
+        <form method="post" action="${pageContext.request.contextPath}/trip/delete/${trip.id}">
+            <button type="submit" class="btn btn-danger"><f:message key="delete"/></button>
+        </form>
+    </c:if>
         </form:form>
-
+    <hr>
+    <h2><f:message key="trip.view.Excursions"/></h2>
     <table class="table">
             <thead>
             <tr>
@@ -80,7 +83,7 @@
                     <td><f:formatDate value="${excursion.excursionDate}" pattern="yyyy-MM-dd"/></td>
                     <td><c:out value="${excursion.duration}"/></td>
                     <td><c:out value="${excursion.destination}"/></td>
-                    <td><c:out value="${excursion.price}"/></td>
+                    <td><c:out value="${excursion.price}"/> <f:message key="reservation.list.currency"/></td>
                     <td>
                         <my:a href="/excursion/view/${excursion.id}" class="btn btn-primary"><f:message key="view"/></my:a>
                     </td>
@@ -88,9 +91,5 @@
             </c:forEach>
             </tbody>
         </table>
-
-    <form method="post" action="${pageContext.request.contextPath}/trip/resetExcursions/${trip.id}">
-        <button type="submit" class="btn btn-primary"><f:message key="trip.reset.excursions"/></button>
-    </form>
 </jsp:attribute>
 </my:pagetemplate>

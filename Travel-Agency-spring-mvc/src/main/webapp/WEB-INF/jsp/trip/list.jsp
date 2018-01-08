@@ -36,14 +36,14 @@
                 <td><f:formatDate value="${trip.dateTo}" pattern="yyyy-MM-dd"/></td>
                 <td><c:out value="${trip.destination}"/></td>
                 <td><c:out value="${trip.availableSpots}"/></td>
-                <td><c:out value="${trip.price}"/></td>
+                <td><c:out value="${trip.price}"/> <f:message key="reservation.list.currency"/></td>
                 <td><c:out value="${trip.excursions.size()}"/></td>
                 <td>
                     <my:a href="/trip/view/${trip.id}" class="btn btn-primary"><f:message key="view"/></my:a>
                 </td>
                 <td>
                     <form method="post" action="${pageContext.request.contextPath}/trip/delete/${trip.id}">
-                        <button type="submit" class="btn btn-primary"><f:message key="delete"/></button>
+                        <button type="submit" class="btn btn-danger"><f:message key="delete"/></button>
                     </form>
                 </td>
             </tr>
