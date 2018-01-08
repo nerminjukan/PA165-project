@@ -43,27 +43,27 @@
             <div class="form-group ${spots_error?'has-error':''}">
                 <form:label path="availableSpots" cssClass="col-sm-2 control-label"><f:message key="trip.availableSpots"/></form:label>
                 <div class="col-sm-10">
-                    <form:input path="availableSpots" cssClass="form-control"/>
+                    <form:input path="availableSpots" cssClass="form-control" type="number"/>
                     <form:errors path="availableSpots" cssClass="help-block"/>
                 </div>
             </div>
             <div class="form-group ${price_error?'has-error':''}" >
                 <form:label path="price" cssClass="col-sm-2 control-label"><f:message key="trip.price"/></form:label>
                 <div class="col-sm-10">
-                    <form:input path="price" cssClass="form-control"/>
+                    <form:input path="price" cssClass="form-control" type="number"/>
                     <form:errors path="price" cssClass="help-block"/>
                 </div>
             </div>
 
-    <c:if test="${authenticatedUser.isAdmin}">
-            <button class="btn btn-primary" type="submit"><f:message key="trip.edit"/></button>
-    </c:if>
+            <c:if test="${authenticatedUser.isAdmin}">
+                <button class="btn btn-primary" type="submit"><f:message key="trip.edit"/></button>
+            </c:if>
+        </form:form>
     <c:if test="${authenticatedUser.isAdmin}">
         <form method="post" action="${pageContext.request.contextPath}/trip/delete/${trip.id}">
             <button type="submit" class="btn btn-danger"><f:message key="delete"/></button>
         </form>
     </c:if>
-        </form:form>
     <hr>
     <h2><f:message key="trip.view.Excursions"/></h2>
     <table class="table">

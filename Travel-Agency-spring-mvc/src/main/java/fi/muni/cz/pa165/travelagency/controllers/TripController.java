@@ -8,6 +8,7 @@ import fi.muni.cz.pa165.travelagency.facade.ExcursionFacade;
 import fi.muni.cz.pa165.travelagency.facade.ReservationFacade;
 import fi.muni.cz.pa165.travelagency.facade.TripFacade;
 import fi.muni.cz.pa165.travelagency.forms.TripCreateDTOValidator;
+import java.text.SimpleDateFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -167,9 +168,12 @@ public class TripController {
  * Spring Validator added to JSR-303 Validator for this @Controller only.
  * It is useful  for custom validations that are not defined on the form bean by annotations.
  * http://docs.spring.io/spring/docs/current/spring-framework-reference/html/validation.html#validation-mvc-configuring
+     * @param binder binder
  */
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyy");
+        dateFormat.setLenient(false);
         if (binder.getTarget() instanceof TripCreateDTO) {
             binder.addValidators(new TripCreateDTOValidator());
         }

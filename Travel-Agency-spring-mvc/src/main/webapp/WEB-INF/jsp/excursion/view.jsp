@@ -34,7 +34,7 @@
             <div class="form-group ${duration_error?'has-error':''}">
                 <form:label path="duration" cssClass="col-sm-2 control-label"><f:message key="excursion.duration"/></form:label>
                 <div class="col-sm-10">
-                    <form:input path="duration" cssClass="form-control"/>
+                    <form:input path="duration" cssClass="form-control" type="number"/>
                     <form:errors path="duration" cssClass="help-block"/>
                 </div>
             </div>
@@ -49,7 +49,7 @@
             <div class="form-group ${price_error?'has-error':''}" >
                 <form:label path="price" cssClass="col-sm-2 control-label"><f:message key="excursion.price"/></form:label>
                 <div class="col-sm-10">
-                    <form:input path="price" cssClass="form-control"/>
+                    <form:input path="price" cssClass="form-control" type="number"/>
                     <form:errors path="price" cssClass="help-block"/>
                 </div>
             </div>
@@ -57,12 +57,12 @@
 <c:if test="${authenticatedUser.isAdmin}">
             <button class="btn btn-primary" type="submit"><f:message key="excursion.edit"/></button>
 </c:if>
-            <c:if test="${authenticatedUser.isAdmin}">
+    </form:form>
+    <c:if test="${authenticatedUser.isAdmin}">
     <form method="post" action="${pageContext.request.contextPath}/excursion/delete/${excursion.id}">
         <button type="submit" class="btn btn-danger"><f:message key="delete"/></button>
     </form>
     </c:if>
-    </form:form>
     <hr>
     <h2><f:message key="excursion.view.Trips"/></h2>
     <table class="table">
