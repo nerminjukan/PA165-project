@@ -30,7 +30,7 @@
                     <tr>
                         <td><label for="phoneNumber" ><fmt:message key="user.edit.phoneNumber"/></label></td>
                         <td>
-                            <form:input placeholder="123456789" id="phoneNumber" name="phoneNumber" path="phoneNumber" type="text" value="${user.phoneNumber}" pattern="^[0-9]{9}"/>
+                            <form:input placeholder="123456789" id="phoneNumber" name="phoneNumber" path="phoneNumber" type="text" value="${user.phoneNumber}" pattern="^[0-9]{6}"/>
                             <form:label path="phoneNumber" cssClass="help-block"><fmt:message key="user.edit.phoneNumber.format"/></form:label>
                         </td>
                     </tr>
