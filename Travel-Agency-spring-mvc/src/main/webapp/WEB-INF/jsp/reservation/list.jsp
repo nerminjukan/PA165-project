@@ -55,11 +55,7 @@
                 <td>
                 <c:forEach items="${reservation.excursionsReserved}" var="ex">
                     <a href="${pageContext.request.contextPath}/excursion/view/${ex.id}">
-<<<<<<< HEAD
-                        ${ex.destination}<br>
-=======
                         ${ex.description}<br>
->>>>>>> c36177bb1e9a29bee3ab03e549f13f8d0064830b
                     </a>
                 </c:forEach>
                 </td>

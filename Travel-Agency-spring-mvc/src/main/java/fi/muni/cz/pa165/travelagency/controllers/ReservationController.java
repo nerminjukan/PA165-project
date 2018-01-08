@@ -375,16 +375,10 @@ public class ReservationController {
             String[] list = req.getParameterValues("id");
             ReservationDTO reservationDTO = reservationFacade.findReservationById(id);
            List<Long> exc = new ArrayList<>();
-            
-<<<<<<< HEAD
-            for (String s : list ) {
-                exc.add(Long.valueOf(s).longValue());
-            }
-            reservationDTO.setExcursionsReserved(new HashSet<>());
-=======
+
             reservationDTO.setExcursionsReserved(new HashSet<>());
 
->>>>>>> c36177bb1e9a29bee3ab03e549f13f8d0064830b
+
             try {
                 reservationFacade.updateReservation(reservationDTO);
                 if (list == null || list.length == 0) {
